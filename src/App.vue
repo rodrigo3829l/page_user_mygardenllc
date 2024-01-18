@@ -1,26 +1,30 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <v-app>
+    <v-main>
+      <NavBar></NavBar>
+      <!-- <AccessibilityButtons></AccessibilityButtons> -->
+      <router-view></router-view>
+      <FooterComponent></FooterComponent>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { defineAsyncComponent } from 'vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    NavBar: defineAsyncComponent(() => import(/* webpackChunkName: "Navbar" */ '@/modules/shared/components/NavBar.vue')),
+    FooterComponent: defineAsyncComponent(() => import(/* webpackChunkName: "Footer" */ '@/modules/shared/components/FooterComponent.vue')),
+    // AccessibilityButtons: defineAsyncComponent(() => import(/* webpackChunkName: "AccessibilityButtons" */ '@/modules/shared/components/AccessibilityButtons')),
+  },
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+.v-carousel {
+  margin-top: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 </style>
