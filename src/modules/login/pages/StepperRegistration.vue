@@ -190,6 +190,7 @@
 </template>
 
 <script>
+import { api } from '@/axios/axios';
 // import { defineAsyncComponent } from 'vue'
 export default {
   // components: {

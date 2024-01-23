@@ -57,6 +57,7 @@
 import { useRouter } from 'vue-router';
 import { ref, nextTick } from 'vue'
 import { useField, useForm } from 'vee-validate'
+import { api } from '@/axios/axios';
 
 export default {
   setup() {
@@ -80,10 +81,17 @@ export default {
 
     const submit = handleSubmit(async (values) => {
       dialog.value = true;
-      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      const datos = {
+        email: values.email
+      }
+
+      console.log(datos)
+      const { data } = await api.post('/user/recover', datos )
+      console.log(data)
       dialog.value = false;
 
-      if (values.email !== 'prueba@gmail.com') {
+      if (data.success === false) {
         message.value = 'This email has not been registered';
         typeAlert.value = 'warning'
         tittleAlert.value = 'Warning'
@@ -92,13 +100,15 @@ export default {
 
       // Espera a que se actualice el DOM antes de mostrar la alerta
       await nextTick();
-      setTimeout(() => {
-        showAlert.value = false;
-        // Redirige a 'home-home' después de que la alerta se haya mostrado
-        if(typeAlert.value !== 'warning'){
+      if(typeAlert.value !== 'warning'){
+          localStorage.setItem('token', data.token);
           router.push({ name: 'login-optconfirm' });
         }
+      setTimeout(() => {
+        showAlert.value = false;
+
       }, 2000);
+      
     });
 
     

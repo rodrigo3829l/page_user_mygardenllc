@@ -73,6 +73,7 @@
 import { ref,nextTick } from 'vue'
 import { useRouter } from 'vue-router';
 import { useField, useForm } from 'vee-validate'
+import { api } from '@/axios/axios';
 
 export default {
   setup() {
@@ -110,23 +111,36 @@ export default {
       }
 
       dialog.value = true;
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const datos ={
+        token: localStorage.getItem('token'),
+        password : values.password
+      }
+      const {data} = await api.post('/user/change', datos)
+
+      console.log(data)
       dialog.value = false;
 
+      if(data.success === false){
+        message.value = 'Error al cambiar contraseña';
+        typeAlert.value = 'warning';
+        titleAlert.value = 'Warning';
+        showAlert.value = true;
+      }else{
+        message.value = 'Contraseña cambiada con exito';
+        typeAlert.value = 'success';
+        titleAlert.value = 'success';
+        showAlert.value = true;
+      }
 
-      // Espera a que se actualice el DOM antes de mostrar la alerta
       await nextTick();
-      message.value = 'Contraseña cambiada exitosamente';
-      typeAlert.value = 'success';
-      titleAlert.value = 'Éxito';
-      showAlert.value = true;
+      
       setTimeout(() => {
         showAlert.value = false;
-        // Redirige a 'home-home' después de que la alerta se haya mostrado
-        if(typeAlert.value === 'success'){
+        if(typeAlert.value !== 'warning'){
           router.push({ name: 'home-home' });
         }
       }, 2000);
+
     });
 
     const togglePasswordVisibility = () => {

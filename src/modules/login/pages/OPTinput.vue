@@ -59,6 +59,7 @@
 
 <script>
 import { useRouter } from 'vue-router';
+import { api } from '@/axios/axios';
 
 export default {
   data: () => ({
@@ -80,23 +81,28 @@ export default {
     onClick () {
       this.validating = true;
 
-      setTimeout(() => {
+      setTimeout(async () => {
         this.validating = false;
+        const datos = {
+          token: localStorage.getItem('token'),
+          code: this.otp
+        }
+        const {data} = await api.post('/user/verify', datos)
 
-        if (this.otp !== '123456') {
+        if (data.success === false) {
           this.message = 'Invalid code';
           this.typeAlert = 'warning';
           this.tittleAlert = 'Warning';
           this.color = 'warning';
           this.showAlert = true;
+          setTimeout(() => {
+            this.showAlert = false;
+          }, 2000);
         }
-
-        setTimeout(() => {
-          this.showAlert = false;
-          if (this.otp === '123456') {
+        else {
             this.router.push({ name: 'login-confirm' });
           }
-        }, 2000);
+        
       }, 2000);
     },
   },
