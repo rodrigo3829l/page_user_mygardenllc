@@ -11,7 +11,7 @@
                 <br>
                 <div class="abn">
                   <p><router-link class="white--text" :to="{ name: 'privacity' }">Privacy Policy</router-link></p>
-                  <p><router-link class="white--text" :to="{ name: 'cookies' }">Cookie Policy</router-link></p>
+                  <!-- <p><router-link class="white--text" :to="{ name: 'cookies' }">Cookie Policy</router-link></p> -->
                   <p><router-link class="white--text" :to="{ name: 'terms' }">Terms and Conditions</router-link></p>
                   <p><router-link class="white--text" :to="{ name: 'bina' }">Bina Data</router-link></p>
                 </div>

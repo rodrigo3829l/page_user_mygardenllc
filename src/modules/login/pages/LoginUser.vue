@@ -1,4 +1,9 @@
 <template>
+  <v-breadcrumbs :items="items">
+      <template v-slot:divider>
+        <v-icon icon="mdi-chevron-right"></v-icon>
+      </template>
+    </v-breadcrumbs>
   <v-container class="mt-5">
     <v-row justify="center">
       <v-col cols="12" sm="8" md="6" lg="16">
@@ -16,6 +21,9 @@
               :text="message"
               class="fade-alert" 
               :color="color" 
+              variant="outlined"
+              prominent
+              border="top"
             ></v-alert>
             <br v-if="showAlert">
             <v-divider></v-divider>
@@ -40,10 +48,10 @@
                 prepend-inner-icon="mdi-lock"
                 :append-inner-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
                 :type="passwordVisible ? 'text' : 'password'"
-                color="green-darken-3"
                 outlined
-                required
                 @click:append-inner="togglePasswordVisibility"
+                color="green-darken-3"
+                required
               ></v-text-field>
               <!-- <v-card-text class="text-medium-emphasis text-caption">
                 Warning: After 3 consecutive failed login attempts, you account will be temporarily locked for three hours. If you must login now, you can also click "Forgot login password?" below to reset the login password.
@@ -59,27 +67,6 @@
                   <v-icon left>mdi-login</v-icon>
                   Ingresar
                 </v-btn>
-
-                <!-- <v-dialog
-                  v-model="dialog"
-                  :scrim="false"
-                  persistent
-                  width="auto"
-                >
-                  <v-card
-                    color="green-darken-3"
-                  >
-                    <v-card-text>
-                      Please stand by
-                      <v-progress-linear
-                        indeterminate
-                        color="white"
-                        class="mb-0"
-                      ></v-progress-linear>
-                    </v-card-text>
-                  </v-card>
-                </v-dialog> -->
-
             </v-form><br>
             <v-divider></v-divider>
             <v-stack class="text-center mt-5">
@@ -101,19 +88,61 @@
 import { useRouter } from 'vue-router';
 import { ref, nextTick } from 'vue'
 import { useField, useForm } from 'vee-validate'
+import  {useUserStore} from '../../../store/store.js'
 
 export default {
+  data: () => ({
+      items: [
+        {
+          title: 'Home',
+          disabled: false,
+          href: '/home/homeuser',
+        },
+        {
+          title: 'Login',
+          disabled: false,
+          href: '/login/loginuser',
+        },
+      ],
+    }),
   setup() {
     const { handleSubmit } = useForm({
       validationSchema: {
-        email (value) {
-          if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true
-          return 'Must be a valid e-mail.'
+        email(value) {
+          if (/^[a-z0-9.]+@(uthh\.edu\.mx|[a-z]+\.(com|ed|org))$/i.test(value)) {
+            return true;
+          }
+          return 'Must be a valid e-mail with a supported domain.';
         },
-        password  (value) {
-          if (value?.length >= 6) return true;
-          return 'La contraseña debe tener al menos 6 caracteres.';
-        },
+
+
+        password(value) {
+          // Check minimum length of 6 characters
+          if (value.length < 6) {
+            return 'Password must be at least 6 characters long.';
+          }
+
+          // Check for at least one uppercase letter
+          if (!/[A-Z]/.test(value)) {
+            return 'Password must contain at least one uppercase letter.';
+          }
+
+          // Check for at least one number
+          if (!/\d/.test(value)) {
+            return 'Password must contain at least one number.';
+          }
+
+          // Check for only one special character
+          const specialCharCount = (value.match(/[^A-Za-z0-9]/g) || []).length;
+          if (specialCharCount !== 1) {
+            return 'Password must contain only one special character.';
+          }
+
+          // If all conditions are met, the password is valid
+          return true;
+      },
+
+
       },
     })
 
@@ -127,41 +156,45 @@ export default {
     const tittleAlert = ref('')
     const showAlert = ref(false);
     const router = useRouter();
+    const userStore = useUserStore();
 
     const submit = handleSubmit(async (values) => {
       dialog.value = true;
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      dialog.value = false;
+      try {
+        const res = await userStore.login(values.email, values.password);
+        console.log(res);
 
-      if (values.email !== 'prueba@gmail.com') {
-        message.value = 'Invalid email';
-        typeAlert.value = 'warning'
-        tittleAlert.value = 'Warning'
-        color.value= 'warning';
-      } else if (values.password !== 'hola123') {
-        message.value = 'Invalid password';
-        typeAlert.value = 'warning'
-        color.value= 'warning';
-        tittleAlert.value = 'Warning'
-      } else {
-        message.value = 'Welcome Rodrigo';
-        typeAlert.value = 'success'
-        color.value= 'green-darken-3';
-        tittleAlert.value = 'Successful login'
-      }
+        dialog.value = false;
 
-      // Espera a que se actualice el DOM antes de mostrar la alerta
-      await nextTick();
-      showAlert.value = true;
-      setTimeout(() => {
-        showAlert.value = false;
-        // Redirige a 'home-home' después de que la alerta se haya mostrado
-        if(typeAlert.value === 'success'){
-          router.push({ name: 'home-home' });
+        if (res.error) {
+          message.value = res.error;
+          typeAlert.value = 'warning';
+          tittleAlert.value = 'Warning';
+          color.value = 'warning';
+        } else {
+          message.value = 'Welcome';
+          typeAlert.value = 'success';
+          color.value = 'green-darken-3';
+          tittleAlert.value = 'Successful login';
         }
-      }, 2000);
-      
+
+        // Espera a que se actualice el DOM antes de mostrar la alerta
+        await nextTick();
+        showAlert.value = true;
+        setTimeout(() => {
+          showAlert.value = false;
+          // Redirige a 'home-home' después de que la alerta se haya mostrado
+          if (typeAlert.value === 'success') {
+            router.push({ name: 'home-home' });
+          }
+        }, 2000);
+      } catch (error) {
+        console.error(error);
+        // Si hay un error al realizar la solicitud, redirige a 'serverError'
+        router.push({ name: 'serverError' });
+      }
     });
+
 
     const togglePasswordVisibility = () => {
       passwordVisible.value = !passwordVisible.value;

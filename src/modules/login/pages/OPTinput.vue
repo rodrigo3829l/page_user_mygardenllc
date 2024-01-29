@@ -1,4 +1,9 @@
 <template>
+  <v-breadcrumbs :items="items">
+      <template v-slot:divider>
+        <v-icon icon="mdi-chevron-right"></v-icon>
+      </template>
+    </v-breadcrumbs>
   <v-container class="mt-5">
     <v-row justify="center">
       <v-col cols="12" sm="8" md="6" lg="16">
@@ -15,7 +20,10 @@
               :title="tittleAlert"
               :text="message"
               class="fade-alert" 
-              :color="color" 
+              :color="color"
+              variant="outlined"
+              prominent
+              border="top" 
             ></v-alert>
             
             <v-form class="text-center mx-auto">
@@ -70,6 +78,28 @@ export default {
     tittleAlert: '',
     color: '',
     showAlert: false,
+    items: [
+        {
+          title: 'Home',
+          disabled: false,
+          href: '/home/homeuser',
+        },
+        {
+          title: 'Login',
+          disabled: false,
+          href: '/login/loginuser',
+        },
+        {
+          title: 'Send email',
+          disabled: false,
+          href: '/login/mail',
+        },
+        {
+          title: 'OTP Code',
+          disabled: false,
+          href: '/login/optconfirm',
+        },
+      ],
   }),
 
   setup() {
@@ -79,31 +109,35 @@ export default {
 
   methods: {
     onClick () {
-      this.validating = true;
+      try {
+        this.validating = true;
 
-      setTimeout(async () => {
-        this.validating = false;
-        const datos = {
-          token: localStorage.getItem('token'),
-          code: this.otp
-        }
-        const {data} = await api.post('/user/verify', datos)
-
-        if (data.success === false) {
-          this.message = 'Invalid code';
-          this.typeAlert = 'warning';
-          this.tittleAlert = 'Warning';
-          this.color = 'warning';
-          this.showAlert = true;
-          setTimeout(() => {
-            this.showAlert = false;
-          }, 2000);
-        }
-        else {
-            this.router.push({ name: 'login-confirm' });
+        setTimeout(async () => {
+          this.validating = false;
+          const datos = {
+            token: localStorage.getItem('tokenData'),
+            code: this.otp
           }
-        
-      }, 2000);
+          const {data} = await api.post('/user/verify', datos)
+
+          if (data.success === false) {
+            this.message = 'Invalid code';
+            this.typeAlert = 'warning';
+            this.tittleAlert = 'Warning';
+            this.color = 'warning';
+            this.showAlert = true;
+            setTimeout(() => {
+              this.showAlert = false;
+            }, 2000);
+          }
+          else {
+              this.router.push({ name: 'login-confirm' });
+            }
+          
+        }, 2000);
+      } catch (error) {
+        this.router.push({ name: 'serverError' });
+      }
     },
   },
 };

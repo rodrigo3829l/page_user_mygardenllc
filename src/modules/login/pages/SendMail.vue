@@ -1,4 +1,9 @@
 <template>
+  <v-breadcrumbs :items="items">
+      <template v-slot:divider>
+        <v-icon icon="mdi-chevron-right"></v-icon>
+      </template>
+    </v-breadcrumbs>
   <v-container class="mt-5">
     <v-row justify="center">
       <v-col cols="12" sm="8" md="6" lg="16">
@@ -14,7 +19,10 @@
               :type="typeAlert"
               :title="tittleAlert"
               :text="message"
-              class="fade-alert"  
+              class="fade-alert" 
+              variant="outlined"
+              prominent
+              border="top" 
             ></v-alert>
             <v-form  @submit.prevent="submit">
               <label for="">Registered mail</label>
@@ -60,12 +68,33 @@ import { useField, useForm } from 'vee-validate'
 import { api } from '@/axios/axios';
 
 export default {
+  data: () => ({
+      items: [
+        {
+          title: 'Home',
+          disabled: false,
+          href: '/home/homeuser',
+        },
+        {
+          title: 'Login',
+          disabled: false,
+          href: '/login/loginuser',
+        },
+        {
+          title: 'Send email',
+          disabled: false,
+          href: '/login/mail',
+        },
+      ],
+    }),
   setup() {
     const { handleSubmit } = useForm({
       validationSchema: {
-        email (value) {
-          if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true
-          return 'Must be a valid e-mail.'
+        email(value) {
+          if (/^[a-z0-9.]+@(uthh\.edu\.mx|[a-z]+\.(com|ed|otrodominio))$/i.test(value)) {
+            return true;
+          }
+          return 'Must be a valid e-mail with a supported domain.';
         },
         
       },
@@ -80,34 +109,38 @@ export default {
     const router = useRouter();
 
     const submit = handleSubmit(async (values) => {
-      dialog.value = true;
+      try {
+        dialog.value = true;
 
-      const datos = {
-        email: values.email
-      }
-
-      console.log(datos)
-      const { data } = await api.post('/user/recover', datos )
-      console.log(data)
-      dialog.value = false;
-
-      if (data.success === false) {
-        message.value = 'This email has not been registered';
-        typeAlert.value = 'warning'
-        tittleAlert.value = 'Warning'
-        showAlert.value = true;
-      }
-
-      // Espera a que se actualice el DOM antes de mostrar la alerta
-      await nextTick();
-      if(typeAlert.value !== 'warning'){
-          localStorage.setItem('token', data.token);
-          router.push({ name: 'login-optconfirm' });
+        const datos = {
+          email: values.email
         }
-      setTimeout(() => {
-        showAlert.value = false;
 
-      }, 2000);
+        console.log(datos)
+        const { data } = await api.post('/user/recover', datos )
+        console.log(data)
+        dialog.value = false;
+
+        if (data.success === false) {
+          message.value = 'This email has not been registered';
+          typeAlert.value = 'warning'
+          tittleAlert.value = 'Warning'
+          showAlert.value = true;
+        }
+
+        // Espera a que se actualice el DOM antes de mostrar la alerta
+        await nextTick();
+        if(data.success === true){
+            localStorage.setItem('tokenData', data.token);
+            router.push({ name: 'login-optconfirm' });
+          }
+        setTimeout(() => {
+          showAlert.value = false;
+
+        }, 2000);
+      } catch (error) {
+        router.push({ name: 'serverError' });
+      }
       
     });
 

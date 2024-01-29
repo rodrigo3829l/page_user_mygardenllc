@@ -1,4 +1,9 @@
 <template>
+  <v-breadcrumbs :items="items">
+      <template v-slot:divider>
+        <v-icon icon="mdi-chevron-right"></v-icon>
+      </template>
+    </v-breadcrumbs>
   <v-container>
     <v-row align="center" justify="center">
       <v-col md="6">
@@ -51,7 +56,21 @@
 
 <script>
 export default {
-  data: () => ({ loading: false }),
+  data: () => ({
+     loading: false,
+     items: [
+        {
+          title: 'Home',
+          disabled: false,
+          href: '/home/homeuser',
+        },
+        {
+          title: 'Contact',
+          disabled: false,
+          href: '/home/contact',
+        },
+      ],
+     }),
 
   methods: {
     load() {

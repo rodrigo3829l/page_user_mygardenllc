@@ -1,4 +1,9 @@
 <template>
+  <v-breadcrumbs :items="items">
+      <template v-slot:divider>
+        <v-icon icon="mdi-chevron-right"></v-icon>
+      </template>
+    </v-breadcrumbs>
   <v-container>
     <v-row justify="center">
       <v-col cols="12" md="8">
@@ -34,6 +39,18 @@
 export default {
   data() {
     return {
+      items: [
+        {
+          title: 'Home',
+          disabled: false,
+          href: '/home/homeuser',
+        },
+        {
+          title: 'Answers',
+          disabled: false,
+          href: '/home/answers',
+        },
+      ],
       panel: [],
       faqs: [
         { question: '¿Cuáles son los servicios de diseño de jardines que ofrecen?', answer: 'Ofrecemos servicios de diseño de jardines personalizados, incluyendo planificación, selección de plantas, paisajismo y creación de áreas temáticas.' },

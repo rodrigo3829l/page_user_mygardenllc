@@ -1,4 +1,9 @@
 <template>
+  <v-breadcrumbs :items="routes">
+      <template v-slot:divider>
+        <v-icon icon="mdi-chevron-right"></v-icon>
+      </template>
+    </v-breadcrumbs>
   <div class="container">
     <div class="service-page">
       <h1 class="page-title">Our services</h1>

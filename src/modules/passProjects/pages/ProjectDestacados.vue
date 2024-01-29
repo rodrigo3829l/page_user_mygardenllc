@@ -121,6 +121,11 @@ a {
 </style> -->
 
 <template>
+  <v-breadcrumbs :items="items">
+      <template v-slot:divider>
+        <v-icon icon="mdi-chevron-right"></v-icon>
+      </template>
+    </v-breadcrumbs>
   <v-container>
     <v-card>
     <v-tabs
@@ -164,6 +169,18 @@ a {
 <script>
   export default {
     data: () => ({
+      items: [
+        {
+          title: 'Home',
+          disabled: false,
+          href: '/home/homeuser',
+        },
+        {
+          title: 'Projects',
+          disabled: false,
+          href: '/proyects/destacados',
+        },
+      ],
       tab: null,
     }),
   }

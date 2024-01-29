@@ -1,38 +1,114 @@
 import { ref } from "vue"
 import { defineStore } from 'pinia'
-import { api } from "@/axios/axios.js"
+import { api } from "@/axios/axios";
 
-export const useUserStore = defineStore('user', () =>{
+export const useUserStore = defineStore('user', () => {
     const token = ref(null);
     const expireIn = ref (null);
-    const tipo = ref(null)
+    const name = ref (null);
+    const email = ref (null);
 
-    const login = async (user, pass) =>{
+    const login = async (email, pass) => {
         const datos = {
-            userName: user,
+            email: email,
             password: pass 
         }
         try {
             const {data} = await api.post('/user/login', datos)
+            console.log(data)
+            console.log('desde el store')
+
             token.value = data.token;
             expireIn.value = data.expiresIn
-            // setTime();
+
+            // name.value = data.name
+            // email.value = data.email
+
+            setTime();
             const resp = await api({
                 method: 'GET',
-                url : '/auth/protected',
+                url : '/user/protected',
                 headers: {
                     'Authorization' : 'Bearer ' + token.value,
                 },
             })
-            // console.log(resp.data)
-            localStorage.setItem('tipo', resp.data.tipo)
-            const ventas = []
-            localStorage.setItem('venta', JSON.stringify(ventas))
+            console.log(resp)
+            localStorage.setItem('rol', resp.data.tipo)
+            localStorage.setItem('token', token.value)
             return({exito : 'inicio se sesion exitoso'})
         } catch (error) {
-            console.log(error.response.data.error);
-            // alert(error.response.data.error)
             return({error: error.response.data.error})
         }
     }
-})
+    const logout = async () => {
+        try {
+            localStorage.removeItem('rol');
+            localStorage.removeItem('token');
+            await api.get('/user/logout')
+        } catch (error) {
+            console.log(error)
+        } finally{
+            // localStorage.clear();
+            localStorage.removeItem('rol');
+            localStorage.removeItem('token');
+            resetStore();
+        }
+    }
+    const resetStore = () =>{
+        token.value = null;
+        expireIn.value = null;
+        name.value = null
+        email.value = null
+        // localStorage.clear();
+        localStorage.removeItem('rol');
+        localStorage.removeItem('token');
+    }
+    const setTime = () =>{
+        setTimeout(() => {
+            refreshToken();
+        }, expireIn.value * 1000 - 6000)
+    }
+    
+    const refreshToken = async () =>{
+        try {
+            const {data} = await api.get ('/user/refresh');
+            token.value = data.token;
+            expireIn.value = data.expiresIn;
+
+            const resp = await api({
+                method: 'GET',
+                url : '/user/protected',
+                headers: {
+                    'Authorization' : 'Bearer ' + token.value,
+                },
+            })
+            console.log(resp.data)
+            localStorage.setItem('rol', resp.data.tipo)
+            localStorage.setItem('token', token.value,);
+            setTime();
+        } catch (error) {
+            console.log(error)
+            // localStorage.removeItem('tipo')
+        //     localStorage.removeItem('tipo');
+        // localStorage.removeItem('venta');
+        }
+    }
+    // const initializeStore = () => {
+    //     const storedToken = localStorage.getItem('token');
+    //     const storedExpireIn = localStorage.getItem('expireIn');
+    //     if (storedToken && storedExpireIn) {
+    //         token.value = storedToken;
+    //         expireIn.value = storedExpireIn;
+    //         setTime();
+    //     }
+    // };
+
+    return {
+        token,
+        expireIn,
+        login,
+        logout,
+        refreshToken,
+        // initializeStore
+    }
+  })

@@ -349,7 +349,7 @@ export default {
   font-size: 0.875rem;
 }
 </style> -->
-
+<!-- 
 <template>
   <v-layout class="overflow-visible" style="height: 56px;" >
     <v-bottom-navigation
@@ -405,4 +405,208 @@ export default {
   }
 </style>
 
+   -->
+   <template>
+    <nav class="navbar navbar-expand-lg navbar-light bg-green-darken-3">
+      <v-container>
+        <div class="container">
+          <v-row align="center" justify="center">
+            <v-col cols="auto">
+              <router-link to="/" class="navbar-brand">
+                <div class="d-flex align-items-center">
+                  <img src="https://res.cloudinary.com/dui4i9f4e/image/upload/v1697989916/logos/jgkamjqwy97zkb0hfsye.png" alt="Logo" class="logo">
+                </div>
+              </router-link>
+            </v-col>
+  
+            <v-col cols="auto" class="d-md-none d-lg-block">
+              <p class="company-name">
+                My Garden LLC
+              </p>
+              <p class="subtitle">
+                Gardening Services and More.
+              </p>
+            </v-col>
+  
+            <v-col cols="auto">
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </v-col>
+  
+            <v-col cols="auto">
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                  <router-link
+                    v-for="link in links"
+                    :key="link.to"
+                    :to="{ name: link.to }"
+                    class="nav-link"
+                    :class="{ 'is-active': $route.name === link.to }"
+                  >
+                    <v-icon size="15" color="white">{{ link.icon }}</v-icon>{{ link.name }}
+                  </router-link>
+
+
+                  <router-link v-if="userStore.token === null"
+                    :to="{ name: 'login-login' }"
+                    class="nav-link is-active"
+                  >
+                    <v-icon size="15" color="white">mdi-login</v-icon>Login
+                  </router-link>
+                </ul>
+              </div>
+            </v-col>
+  
+            <!-- Agregamos el componente de avatar aquí -->
+            <v-col v-if="userStore.token !== null" cols="auto">
+              <v-menu
+                min-width="200px"
+                rounded
+              >
+                <template v-slot:activator="{ props }">
+                  <v-btn
+                    icon
+                    v-bind="props"
+                  >
+                    <v-avatar
+                      color="light-blue-darken-4"
+                      size="large"
+                    >
+                      <span class="text-h5">{{ user.initials }}</span>
+                    </v-avatar>
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-text>
+                    <div class="mx-auto text-center">
+                      <v-avatar
+                        color="light-blue-darken-4"
+                      >
+                        <span class="text-h5">{{ user.initials }}</span>
+                      </v-avatar>
+                      <h3>{{ userStore.name }}</h3>
+                      <p class="text-caption mt-1">
+                        {{ userStore.email }}
+                      </p>
+                      <v-divider class="my-3"></v-divider>
+                      <v-btn
+                        rounded
+                        variant="text"
+                        @click="profile"
+                      >
+                        Your Account
+                      </v-btn>
+                      <v-divider class="my-3"></v-divider>
+                      <v-btn
+                        rounded
+                        variant="text"
+                        @click="logout"
+                      >
+                        Disconnect
+                      </v-btn>
+                    </div>
+                  </v-card-text>
+                </v-card>
+              </v-menu>
+            </v-col>
+          </v-row>
+        </div>
+      </v-container>
+    </nav>
+  </template>
+  
+  <script>
+    import { useUserStore } from '@/store/store';
+    import { useRouter } from 'vue-router';
+    
+    export default {
+      setup() {
+        const userStore = useUserStore();
+        const router = useRouter();
+    
+        let links = [
+          { name: 'Home', to: 'home-home', icon: 'mdi-home' },
+          { name: 'Services', to: 'services-services', icon: 'mdi-hammer-screwdriver' },
+          { name: 'Projects', to: 'proyects-view', icon: 'mdi-briefcase' },
+          { name: 'Contact', to: 'home-contact', icon: 'mdi-email' },
+          { name: 'Frequent Questions', to: 'home-answers', icon: 'mdi-help-circle' },
+        ];
+    
+        // if (userStore.token === null) {
+        //   links.push({ name: 'Login', to: 'login-login', icon: 'mdi-login' });
+        // }
+    
+        const logout = async () => {
+          await userStore.logout();
+          router.push('/');
+        };
+    
+        return {
+          links,
+          drawer: false,
+          userStore,
+          user: {
+            initials: 'RD',
+            fullName: 'Rodigo Del Angel',
+            email: 'prueba@gmail.com',
+          },
+          speak: (text) => {
+            const utterance = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(utterance);
+          },
+          profile: () => {
+            router.push({ name: 'profile-profile' });
+          },
+          logout, // Agregar la función logout al retorno
+        };
+      },
+    
+      mounted() {
+        const storedToken = localStorage.getItem('token');
+        if (storedToken) {
+          this.userStore.refreshToken();
+        }
+      },
+    };
+  </script>
+  
+  <style scoped>
+    .logo {
+      width: 120px;
+      margin-right: 10px;
+    }
+  
+    .company-name {
+      font-weight: bold;
+      font-size: 18px;
+      margin: 0;
+      color: #efe9e9;
+    }
+  
+    .subtitle {
+      font-size: 14px;
+      margin: 0;
+      color: #efe9e9;
+    }
+  
+    .nav-link {
+      color: #c6c5c5;
+      padding: 0.5rem 1rem;
+    }
+  
+    .is-active {
+      color: #ffffff;
+    }
+  </style>
+  
+  
   

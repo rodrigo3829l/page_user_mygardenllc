@@ -1,4 +1,9 @@
 <template>
+  <v-breadcrumbs :items="items">
+      <template v-slot:divider>
+        <v-icon icon="mdi-chevron-right"></v-icon>
+      </template>
+    </v-breadcrumbs>
   <v-container class="mt-5">
     <v-row justify="center">
       <v-col cols="12" sm="8" md="6" lg="16">
@@ -14,7 +19,10 @@
               :type="typeAlert"
               :title="tittleAlert"
               :text="message"
-              class="fade-alert"  
+              class="fade-alert" 
+              variant="outlined"
+              prominent
+              border="top"
             ></v-alert>
             <v-form  @submit.prevent="submit">
               <label for="">New Pasword</label>
@@ -26,10 +34,10 @@
                 prepend-inner-icon="mdi-lock"
                 :append-inner-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
                 :type="passwordVisible ? 'text' : 'password'"
+                @click:append-inner="togglePasswordVisibility"
                 color="green-darken-3"
                 outlined
                 required
-                @click:append-inner="togglePasswordVisibility"
               ></v-text-field>
               <label for="">Confirm your password</label>
               <v-text-field
@@ -76,17 +84,88 @@ import { useField, useForm } from 'vee-validate'
 import { api } from '@/axios/axios';
 
 export default {
+  data: () => ({
+      items: [
+        {
+          title: 'Home',
+          disabled: false,
+          href: '/home/homeuser',
+        },
+        {
+          title: 'Login',
+          disabled: false,
+          href: '/login/loginuser',
+        },
+        {
+          title: 'Send email',
+          disabled: false,
+          href: '/login/mail',
+        },
+        {
+          title: 'OTP Code',
+          disabled: false,
+          href: '/login/optconfirm',
+        },
+        {
+          title: 'Confirm Password',
+          disabled: false,
+          href: '/login/confirm',
+        },
+      ],
+    }),
   setup() {
     const { handleSubmit } = useForm({
       validationSchema: {
         password(value) {
-          if (value?.length >= 6) return true;
-          return 'La contraseña debe tener al menos 6 caracteres.';
-        },
-        confirmPassword(value, { password }) {
-          if (value !== password) return true;
-          return 'Las contraseñas no coinciden.';
-        },
+          // Check minimum length of 6 characters
+          if (value.length < 6) {
+            return 'Password must be at least 6 characters long.';
+          }
+
+          // Check for at least one uppercase letter
+          if (!/[A-Z]/.test(value)) {
+            return 'Password must contain at least one uppercase letter.';
+          }
+
+          // Check for at least one number
+          if (!/\d/.test(value)) {
+            return 'Password must contain at least one number.';
+          }
+
+          // Check for only one special character
+          const specialCharCount = (value.match(/[^A-Za-z0-9]/g) || []).length;
+          if (specialCharCount !== 1) {
+            return 'Password must contain only one special character.';
+          }
+
+          // If all conditions are met, the password is valid
+          return true;
+      },
+      confirmPassword(value) {
+          // Check minimum length of 6 characters
+          if (value.length < 6) {
+            return 'Password must be at least 6 characters long.';
+          }
+
+          // Check for at least one uppercase letter
+          if (!/[A-Z]/.test(value)) {
+            return 'Password must contain at least one uppercase letter.';
+          }
+
+          // Check for at least one number
+          if (!/\d/.test(value)) {
+            return 'Password must contain at least one number.';
+          }
+
+          // Check for only one special character
+          const specialCharCount = (value.match(/[^A-Za-z0-9]/g) || []).length;
+          if (specialCharCount !== 1) {
+            return 'Password must contain only one special character.';
+          }
+
+          // If all conditions are met, the password is valid
+          return true;
+      },
       },
     })
 
@@ -102,44 +181,52 @@ export default {
     const router = useRouter();
 
     const submit = handleSubmit(async (values) => {
-      if (values.password !== values.confirmPassword) {
-        message.value = 'Las contraseñas no coinciden.';
-        typeAlert.value = 'warning';
-        titleAlert.value = 'Advertencia';
-        showAlert.value = true;
-        return; // No continuar si las contraseñas no coinciden
-      }
-
-      dialog.value = true;
-      const datos ={
-        token: localStorage.getItem('token'),
-        password : values.password
-      }
-      const {data} = await api.post('/user/change', datos)
-
-      console.log(data)
-      dialog.value = false;
-
-      if(data.success === false){
-        message.value = 'Error al cambiar contraseña';
-        typeAlert.value = 'warning';
-        titleAlert.value = 'Warning';
-        showAlert.value = true;
-      }else{
-        message.value = 'Contraseña cambiada con exito';
-        typeAlert.value = 'success';
-        titleAlert.value = 'success';
-        showAlert.value = true;
-      }
-
-      await nextTick();
-      
-      setTimeout(() => {
-        showAlert.value = false;
-        if(typeAlert.value !== 'warning'){
-          router.push({ name: 'home-home' });
+      try {
+        if (values.password !== values.confirmPassword) {
+          message.value = 'Passwords do not match.';
+          typeAlert.value = 'warning';
+          titleAlert.value = 'Warning';
+          showAlert.value = true;
+          return; // No continuar si las contraseñas no coinciden
         }
-      }, 2000);
+
+        setTimeout(() => {
+          showAlert.value = false;
+        }, 2000);
+
+        dialog.value = true;
+        const datos ={
+          token: localStorage.getItem('tokenData'),
+          password : values.password
+        }
+        const {data} = await api.post('/user/change', datos)
+
+        console.log(data)
+        dialog.value = false;
+
+        if(data.success === false){
+          message.value = 'Error al cambiar contraseña';
+          typeAlert.value = 'warning';
+          titleAlert.value = 'Warning';
+          showAlert.value = true;
+        }else{
+          message.value = 'Contraseña cambiada con exito';
+          typeAlert.value = 'success';
+          titleAlert.value = 'success';
+          showAlert.value = true;
+        }
+
+        await nextTick();
+      
+        setTimeout(() => {
+          showAlert.value = false;
+          if(typeAlert.value !== 'warning'){
+            router.push({ name: 'home-home' });
+          }
+        }, 2000);
+      } catch (error) {
+        router.push({ name: 'serverError' });
+      }
 
     });
 

@@ -1,93 +1,138 @@
 <template>
-  <div class="container mt-4">
-    <div class="card shadow">
-      <div class="header-form">
-        <h1 class="text-center">Editar Perfil</h1>
-      </div>
-      <div class="card-body">
-        <!-- Foto de perfil -->
-        <div class="service-image">
-          <div class="image-input">
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="imagen" @change="handleImageUpload" accept="image/*">
-              <label class="custom-file-label" for="imagen">Eliga su nueva foto de perfil</label>
-            </div>
-          </div>
-          <div class="image-preview">
-            <img v-if="formData.imagen" :src="formData.imagen" alt="Imagen seleccionada">
-            <img v-else src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png" alt="Imagen de perfil por defecto">
-          </div>
-        </div>
+  <v-container>
+    <v-card class="max-width-card shadow">
+      <v-toolbar color="primary" dark>
+        <v-toolbar-title>Edit Profile</v-toolbar-title>
+      </v-toolbar>
+      <v-card-text>
+        <!-- Profile Picture -->
+        <v-row>
+          <v-col cols="12" md="6">
+            <v-file-input
+              @change="handleImageUpload"
+              accept="image/*"
+              :error-messages="errors.image"
+              label="Select profile picture"
+            ></v-file-input>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-img
+              v-if="formData.image"
+              :src="formData.image"
+              alt="Selected Image"
+              class="image-preview"
+              contain
+            ></v-img>
+            <v-row v-else class="image-preview" justify="center" align="center">
+              <div class="image-placeholder">Selected Image</div>
+            </v-row>
+          </v-col>
+        </v-row>
 
-        <!-- Nombre -->
-        <div class="mb-3">
-          <label for="nombre">Nombre</label>
-          <input type="text" class="form-control" id="nombre" v-model="formData.nombre" placeholder="Rodrigo">
-        </div>
+        <!-- Name and Surnames -->
+        <v-row>
+          <v-col>
+            <v-text-field v-model="formData.firstName" label="First Name"></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field v-model="formData.lastName" label="Last Name"></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field v-model="formData.lastName" label="Last Name"></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field v-model="formData.phone" label="Phone Number" type="tel"></v-text-field>
+          </v-col>
+        </v-row>
 
-        <!-- Apellidos centrados con márgenes -->
-        <div class="mb-3 d-flex justify-content-center">
-          <div style="margin-right: 50px;">
-            <label for="apellidoPaterno">Apellido Paterno</label>
-            <input type="text" class="form-control" id="apellidoPaterno" v-model="formData.apellidoPaterno" placeholder="Del Angel">
-          </div>
-          <div style="margin-left: 50px;">
-            <label for="apellidoMaterno">Apellido Materno</label>
-            <input type="text" class="form-control" id="apellidoMaterno" v-model="formData.apellidoMaterno" placeholder="Gerardo">
-          </div>
-        </div>
+        <!-- Phone Number and Date of Birth -->
+        <v-row>
+          <v-col>
+            <v-text-field v-model="formData.birthDate" label="Date of Birth" type="date"></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field v-model="formData.gender" label="Gender"></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field v-model="formData.city" label="City"></v-text-field>
+          </v-col>
+        </v-row>
 
-        <!-- Teléfono -->
-        <div class="mb-3">
-          <label for="telefono">Teléfono</label>
-          <input type="tel" class="form-control" id="telefono" v-model="formData.telefono" placeholder="0123456789">
-        </div>
-
-        <!-- Suspender cuenta (select) -->
-        <div class="mb-3">
-          <label for="suspenderCuenta">Desea suuspender su cuenta</label>
-          <select class="form-control" id="suspenderCuenta" v-model="formData.suspenderCuenta">
-            <option value="no">No</option>
-            <option value="si">Sí</option>
-          </select>
-        </div>
-      </div>
-      <div class="card-footer d-flex justify-content-between">
+        <!-- Neighborhood and Street -->
+        <v-row>
+          <v-col>
+            <v-text-field v-model="formData.neighborhood" label="Neighborhood"></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field v-model="formData.street" label="Street"></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field v-model="formData.houseNumber" label="House Number"></v-text-field>
+          </v-col>
+        </v-row>
+      </v-card-text>
+      <v-card-actions class="d-flex justify-end">
         <router-link :to="{name: 'profile-profile'}">
-          <button class="btn button-danger">Regresar</button>
+          <v-btn color="error">Go Back</v-btn>
         </router-link>
         <router-link :to="{name: 'profile-profile'}">
-          <button class="btn button-succes">Guardar Cambios</button>
+          <v-btn color="success">Save Changes</v-btn>
         </router-link>
-      </div>
-    </div>
-  </div>
+      </v-card-actions>
+    </v-card>
+  </v-container>
 </template>
-
 
 <script>
 export default {
   data() {
     return {
       formData: {
-        imagen: 'https://cdn-icons-png.flaticon.com/128/1077/1077063.png',
-        nombre: 'Rodrigo',
-        apellidoPaterno: 'Del Angel',
-        apellidoMaterno: 'Gerardo',
-        telefono: '0123456789',
-        suspenderCuenta: 'no',
+        image: '',
+        firstName: '',
+        lastName: '',
+        phone: '',
+        birthDate: '',
+        gender: '',
+        city: '',
+        neighborhood: '',
+        street: '',
+        houseNumber: '',
       },
+      errors: {
+        image: ''
+      }
     };
   },
   methods: {
     handleImageUpload(event) {
       const file = event.target.files[0];
+
+      // Reset error message
+      this.errors.image = '';
+
       if (file) {
+        // Check the file size (in bytes)
+        const maxSize = 4 * 1024 * 1024; // 4 megabytes
+        if (file.size > maxSize) {
+          this.errors.image = 'File size must be up to 4 megabytes.';
+          return;
+        }
+
+        // Check if the file type is an image
+        if (!file.type.startsWith('image/')) {
+          this.errors.image = 'Please select a valid image file.';
+          return;
+        }
+
+        // Read the image as a Blob object
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.formData.imagen = e.target.result;
+          this.formData.image = e.target.result;
         };
         reader.readAsDataURL(file);
+      } else {
+        this.errors.image = 'Please select an image file.';
       }
     },
   },
@@ -95,34 +140,17 @@ export default {
 </script>
 
 <style scoped>
-.card {
-  margin: 50px 0;
-  
-}
-.service-image {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  margin: 0 20px 20px 20px;
+.max-width-card {
+  margin: 50px auto;
 }
 .image-preview {
-  width: 250px;
-  height: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 50%;
+  height: 100px;
   background-color: #f0f0f0;
   border: 2px dashed #ccc;
   border-radius: 5px;
   overflow: hidden;
   position: relative;
-}
-.image-preview img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  position: absolute;
 }
 .image-placeholder {
   font-size: 14px;
@@ -130,23 +158,8 @@ export default {
   position: absolute;
   z-index: 1;
   user-select: none;
-}
-.image-input {
-  flex-grow: 1;
-}
-.btn-select-image {
-  background-color: #3E7347;
-  color: #fff;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-@media screen and (max-width: 992px) {
-  .image-preview {
-    height: 145px;
-  }
+  text-align: center;
+  width: 100%;
+  padding: 60px 0;
 }
 </style>
