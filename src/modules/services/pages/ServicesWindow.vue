@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <v-breadcrumbs :items="routes">
       <template v-slot:divider>
         <v-icon icon="mdi-chevron-right"></v-icon>
@@ -100,4 +100,18 @@ h2 {
 .btn-back:hover {
   background-color: #1c882f;
 }
+</style> -->
+
+<template>
+  hola
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style>
+
 </style>

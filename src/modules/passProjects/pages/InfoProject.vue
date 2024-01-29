@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="container mt-4">
     <h1 class="text-center mt-4">{{ proyecto.name }}</h1>
     <div class="row mt-4">
@@ -91,4 +91,19 @@ export default {
   max-height: auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+</style> -->
+
+
+<template>
+  hola
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style>
+
 </style>
