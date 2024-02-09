@@ -75,16 +75,32 @@
                     ></v-select>
                   </v-col>
                   <v-col cols="12" md="6">
-                    <v-text-field
-                      label="Phone number"
-                      v-model="formData.phone"
-                      required
-                      :error-messages="errors.phone"
-                      type="number"
-                      variant="underlined"
-                      color="green-darken-3"
-                    ></v-text-field>
+                    <v-row align="center">
+                      <v-col cols="4">
+                        <v-select
+                          v-model="formData.lada"
+                          :items="['+1 (USA)', '+52 (Mexico)']"
+                          label="Lada"
+                          :error-messages="errors.lada"
+                          variant="underlined"
+                          color="green-darken-3"
+                        ></v-select>
+                      </v-col>
+                      <v-col cols="8">
+                        <v-text-field
+                          label="Phone number"
+                          v-model="formData.phone"
+                          required
+                          :error-messages="errors.phone"
+                          type="number"
+                          variant="underlined"
+                          color="green-darken-3"
+                          :prefix="formData.lada ? formData.lada.split(' ')[0] : ''"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
                   </v-col>
+
                 </v-row>
               
               <v-divider></v-divider>
@@ -222,7 +238,7 @@
                     required
                     :error-messages="errors.userName"
                     variant="underlined"
-                    placeholder="Enter your username"
+                    placeholder="Ex. UserName38"
                   ></v-text-field>
     
                   <v-text-field
@@ -231,7 +247,7 @@
                     required
                     :error-messages="errors.email"
                     variant="underlined"
-                    placeholder="Enter your email"
+                    placeholder="useremail@domain.com"
                     type="email"
                     color="green-darken-3"
                   ></v-text-field>
@@ -243,7 +259,7 @@
                     :error-messages="errors.password"
                     variant="underlined"
                     color="green-darken-3"
-                    placeholder="Enter your password"
+                    placeholder="Hello12#"
                     :append-inner-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
                     :type="passwordVisible ? 'text' : 'password'"
                     outlined
@@ -257,7 +273,7 @@
                     :error-messages="errors.confirmPassword"
                     variant="underlined"
                     color="green-darken-3"
-                    placeholder="Confirm your password"
+                    placeholder="Hello12#"
                     :append-inner-icon="passwordVisibleConfirm ? 'mdi-eye-off' : 'mdi-eye'"
                     :type="passwordVisibleConfirm ? 'text' : 'password'"
                     outlined
@@ -291,40 +307,52 @@
     </v-row>
   </v-container>
   <v-dialog v-model="dialogVisible" width="500">
-    <template v-slot:default="{ dialog }">
+    
+    <template v-slot:default="{ dialog }" >
+      
       <v-sheet
         elevation="12"
         max-width="600"
         rounded="lg"
         width="100%"
         class="pa-4 text-center mx-auto"
+        
       >
-        <v-icon
-          class="mb-5"
-          :color="color"
-          :icon="icon"
-          size="112"
-        ></v-icon>
-
-        <h2 class="text-h5 mb-6">{{ tittle }}</h2>
-
-        <p class="mb-4 text-medium-emphasis text-body-2">
-          {{ message }}
-        </p>
-
-        <v-divider class="mb-4"></v-divider>
-
-        <div class="text-end">
-          <v-btn
-            class="text-none"
+        <v-progress-circular
+          :size="70"
+          :width="7"
+          color="purple"
+          indeterminate
+          v-if="progress"
+        ></v-progress-circular>
+        <div v-if="!progress">
+          <v-icon
+            class="mb-5"
             :color="color"
-            rounded
-            variant="flat"
-            width="90"
-            @click="dialogVisible = false"
-          >
-            okey
-          </v-btn>
+            :icon="icon"
+            size="112"
+          ></v-icon>
+  
+          <h2 class="text-h5 mb-6">{{ tittle }}</h2>
+  
+          <p class="mb-4 text-medium-emphasis text-body-2">
+            {{ message }}
+          </p>
+  
+          <v-divider class="mb-4"></v-divider>
+  
+          <div class="text-end">
+            <v-btn
+              class="text-none"
+              :color="color"
+              rounded
+              variant="flat"
+              width="90"
+              @click="dialogVisible = false"
+            >
+              okey
+            </v-btn>
+          </div>
         </div>
       </v-sheet>
     </template>
@@ -334,6 +362,7 @@
 <script>
 import { api } from '@/axios/axios';
 import { useRouter } from 'vue-router';
+import axios from 'axios';
 
 export default {
   data() {
@@ -345,6 +374,7 @@ export default {
         apellidoMaterno: '',
         fechaNacimiento: '',
         sexo: '',
+        lada: '',
         phone: '',
         imagen: null,
         postalCode: '',
@@ -379,6 +409,7 @@ export default {
         apellidoMaterno: '',
         fechaNacimiento: '',
         phone: '',
+        lada: '',
         city: '',
         neighborhood: '',
         street: '',
@@ -390,6 +421,7 @@ export default {
         image: '',
         postalCode: ''
       },
+      progress: true,
       dialogVisible: false,
       color: '',
       tittle: '',
@@ -431,23 +463,48 @@ export default {
     },
 
 
-    validateInformation() {
+    async validateInformation() {
+      let lada = this.formData.lada.split(' ')[0]; // "+1"
+      let number = lada.replace('+', ''); // "1"
+      console.log(number); // Imprime: 1
+
       // Validation for Personal Information step
-      this.errors.nombre = (this.formData.nombre.length < 3 || !/^[a-zA-Z]+$/.test(this.formData.nombre))
-        ? 'Invalid first name'
-        : '';
-      this.errors.apellidoPaterno = (this.formData.apellidoPaterno.length < 4 || !/^[a-zA-Z]+$/.test(this.formData.apellidoPaterno))
-        ? 'Invalid last name'
-        : '';
-      this.errors.apellidoMaterno = (this.formData.apellidoMaterno.length < 4 || !/^[a-zA-Z]+$/.test(this.formData.apellidoMaterno))
-        ? 'Invalid middle name'
-        : '';
+      this.errors.nombre = (this.formData.nombre.length < 3 || !/^[a-zA-ZüÜáéíóúÁÉÍÓÚñÑ' ]+$/.test(this.formData.nombre))
+          ? 'Invalid first name'
+          : '';
+
+      this.errors.apellidoPaterno = (this.formData.apellidoPaterno.length < 4 || !/^[a-zA-ZüÜáéíóúÁÉÍÓÚñÑ' ]+$/.test(this.formData.apellidoPaterno))
+          ? 'Invalid last name'
+          : '';
+
+      this.errors.apellidoMaterno = (this.formData.apellidoMaterno.length < 4 || !/^[a-zA-ZüÜáéíóúÁÉÍÓÚñÑ' ]+$/.test(this.formData.apellidoMaterno))
+          ? 'Invalid middle name'
+          : '';
+
       this.errors.fechaNacimiento = (new Date().getFullYear() - new Date(this.formData.fechaNacimiento).getFullYear() < 18)
         ? 'Invalid date of birth'
         : '';
-      this.errors.phone = (this.formData.phone.length < 10 || !/^\d+$/.test(this.formData.phone))
-        ? 'Invalid phone number'
+      this.errors.lada = (!this.formData.lada)
+        ? 'Lada is required'
         : '';
+
+      // Validación del número de teléfono con la API
+      // try {
+      //   const response = await axios.get(`https://api.apilayer.com/number_verification/validate?number=${number}${this.formData.phone}`, {
+      //     headers: {
+      //       'apikey': 'isWBK7I7wNGIiFCcBpYICqSUGrKgpdDw'
+      //     }
+      //   });
+      //   console.log(response)
+      //   if (response.data.valid) {
+      //     this.errors.phone = '';
+      //   } else {
+      //     this.errors.phone = 'Invalid phone number';
+      //   }
+      // } catch (error) {
+      //   console.error(error);
+      //   this.errors.phone = 'Error validating phone number';
+      // }
 
       if (Object.values(this.errors).some(error => error !== '')) {
         return;
@@ -484,10 +541,9 @@ export default {
       this.errors.userName = (!this.formData.userName || this.formData.userName.length < 6 || !/^[a-zA-Z0-9]+$/.test(this.formData.userName))
         ? 'Invalid username'
         : '';
-      this.errors.email = (/^[a-z0-9.]+@(uthh\.edu\.mx|[a-z]+\.(com|ed|org))$/i.test(this.formData.email))
+        this.errors.email = (/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(this.formData.email))
         ? ''
         : 'Must be a valid e-mail with a supported domain.';
-
 
 
       if (this.formData.password === this.formData.confirmPassword){
@@ -547,6 +603,12 @@ export default {
       this.signUp();
     },
     signUp: async function () {
+      this.tittle = ''
+      this.message = ""
+      this.icon = ''
+      this.color = ''
+      this.dialogVisible = true
+      this.progress = true
       const router = useRouter();
       try {
         
@@ -582,13 +644,13 @@ export default {
           this.message = data.msg
           this.icon = 'mdi-alert-octagon-outline'
           this.color = 'red-darken-4'
-          this.dialogVisible = true
+          this.progress = false
         }else{
           this.tittle = 'Successful gardening account registration! 🌟🌻'
           this.message = "Kindly check your inbox; we've sent you a verification code. Happy cultivating! 🪴📬"
           this.icon = 'mdi-check-circle'
           this.color = 'green-darken-3'
-          this.dialogVisible = true
+          this.progress = false
           setTimeout(() => {
             router.push({ name: "home-home" });
           }, 2000);
@@ -597,9 +659,6 @@ export default {
         router.push({ name: 'serverError' });
         // Puedes manejar el error de alguna manera, por ejemplo, mostrando un mensaje al usuario.
       }
-    },
-    submitForm() {
-      // ... (your existing submitForm function)
     },
   },
 };

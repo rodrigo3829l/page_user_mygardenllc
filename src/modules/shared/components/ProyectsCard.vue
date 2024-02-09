@@ -107,6 +107,7 @@ export default {
         color="green-darken-3"
         variant="text"
         @click="reserve"
+
       >
         Reserve
       </v-btn>

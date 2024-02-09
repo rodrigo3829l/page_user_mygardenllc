@@ -69,12 +69,10 @@
                         <li>Fotografia</li>
                         <li>Número de tarjetas de crédito</li>
                         <li>Pasatiempos</li>
-                        <!-- Agrega los demás datos personales utilizados -->
                     </ul>
 
                     <h3><i class="fa fa-exchange-alt"></i>Transferencia de datos</h3>
                     <p>My Garden LLC, se compromete a no transferir a un tercero sus datos personales, asimismo, para garantizar la protección y confidencialidad ha establecido mecanismos de seguridad administrativos, técnicos y físicos.</p>
-                    <!-- Agrega el resto de tu aviso de privacidad como sea necesario -->
 
                     <h3><i class="fa fa-lock"></i>¿Cómo puede acceder, rectificar o cancelar sus datos personales, u oponerse a su uso?</h3>
                     <p>Usted tiene derecho a conocer qué datos personales tenemos de usted, para qué los utilizamos y las condiciones del uso que les damos (Acceso). Asimismo, es su derecho solicitar la corrección de su información personal en caso de que esté desactualizada, sea inexacta o incompleta (Rectificación); que la eliminemos de nuestros registros o bases de datos cuando considere que la misma no está siendo utilizada adecuadamente (Cancelación); así como oponerse al uso de sus datos personales para fines específicos (Oposición). Estos derechos se conocen como derechos ARCO.</p>
@@ -186,8 +184,6 @@
                     </p>
 
                     <p>Ultima actualización: 14/11  /2023</p>
-
-                    <!-- Agrega el resto de tu aviso de privacidad como sea necesario -->
                 </div>
             </div>
         </div>

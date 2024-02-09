@@ -60,6 +60,14 @@ const routes = [
                 component: () =>  import( /* webpackChunkName: "ProjectDetacados" */ '@/modules/passProjects/pages/ProjectDestacados.vue'),
             },
             {
+                path: '/categorie/:category',
+                name: 'categorie-view',
+                meta: {
+                    title: 'categorie-vie',
+                },
+                component: () =>  import( /* webpackChunkName: "ProjectDetacados" */ '@/modules/passProjects/pages/projectCategorie.vue'),
+            },
+            {
                 path: 'info',
                 name: 'proyects-info',
                 meta: {
@@ -91,16 +99,6 @@ const routes = [
                 },
                 component: () => import ( /* webpackChunkName: "ConfirmPassword" */ '@/modules/login/pages/ConfirmPassword.vue'),
             },
-            // {
-            //     path: 'location',
-            //     name: 'login-location',
-            //     component: () => import ( /* webpackChunkName: "LocationData" */ '@/modules/login/pages/LocationData.vue'),
-            // },
-            // {
-            //     path: 'personal',
-            //     name: 'login-personal',
-            //     component: () => import ( /* webpackChunkName: "PersonalData" */ '@/modules/login/pages/PersonalData.vue'),
-            // },
             {
                 path: 'mail',
                 name: 'login-mail',
@@ -109,11 +107,6 @@ const routes = [
                 },
                 component: () => import ( /* webpackChunkName: "SendMail" */ '@/modules/login/pages/SendMail.vue'),
             },
-            // {
-            //     path: 'userdata',
-            //     name: 'login-userdata',
-            //     component: () => import ( /* webpackChunkName: "UserData" */ '@/modules/login/pages/UserData.vue'),
-            // },
             {
                 path: 'optconfirm',
                 name: 'login-optconfirm',
