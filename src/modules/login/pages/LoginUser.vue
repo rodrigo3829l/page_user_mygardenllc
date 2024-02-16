@@ -53,17 +53,22 @@
                 color="green-darken-3"
                 required
               ></v-text-field>
-              <!-- <v-card-text class="text-medium-emphasis text-caption">
+
+              <v-card-text class="text-medium-emphasis text-caption">
                 Warning: After 3 consecutive failed login attempts, you account will be temporarily locked for three hours. If you must login now, you can also click "Forgot login password?" below to reset the login password.
-              </v-card-text> -->
-                <v-btn 
+              </v-card-text>
+              <center>
+                <div class="g-recaptcha" data-sitekey="6Le5gHApAAAAADv0EqDbSKVSgpcBxPFpCz6o4zVt" data-callback="onRecaptchaSuccess"></div>
+              </center>
+              <v-divider></v-divider>
+              <v-btn 
                 color="green-darken-3" 
                 block 
-                lass="mt-4" 
+                class="mt-4" 
                 type="submit"
                 :disabled="dialog"
                 :loading="dialog"
-                >
+              >
                   <v-icon left>mdi-login</v-icon>
                   Ingresar
                 </v-btn>
@@ -106,10 +111,14 @@ export default {
       ],
     }),
   setup() {
+    window.onRecaptchaSuccess = () => {
+      captchaVerified.value = true;
+    };
+
     const { handleSubmit } = useForm({
       validationSchema: {
         email(value) {
-          if (/^[a-z0-9.]+@(uthh\.edu\.mx|[a-z]+\.(com|ed|org))$/i.test(value)) {
+          if (/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(value)) {
             return true;
           }
           return 'Must be a valid e-mail with a supported domain.';
@@ -157,6 +166,7 @@ export default {
     const showAlert = ref(false);
     const router = useRouter();
     const userStore = useUserStore();
+    const captchaVerified = ref(false);
 
     const submit = handleSubmit(async (values) => {
       dialog.value = true;
@@ -201,6 +211,7 @@ export default {
     };
 
     return {
+      captchaVerified,
       email,
       password,
       passwordVisible,

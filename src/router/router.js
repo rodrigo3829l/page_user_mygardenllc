@@ -262,6 +262,15 @@ const routes = [
     },
 
     {
+        path: '/resendemail',
+        name: 'resendemail',
+        meta: {
+            title: 'resendemail',
+        },
+        component: () => import ( /* webpackChunkName: "bina datos" */ '@/modules/shared/pages/resendCorrect.vue'),
+    },
+
+    {
         path: '/notverified',
         name: 'notverified',
         meta: {
@@ -269,6 +278,16 @@ const routes = [
         },
         component: () => import ( /* webpackChunkName: "bina datos" */ '@/modules/shared/pages/notVerifiedView.vue'),
     },
+
+    {
+        path: '/recover',
+        name: 'recover',
+        meta: {
+            title: 'recover',
+        },
+        component: () => import ( /* webpackChunkName: "bina datos" */ '@/modules/shared/pages/recoverCount.vue'),
+    },
+    
     
     {
         path: '/accesibility',

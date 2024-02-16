@@ -15,6 +15,10 @@
   </v-carousel>
 
   <v-container>
+
+    <p>Prueba</p>
+    <h1>{{ $t('greeting') }}</h1>
+
     <v-row align="center" justify="center">
       <v-col cols="12">
         <v-card-title class="display-2 text-center text">Our Company</v-card-title>
@@ -94,6 +98,7 @@
 </template>
 
 <script>
+
   import { defineAsyncComponent } from 'vue'
   export default {
     data() {

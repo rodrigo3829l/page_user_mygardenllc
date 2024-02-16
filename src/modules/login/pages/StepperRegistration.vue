@@ -155,40 +155,89 @@
               <br>
               <v-row>
                 <v-col>
+                  <v-row>
+                    <v-col cols="8" sm="9">
+                      <v-text-field
+                        v-model="formData.postalCode"
+                        label="Postal Code"
+                        required
+                        type="number"
+                        :error-messages="errors.postalCode"
+                        variant="underlined"
+                        color="green-darken-3"
+                        
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="4" sm="3">
+                      <v-btn
+                        @click="validatePostalCode"
+                        color="green-darken-3"
+                        class="ma-2"
+                        small
+                        :loading="loadBtn"
+                        :disabled="loadBtn"
+                      >
+                        Validate
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+
                   <v-autocomplete
                     v-model="formData.city"
                     label="City"
                     color="green-darken-3"
                     required
+                    :disabled="true"
                     :error-messages="errors.city"
                     variant="underlined"
-                    :items="['Miami', 'Orlando', 'Tampa', 'Jacksonville', 'Fort Lauderdale', 'Tallahassee', 'St. Petersburg', 'Naples', 'Fort Myers', 'Key West', 'Pensacola', 'Sarasota']"
                   ></v-autocomplete>
   
-                  <v-autocomplete
-                    v-model="formData.neighborhood"
-                    label="Neighborhood"
-                    required
-                    :error-messages="errors.neighborhood"
-                    variant="underlined"
-                    color="green-darken-3"
-                    :items="['Buckhead', 'Midtown', 'Virginia-Highland', 'Inman Park', 'Old Fourth Ward', 'Grant Park', 'Cabbagetown', 'Poncey-Highland', 'Kirkwood', 'West End', 'East Atlanta Village', 'Little Five Points']"
-                  ></v-autocomplete>
-
-                  <v-autocomplete
+                  <v-select
                     v-model="formData.street"
                     label="Street"
                     required
+                    :disabled="!cpValidate"
                     :error-messages="errors.street"
                     variant="underlined"
                     color="green-darken-3"
-                    :items="['Peachtree Street', 'Marietta Street', 'Decatur Street', 'Spring Street', 'Auburn Avenue', 'Monroe Drive', 'North Avenue', 'Boulevard', 'Ponce de Leon Avenue', 'Irwin Street', 'Edgewood Avenue', 'Mitchell Street']"
-                  ></v-autocomplete>
+                    :items="['Peachtree Street',
+                      'Marietta Street', 
+                      'Decatur Street', 
+                      'Spring Street', 
+                      'Auburn Avenue', 
+                      'Monroe Drive', 
+                      'North Avenue', 
+                      'Boulevard', 
+                      'Ponce de Leon Avenue', 
+                      'Irwin Street', 
+                      'Edgewood Avenue', 
+                      'Mitchell Street',
+                      'Chicory Way',
+                      'Churchill Heights',
+                      'Clarinbridge Way',
+                      'Cobblestone Way',
+                      'Columbia Bay',
+                      'Cranchester Way',
+                      'Whittenham Clse'
+                    ]"
+                  ></v-select>
+
+                  <v-text-field
+                    v-model="formData.neighborhood"
+                    label="Neighborhood"
+                    required
+                    :disabled="!cpValidate"
+                    placeholder="Enter your neighborhood"
+                    :error-messages="errors.neighborhood"
+                    variant="underlined"
+                    color="green-darken-3"
+                  ></v-text-field>
   
                   <v-text-field
                     v-model="formData.houseNumber"
                     label="House Number"
                     required
+                    :disabled="!cpValidate"
                     :error-messages="errors.houseNumber"
                     variant="underlined"
                     color="green-darken-3"
@@ -196,15 +245,7 @@
                     type="number"
                   ></v-text-field>
 
-                  <v-autocomplete
-                    v-model="formData.postalCode"
-                    label="Postal Code"
-                    required
-                    :error-messages="errors.postalCode"
-                    variant="underlined"
-                    color="green-darken-3"
-                    :items="['30301', '30302', '30303', '30304', '30305', '30306', '30307', '30308', '30309', '30310', '30311', '30312', '30313', '30314', '30315', '30316', '30317', '30318', '30319', '30320']"
-                  ></v-autocomplete>
+                  
                     <v-btn
                     v-if="step > 1"
                     @click="step--"
@@ -218,6 +259,7 @@
                     @click="validateDirecion"
                     color="green-darken-3"
                     variant="text"
+                    :disabled="!cpValidate"
                   >
                     Next Step
                   </v-btn>
@@ -279,6 +321,14 @@
                     outlined
                     @click:append-inner="togglePasswordVisibilityConfirm"
                   ></v-text-field>
+
+                  <v-checkbox
+                    v-model="formData.agreeToTerms"
+                    :required="true"
+                    :error-messages="errors.agreeToTerms"
+                    label="I accept the Terms and Conditions for signing up to this page."
+                    color="green-darken-3"
+                  ></v-checkbox>
                 
                 <v-btn
                   v-if="step > 1"
@@ -289,6 +339,7 @@
                   Previous Step
                 </v-btn>
                 <v-btn
+                :disabled="!formData.agreeToTerms"
                   @click="validateUser"
                   color="green-darken-3"
                   variant="text"
@@ -363,6 +414,7 @@
 import { api } from '@/axios/axios';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import { load } from 'webfontloader';
 
 export default {
   data() {
@@ -429,9 +481,48 @@ export default {
       icon: '',
       passwordVisibleConfirm: false,
       passwordVisible: false,
+      cpValidate : false,
+      loadBtn : false
     };
   },
   methods: {
+    async validatePostalCode() {
+      this.loadBtn = true;
+      console.log(this.formData.postalCode);
+
+      // Verificación inicial del formato del código postal
+      if (this.formData.postalCode.length !== 5 || !/^\d+$/.test(this.formData.postalCode)) {
+        this.errors.postalCode = 'Invalid postal code';
+        this.cpValidate = false; // Asume que la validación es falsa inicialmente
+        this.loadBtn = false;
+        return;
+      }
+
+      try {
+        // Llamada a la API de Zippopotam para validar el código postal
+        const response = await axios.get(`https://api.zippopotam.us/us/${this.formData.postalCode}`);
+        const data = response.data;
+
+        // Verifica si el lugar es Atlanta
+        const placeName = data.places[0]['place name'];
+        console.log(placeName)
+        if (placeName.toLowerCase() === 'atlanta') {
+          this.errors.postalCode = '';
+          this.cpValidate = true;
+          this.formData.city = placeName; // Asigna el nombre del lugar al campo de ciudad
+        } else {
+          this.errors.postalCode = 'Service is only offered in Atlanta'; // Mensaje de error si no es Atlanta
+          this.cpValidate = false;
+        }
+      } catch (error) {
+        console.error("Error fetching postal code info:", error);
+        this.errors.postalCode = 'Invalid postal code';
+        this.cpValidate = false;
+      } finally {
+        this.loadBtn = false;
+      }
+    },
+
     togglePasswordVisibility () {
       this.passwordVisible = !this.passwordVisible;
     },
@@ -517,18 +608,27 @@ export default {
       this.errors.city = (!this.formData.city)
         ? 'City is required'
         : '';
-      this.errors.neighborhood = (!this.formData.neighborhood)
-        ? 'Neighborhood is required'
-        : '';
+      
+        // Define the regex pattern to match valid characters
+        const validPattern = /^[a-zA-Z0-9\s'#]+$/;
+        const hasInvalidChars = !validPattern.test(this.formData.neighborhood);
+        if (!this.formData.neighborhood) {
+            this.errors.neighborhood = 'Neighborhood is required';
+        } 
+
+        // Check for invalid characters
+        else if (hasInvalidChars) {
+            this.errors.neighborhood = 'Only letters, numbers, spaces, apostrophes, and "#" are allowed';
+        }
+        else{
+          this.errors.neighborhood = ''
+        }
+            
       this.errors.street = (!this.formData.street)
         ? 'Street is required'
         : '';
       this.errors.houseNumber = (this.formData.houseNumber.length < 3 || !/^\d+$/.test(this.formData.houseNumber))
         ? 'Invalid house number'
-        : '';
-
-      this.errors.postalCode = (this.formData.postalCode.length < 4 || !/^\d+$/.test(this.formData.postalCode))
-        ? 'Invalid postal code'
         : '';
 
       if (Object.values(this.errors).some(error => error !== '')) {

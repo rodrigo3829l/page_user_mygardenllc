@@ -518,6 +518,25 @@ export default {
                 </v-card>
               </v-menu>
             </v-col>
+            <v-col cols="auto" class="d-flex align-items-center">
+  <v-btn icon variant="text" @click="changeLanguage('en')" class="mx-1">
+    <v-img
+      src="https://flagcdn.com/16x12/us.webp"
+      alt="USA"
+      width="16"
+      height="12"
+    ></v-img>
+  </v-btn>
+  <v-btn icon variant="text" @click="changeLanguage('es')" class="mx-1">
+    <v-img
+      src="https://flagcdn.com/16x12/mx.webp"
+      alt="Mexico"
+      width="16"
+      height="12"
+    ></v-img>
+  </v-btn>
+</v-col>
+
           </v-row>
         </div>
       </v-container>
@@ -538,7 +557,7 @@ export default {
           { name: 'Services', to: 'services-services', icon: 'mdi-hammer-screwdriver' },
           { name: 'Projects', to: 'proyects-view', icon: 'mdi-briefcase' },
           { name: 'Contact', to: 'home-contact', icon: 'mdi-email' },
-          { name: 'Frequent Questions', to: 'home-answers', icon: 'mdi-help-circle' },
+          { name: 'FaQs', to: 'home-answers', icon: 'mdi-help-circle' },
         ];
     
         // if (userStore.token === null) {
@@ -569,7 +588,11 @@ export default {
           logout, // Agregar la función logout al retorno
         };
       },
-    
+      methods: {
+        changeLanguage(lang) {
+          this.$i18n.locale = lang;
+        }
+      },
       mounted() {
         const storedToken = localStorage.getItem('token');
         if (storedToken) {

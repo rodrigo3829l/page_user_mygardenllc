@@ -1,9 +1,4 @@
 <template>
-  <v-breadcrumbs :items="items">
-      <template v-slot:divider>
-        <v-icon icon="mdi-chevron-right"></v-icon>
-      </template>
-    </v-breadcrumbs>
   <v-container class="mt-5">
     <v-row justify="center">
       <v-col cols="12" sm="8" md="6" lg="16">
@@ -43,7 +38,8 @@
               </v-sheet>
 
               <v-btn
-                :loading="validating"
+                :loading="validating || resending"
+                :disabled="validating || resending"
                 class="my-4"
                 color="green-darken-3"
                 height="40"
@@ -53,8 +49,11 @@
                 @click="onClick"
               ></v-btn>
 
-              <div class="text-caption">
-                Didn't receive the code? <a href="#" @click.prevent="otp = ''">Resend</a>
+              <div class="text-caption" v-if="countdown > 0">
+                Resend in: {{ formatCountdown }}
+              </div>
+              <div class="text-caption" v-else>
+                Didn't receive the code? <a href="#" @click.prevent="onClickResend" style="color: #2E7D32;">Resend</a>
               </div>
             </v-form><br>
             <v-divider></v-divider>
@@ -78,28 +77,9 @@ export default {
     tittleAlert: '',
     color: '',
     showAlert: false,
-    items: [
-        {
-          title: 'Home',
-          disabled: false,
-          href: '/home/homeuser',
-        },
-        {
-          title: 'Login',
-          disabled: false,
-          href: '/login/loginuser',
-        },
-        {
-          title: 'Send email',
-          disabled: false,
-          href: '/login/mail',
-        },
-        {
-          title: 'OTP Code',
-          disabled: false,
-          href: '/login/optconfirm',
-        },
-      ],
+    resending: false,
+    countdown: 60, // 5 minutes in seconds
+    intervalId: null,
   }),
 
   setup() {
@@ -107,8 +87,23 @@ export default {
     return { router };
   },
 
+  mounted() {
+    this.intervalId = setInterval(() => {
+      if (this.countdown > 0) {
+        this.countdown -= 1;
+      } else {
+        this.onClickResend();
+        clearInterval(this.intervalId);
+      }
+    }, 1000); // Update every second
+  },
+
+  beforeUnmount() {
+    clearInterval(this.intervalId);
+  },
+
   methods: {
-    onClick () {
+    onClick() {
       try {
         this.validating = true;
 
@@ -139,6 +134,44 @@ export default {
         this.router.push({ name: 'serverError' });
       }
     },
+    async onClickResend() {
+      this.resending = true;
+      try {
+        const datos = {
+            token: localStorage.getItem('tokenData'),
+          }
+        const {data} = await api.post('user/resend', datos)
+
+        if (data.success) {
+            this.message = 'Code resending';
+            this.typeAlert = 'success';
+            this.tittleAlert = 'Success';
+            this.color = 'green-darken-3';
+            this.showAlert = true;
+            setTimeout(() => {
+              this.showAlert = false;
+            }, 2000);
+        }
+      } catch (error) {
+        this.message = 'Code not resending';
+        this.typeAlert = 'warning';
+        this.tittleAlert = 'Warning';
+        this.color = 'warning';
+        this.showAlert = true;
+        setTimeout(() => {
+          this.showAlert = false;
+        }, 2000);
+      }
+      this.resending = false;
+    }
   },
+
+  computed: {
+    formatCountdown() {
+      const minutes = Math.floor(this.countdown / 60);
+      const seconds = this.countdown % 60;
+      return `${minutes} min ${seconds} sec`;
+    }
+  }
 };
 </script>
