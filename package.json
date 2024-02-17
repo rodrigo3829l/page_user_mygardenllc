@@ -22,7 +22,7 @@
     "vue-meta": "^2.4.0",
     "vue-recaptcha": "^3.0.0-alpha.6",
     "vue-router": "4",
-    "vuetify": "^3.0.0-beta.0",
+    "vuetify": "^3.5.1",
     "vuex": "^4.1.0",
     "webfontloader": "^1.0.0"
   },
