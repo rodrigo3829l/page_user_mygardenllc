@@ -6,6 +6,8 @@ import { createPinia } from 'pinia';
 import { loadFonts } from './plugins/webfontloader';
 import { createI18n } from 'vue-i18n';
 
+import { useUserStore } from './store/store.js'
+
 // Aquí puedes importar tus archivos de idioma
 import es from './locales/es.json';
 import en from './locales/en.json';
@@ -24,3 +26,6 @@ createApp(App)
   .use(vuetify)
   .use(i18n) // Agregar vue-i18n como plugin
   .mount('#app');
+
+const userStore = useUserStore()
+userStore.initializeStore()

@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useUserStore } from '@/store/store';
 
 const routes = [
     {
@@ -134,7 +135,9 @@ const routes = [
     {
         path: '/profile',
         name: 'profile',
-        
+        meta:{
+            requireAuth: true
+        },
         component: () => import ( /* webpackChunkName: "ProfileLayout" */ '@/modules/profile/layouts/ProfileLayout.vue'),
         children: [
             {
@@ -188,6 +191,7 @@ const routes = [
                 name: 'services-Schedule',
                 meta: {
                     title: 'Services information',
+                    requireAuth: true
                 },
                 component: () => import ( /* webpackChunkName: "ScheduleService" */ '@/modules/services/pages/ScheduleService.vue'),
                 
@@ -305,18 +309,17 @@ const router = createRouter({
 })
 
 
-// router.beforeEach( async (to, from, next) =>{
-//     console.log("=================")
-//     console.log(to)
-//     console.log("=================")
-    
-//     console.log("=================")
-//     console.log(from)
-//     console.log("=================")
-    
-//     console.log("=================")
-//     console.log(next)
-//     console.log("=================")
-//     next()
-// })
+router.beforeEach( async (to, from, next) =>{
+
+    const userStore = useUserStore();
+
+    const auth = userStore.token !== null;
+    const needAuth = to.meta.requireAuth;
+
+    if(needAuth && !auth){
+        next('forbidden')
+    } else{
+        next()
+    }
+})
 export default router

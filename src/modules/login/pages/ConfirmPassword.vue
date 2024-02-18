@@ -38,7 +38,13 @@
                 color="green-darken-3"
                 outlined
                 required
+                @input="checkStrength"
               ></v-text-field>
+              <div v-if="password.value.value">
+                <span v-if="passwordStrength === 'weak'" class="red--text">Weak password</span>
+                <span v-else-if="passwordStrength === 'good'" class="orange--text">Good password</span>
+                <span v-else class="green--text">Excellent password</span>
+              </div>
               <label for="">Confirm your password</label>
               <v-text-field
                 label="Valid your password"
@@ -48,14 +54,12 @@
                 prepend-inner-icon="mdi-lock"
                 :append-inner-icon="passwordVisibleConfirm ? 'mdi-eye-off' : 'mdi-eye'"
                 :type="passwordVisibleConfirm ? 'text' : 'password'"
+                @click:append-inner="togglePasswordVisibilityConfirm"
                 color="green-darken-3"
                 outlined
                 required
-                @click:append-inner="togglePasswordVisibilityConfirm"
               ></v-text-field>
-              <!-- <v-card-text class="text-medium-emphasis text-caption">
-                Warning: After 3 consecutive failed login attempts, you account will be temporarily locked for three hours. If you must login now, you can also click "Forgot login password?" below to reset the login password.
-              </v-card-text> -->
+
                 <v-btn 
                 color="green-darken-3" 
                 block 
@@ -175,6 +179,7 @@ export default {
     const passwordVisibleConfirm = ref(false);
     const dialog = ref(false);
     const message = ref('');
+    const passwordStrength = ref('');
     const typeAlert = ref('')
     const titleAlert = ref('')
     const showAlert = ref(false);
@@ -204,7 +209,7 @@ export default {
         console.log(data)
         dialog.value = false;
 
-        if(data.success === false){
+        if(!data.success){
           message.value = 'Error al cambiar contraseña';
           typeAlert.value = 'warning';
           titleAlert.value = 'Warning';
@@ -230,6 +235,38 @@ export default {
 
     });
 
+
+    const checkStrength = () => {
+      const patterns = {
+        length: /.{6,}/,
+        lowercase: /[a-z]+/,
+        uppercase: /[A-Z]+/,
+        number: /\d+/,
+        special: /[@$!%*?&#^*]+/,
+      };
+
+      const checks = {
+        length: patterns.length.test(password.value.value),
+        lowercase: patterns.lowercase.test(password.value.value),
+        uppercase: patterns.uppercase.test(password.value.value),
+        number: patterns.number.test(password.value.value),
+        special: patterns.special.test(password.value.value),
+      };
+
+      const passedChecks = Object.values(checks).filter(Boolean).length;
+
+      switch (passedChecks) {
+        case 5:
+          passwordStrength.value = 'excellent';
+          break;
+        case 4:
+          passwordStrength.value = 'good';
+          break;
+        default:
+          passwordStrength.value = 'weak';
+      }
+    }
+
     const togglePasswordVisibility = () => {
       passwordVisible.value = !passwordVisible.value;
     };
@@ -249,7 +286,9 @@ export default {
       showAlert,
       submit,
       togglePasswordVisibility,
-      togglePasswordVisibilityConfirm
+      togglePasswordVisibilityConfirm,
+      checkStrength,
+      passwordStrength
     }
   }
 }
@@ -263,4 +302,15 @@ export default {
 .fade-alert.v-leave-active {
   opacity: 0;
 }
+.red--text {
+    color: red;
+  }
+  
+  .orange--text {
+    color: orange;
+  }
+  
+  .green--text {
+    color: green;
+  }
 </style>s

@@ -306,7 +306,14 @@
                     :type="passwordVisible ? 'text' : 'password'"
                     outlined
                     @click:append-inner="togglePasswordVisibility"
+                    @input="checkStrength"
                   ></v-text-field>
+
+                  <div v-if="formData.password.length > 0">
+                    <span v-if="formData.passwordStrength === 'weak'" class="red--text">Weak password</span>
+                    <span v-else-if="formData.passwordStrength === 'good'" class="orange--text">Good password</span>
+                    <span v-else class="green--text">Excellent password</span>
+                  </div>
     
                   <v-text-field
                     v-model="formData.confirmPassword"
@@ -412,9 +419,7 @@
 
 <script>
 import { api } from '@/axios/axios';
-import { useRouter } from 'vue-router';
 import axios from 'axios';
-import { load } from 'webfontloader';
 
 export default {
   data() {
@@ -433,6 +438,7 @@ export default {
         userName: '',
         email: '',
         password: '',
+        passwordStrength: '',
         confirmPassword: '',
         houseNumber: '',
         street: '',
@@ -486,9 +492,39 @@ export default {
     };
   },
   methods: {
+
+    checkStrength() {
+      const patterns = {
+        length: /.{6,}/,
+        lowercase: /[a-z]+/,
+        uppercase: /[A-Z]+/,
+        number: /\d+/,
+        special: /[@$!%*?&#^*]+/,
+      };
+
+      const checks = {
+        length: patterns.length.test(this.formData.password),
+        lowercase: patterns.lowercase.test(this.formData.password),
+        uppercase: patterns.uppercase.test(this.formData.password),
+        number: patterns.number.test(this.formData.password),
+        special: patterns.special.test(this.formData.password),
+      };
+
+      const passedChecks = Object.values(checks).filter(Boolean).length;
+
+      switch (passedChecks) {
+        case 5:
+          this.formData.passwordStrength = 'excellent';
+          break;
+        case 4:
+          this.formData.passwordStrength = 'good';
+          break;
+        default:
+          this.formData.passwordStrength = 'weak';
+      }
+    },
     async validatePostalCode() {
       this.loadBtn = true;
-      console.log(this.formData.postalCode);
 
       // Verificación inicial del formato del código postal
       if (this.formData.postalCode.length !== 5 || !/^\d+$/.test(this.formData.postalCode)) {
@@ -580,22 +616,24 @@ export default {
         : '';
 
       // Validación del número de teléfono con la API
-      // try {
-      //   const response = await axios.get(`https://api.apilayer.com/number_verification/validate?number=${number}${this.formData.phone}`, {
-      //     headers: {
-      //       'apikey': 'isWBK7I7wNGIiFCcBpYICqSUGrKgpdDw'
-      //     }
-      //   });
-      //   console.log(response)
-      //   if (response.data.valid) {
-      //     this.errors.phone = '';
-      //   } else {
-      //     this.errors.phone = 'Invalid phone number';
-      //   }
-      // } catch (error) {
-      //   console.error(error);
-      //   this.errors.phone = 'Error validating phone number';
-      // }
+      try {
+        const response = await axios.get(`https://api.apilayer.com/number_verification/validate?number=${number}${this.formData.phone}`, {
+          headers: {
+            'apikey': 'isWBK7I7wNGIiFCcBpYICqSUGrKgpdDw'
+          }
+        });
+        console.log(response)
+        if (response.data.valid) {
+          this.errors.phone = '';
+        } else {
+          this.errors.phone = 'Invalid phone number';
+        }
+      } catch (error) {
+        console.error(error);
+        this.errors.phone = 'Error validating phone number';
+      }
+
+
 
       if (Object.values(this.errors).some(error => error !== '')) {
         return;
@@ -709,7 +747,6 @@ export default {
       this.color = ''
       this.dialogVisible = true
       this.progress = true
-      const router = useRouter();
       try {
         
         const direccion = {
@@ -752,11 +789,11 @@ export default {
           this.color = 'green-darken-3'
           this.progress = false
           setTimeout(() => {
-            router.push({ name: "home-home" });
+            this.$router.push({ name: "home-home" });
           }, 2000);
         }
       } catch (error) {
-        router.push({ name: 'serverError' });
+        this.$router.push({ name: "serverError" });
         // Puedes manejar el error de alguna manera, por ejemplo, mostrando un mensaje al usuario.
       }
     },
@@ -794,4 +831,15 @@ export default {
   width: 100%;
   padding: 60px 0;
 }
+.red--text {
+    color: red;
+  }
+  
+  .orange--text {
+    color: orange;
+  }
+  
+  .green--text {
+    color: green;
+  }
 </style>

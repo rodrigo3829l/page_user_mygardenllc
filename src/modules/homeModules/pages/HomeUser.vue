@@ -28,7 +28,7 @@
     <v-row>
       <v-col md="6">
         <v-card-title class="display-1">About</v-card-title>
-        <v-card-text v-if="idioma == 'ingles'">
+        <v-card-text>
           "My Garden, LLC" is a company based in Atlanta, Georgia, USA, and it's all about making gardens look awesome and building cool stuff. We kicked things off in August 2020, thanks to the brainchild of our founder, Maximus Hernandez Hernandez, a spirited Mexican lad. He started this gig with the goal of bringing top-notch and kick-ass services to the gardening and construction scene.
         </v-card-text>
       </v-col>

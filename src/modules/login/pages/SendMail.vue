@@ -91,7 +91,7 @@ export default {
     const { handleSubmit } = useForm({
       validationSchema: {
         email(value) {
-          if (/^[a-z0-9.]+@(uthh\.edu\.mx|[a-z]+\.(com|ed|otrodominio))$/i.test(value)) {
+          if (/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(value)) {
             return true;
           }
           return 'Must be a valid e-mail with a supported domain.';

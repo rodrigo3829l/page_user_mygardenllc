@@ -66,7 +66,7 @@
                 block 
                 class="mt-4" 
                 type="submit"
-                :disabled="dialog"
+                :disabled="dialog || !captchaVerified"
                 :loading="dialog"
               >
                   <v-icon left>mdi-login</v-icon>

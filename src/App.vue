@@ -15,7 +15,12 @@ import { csp } from './plugins/csp';
 export default {
   metaInfo() {
     return {
-      // x  
+      meta: [
+        {
+          'http-equiv': 'Content-Security-Policy',
+          content: csp,
+        },
+      ],
     };
   },
   components: {
@@ -29,6 +34,7 @@ export default {
   }
 };
 </script>
+
 
 <style>
 a {

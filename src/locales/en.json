@@ -1,5 +1,29 @@
 {
-    "greeting": "Prueba en ingles",
-    "farewell": "Prueba de idioma"
-  }
+  "greeting": "Prueba en ingles",  
+  "navbar" : {
+      "homeString": "Home",
+      "servicesString": "Services",
+      "projectsString": "Projects",
+      "contactString": "Contact",
+      "faqsString": "FaQS",
+      "loginString": "Login"
+    },
+    "home" : {
+      "tittleString": "My Garden LLC",
+      "subtitleString": "Gardening, Maintenance, and Construction Services.",
+      "button" : "EXPLORE OUR SERVICES",
+      "CompanyString" : "Our Company",
+      "aboutTitleString" : "About",
+      "aboutDescriptionString" : "My Garden, LLC is a company based in Atlanta, Georgia, USA, and it's all about making gardens look awesome and building cool stuff. We kicked things off in August 2020, thanks to the brainchild of our founder, Maximus Hernandez Hernandez, a spirited Mexican lad. He started this gig with the goal of bringing top-notch and kick-ass services to the gardening and construction scene",
+      "missionTitleString" : "Our Mission",
+      "missionDescriptionString" : "As a family-run gig, we totally get how crucial it is to build solid connections with our peeps. We're all about dishing out top-notch work that stands the test of time, using primo materials and sweating the small stuff. When you roll with My Garden LLC, you're not just getting garden services – you're snagging a committed buddy to whip up an outdoor spot you'll be vibing in for years. Trust us, it's gonna be awesome!",
+      "proyectTitleString" : "Projects",
+      "commentsTitleString" : "Comments",
+      "telephoneString" : "Telephone Contact",
+      "emailString" : "Contact Email"
+    },
+    "footer":{
+      
+    }
+}
   

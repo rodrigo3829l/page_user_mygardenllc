@@ -93,15 +93,13 @@ export const useUserStore = defineStore('user', () => {
         // localStorage.removeItem('venta');
         }
     }
-    // const initializeStore = () => {
-    //     const storedToken = localStorage.getItem('token');
-    //     const storedExpireIn = localStorage.getItem('expireIn');
-    //     if (storedToken && storedExpireIn) {
-    //         token.value = storedToken;
-    //         expireIn.value = storedExpireIn;
-    //         setTime();
-    //     }
-    // };
+    const initializeStore = () => {
+        const storedToken = localStorage.getItem('token');
+        if (storedToken ) {
+            token.value = storedToken;
+            setTime();
+        }
+    };
 
     return {
         token,
@@ -109,6 +107,6 @@ export const useUserStore = defineStore('user', () => {
         login,
         logout,
         refreshToken,
-        // initializeStore
+        initializeStore
     }
   })
