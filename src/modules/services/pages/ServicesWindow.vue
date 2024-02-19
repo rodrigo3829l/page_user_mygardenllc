@@ -28,8 +28,7 @@
     <v-row>
       <v-col cols="12">
         <h2 class="text-h5 my-4">
-          <v-icon large left>mdi-flower</v-icon>
-          Gardening
+          <v-icon large left>mdi-flower</v-icon>{{ $t('services.gardeningString') }}
         </h2>
       </v-col>
     </v-row>
@@ -61,7 +60,7 @@
       <v-col cols="12">
         <h2 class="text-h5 my-4">
           <v-icon large left>mdi-hammer-screwdriver</v-icon>
-          Construction
+          {{ $t('services.ConstructionString') }}
         </h2>
       </v-col>
     </v-row>
@@ -95,7 +94,7 @@
       <v-col cols="12">
         <h2 class="text-h5 my-4">
           <v-icon large left>mdi-broom</v-icon>
-          Cleaning
+          {{ $t('services.CleaningString') }}
         </h2>
       </v-col>
     </v-row>
@@ -128,7 +127,7 @@
       <v-col cols="12">
         <h2 class="text-h5 my-4">
           <v-icon large left>mdi-wrench</v-icon>
-          Maintenance
+          {{ $t('services.MaintenanceString') }}
         </h2>
       </v-col>
     </v-row>

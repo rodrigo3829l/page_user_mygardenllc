@@ -7,7 +7,7 @@
   <v-container>
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <h2>Frequently Asked Questions</h2>
+        <h2>{{ $t('faqs.titleString') }}</h2>
         <div class="text-center d-flex pb-4">
           <v-btn class="ma-2" @click="all">
             Show All

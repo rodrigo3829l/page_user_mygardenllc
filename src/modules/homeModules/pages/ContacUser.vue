@@ -9,7 +9,7 @@
       <v-col md="6">
         <!-- Sección de información de contacto -->
         <v-card-text class="text-center">
-          <h2 class="mb-4">Información de Contacto</h2>
+          <h2 class="mb-4">{{ $t('contact.contactInformationString') }}</h2>
           <v-list dense>
             <v-list-item>
               <v-list-item-icon>
@@ -21,13 +21,13 @@
               <v-list-item-icon>
                 <v-icon>mdi-map-marker</v-icon>
               </v-list-item-icon>
-              <v-list-item-content>123 Main St, Ciudad, País</v-list-item-content>
+              <v-list-item-content>{{ $t('contact.countryString') }}</v-list-item-content>
             </v-list-item>
             <v-list-item>
               <v-list-item-icon>
                 <v-icon>mdi-clock</v-icon>
               </v-list-item-icon>
-              <v-list-item-content>Lunes a Viernes: 9:00 AM - 6:00 PM</v-list-item-content>
+              <v-list-item-content>{{ $t('contact.dayOfServiceString') }}</v-list-item-content>
             </v-list-item>
           </v-list>
         </v-card-text>
@@ -37,7 +37,7 @@
         <!-- Sección del formulario de contacto en un Card con sombra -->
         <v-card elevation="5">
           <v-card-title>
-            <h2 class="mb-4">Contacto</h2>
+            <h2 class="mb-4">{{ $t('contact.ContactString') }}</h2>
           </v-card-title>
           <v-card-text>
             <v-form>

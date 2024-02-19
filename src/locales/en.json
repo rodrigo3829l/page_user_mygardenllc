@@ -1,29 +1,137 @@
 {
-  "greeting": "Prueba en ingles",  
   "navbar" : {
-      "homeString": "Home",
-      "servicesString": "Services",
-      "projectsString": "Projects",
-      "contactString": "Contact",
-      "faqsString": "FaQS",
-      "loginString": "Login"
+    "homeString": "Home",
+    "servicesString": "Services",
+    "projectsString": "Projects",
+    "contactString": "Contact",
+    "faqsString": "FaQS",
+    "loginString": "Login"
+  },
+  "home" : {
+    "tittleString": "My Garden LLC",
+    "subtitleString": "Gardening, Maintenance, and Construction Services.",
+    "button" : "EXPLORE OUR SERVICES",
+    "CompanyString" : "Our Company",
+    "aboutTitleString" : "About",
+    "aboutDescriptionString" : "My Garden, LLC is a company based in Atlanta, Georgia, USA, and it's all about making gardens look awesome and building cool stuff. We kicked things off in August 2020, thanks to the brainchild of our founder, Maximus Hernandez Hernandez, a spirited Mexican lad. He started this gig with the goal of bringing top-notch and kick-ass services to the gardening and construction scene",
+    "missionTitleString" : "Our Mission",
+    "missionDescriptionString" : "As a family-run gig, we totally get how crucial it is to build solid connections with our peeps. We're all about dishing out top-notch work that stands the test of time, using primo materials and sweating the small stuff. When you roll with My Garden LLC, you're not just getting garden services – you're snagging a committed buddy to whip up an outdoor spot you'll be vibing in for years. Trust us, it's gonna be awesome!",
+    "proyectTitleString" : "Projects",
+    "commentsTitleString" : "Comments",
+    "telephoneString" : "Telephone Contact",
+    "emailString" : "Contact Email"
+
+  },
+  "footer":{
+    "titleString":"My Garden LLC",
+    "descriptionString":"Gardening, maintenance and construction services",
+    "privacyPolicyString":"Privacy Policy",
+    "termsAndConditionsString":"Terms and Conditions",
+    "binBataString":"Bin Data",
+    "ourScheduleString":"Our Schedule",
+    "mondayString":"Monday - Friday: 9:00 AM - 5:00 PM",
+    "saturdayString":"Saturday: 10:00 AM - 2:00 PM",
+    "sundayClosedString":"Sunday: Closed",
+    "contactString":"Contact",
+    "addressString":"Address: 123 Main Street, City",
+    "phoneString":"Phone: +001 (470) 234-1526",
+    "emailString":"Email: imygarden1526@gmail.com",
+    "mapString":"Map"
+  },
+
+  "services":{
+    "searchString":"Search your favorite service",
+    "gardeningString":"Gardening",
+    "tagsString":"Tags",
+    "reserveString":"Reserve",
+    "ConstructionString":"Construction",
+    "CleaningString":"Cleaning",
+    "MaintenanceString":"Maintenance"
+  },
+
+  "projects":{
+    "gardeningString":"Gardening",
+    "constructionString":"Construction",
+    "cleaningString":"Cleaning",
+    "maintenanceString":"Maintenance      ",
+    "example5String":"Example 5",
+    "example6String":"Example 6",
+    "buttonString":"MORE INFORMATION"
+  },
+
+  "contact":{
+    "contactInformationString":"Contact information",
+    "countryString":"123 Main St, City, Country",
+    "dayOfServiceString":"Monday to Friday: 9:00 AM - 6:00 PM",
+    "ContactString":"Contact",
+    "nameString":"Name",
+    "emailString":"Email",
+    "affairString":"Affair",
+    "messageString":"Message",
+    "buttonString":"Send"
+  },
+
+  "faqs":{
+    "titleString":"Frequently Asked Questions",
+    "buttonShowAllString":"SHOW ALL",
+    "buttonHideAllString":"HIDE ALL"
+    
+  },
+
+  "login":{
+    "titleString":"Login",
+    "emailString":"Email or user",
+    "InsertUserEmailString":"Insert valid user or email",
+    "passwordString":"Password",
+    "insertValidPasswordString":"Insert a valid password",
+    "descriptionWarningString":"Warning: After 3 consecutive failed login attempts, you account will be temporarily locked for three hours. If you must login now, you can also click Forgot login password? below to reset the login password.",
+    "buttonString":"GET INTO",
+    "registrationString":"You do not have an account? Sign up",
+    "forgotPasswordString":"Forgot your password? Get it here"
+  },
+
+  "registration":{
+    "personalInformation":{
+      "titleString":"Personal Information",
+      "firstNameString":"First Name",
+      "lastNameString":"Last Name",
+      "middleString":"Middle Name",
+      "dateString":"Date of Birth",
+      "genderString":"Select your gender",
+      "ladeString":"Lade",
+      "phoneString":"Phone number",
+      "titlePictureString":"Profile Picture",
+      "selectPictureString":"Select profile picture",
+      "selectImageString":"Select Image",
+      "buttonString":"NEXT STEP"
     },
-    "home" : {
-      "tittleString": "My Garden LLC",
-      "subtitleString": "Gardening, Maintenance, and Construction Services.",
-      "button" : "EXPLORE OUR SERVICES",
-      "CompanyString" : "Our Company",
-      "aboutTitleString" : "About",
-      "aboutDescriptionString" : "My Garden, LLC is a company based in Atlanta, Georgia, USA, and it's all about making gardens look awesome and building cool stuff. We kicked things off in August 2020, thanks to the brainchild of our founder, Maximus Hernandez Hernandez, a spirited Mexican lad. He started this gig with the goal of bringing top-notch and kick-ass services to the gardening and construction scene",
-      "missionTitleString" : "Our Mission",
-      "missionDescriptionString" : "As a family-run gig, we totally get how crucial it is to build solid connections with our peeps. We're all about dishing out top-notch work that stands the test of time, using primo materials and sweating the small stuff. When you roll with My Garden LLC, you're not just getting garden services – you're snagging a committed buddy to whip up an outdoor spot you'll be vibing in for years. Trust us, it's gonna be awesome!",
-      "proyectTitleString" : "Projects",
-      "commentsTitleString" : "Comments",
-      "telephoneString" : "Telephone Contact",
-      "emailString" : "Contact Email"
+    "LocationDetails":{
+      "titleString":"Location details",
+      "postalString":"Postal Code",
+      "buttonString":"VALIDATE",
+      "cityString":"City",
+      "streetString":"Street",
+      "neighborhoodString":"Neighborhood",
+      "houseString":"House Number",
+      "buttonPreviousString":"PREVIOUS STEP"
     },
-    "footer":{
-      
+    "userdata":{
+      "titleString":"User Data",
+      "userString":"Username",
+      "userNameString":"Ex.UserName38",
+      "emailString":"Email",
+      "userEmailString":"useremail@domain.com",
+      "passwordString":"Password",
+      "helloString":"Hello12#",
+      "confirmPasswordString":"Confirm Password",
+      "descriptionString":"I accept the Terms and Conditions for signing up to this page."
     }
-}
+  },
   
+  "passwordRecovery":{
+    "emailString":"Email",
+    "registeredString":"Registered mail",
+    "enterEmailString":"Enter the email associated with the account",
+    "buttonString":"CONFIRM"
+  }
+}

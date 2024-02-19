@@ -28,7 +28,7 @@
             <br v-if="showAlert">
             <v-divider></v-divider>
             <v-form  @submit.prevent="submit">
-              <label for="">Email or user</label>
+              <label for="">{{ $t('login.emailString') }}</label>
               <v-text-field
                 v-model="email.value.value"
                 :error-messages="email.errorMessage.value"
@@ -39,7 +39,7 @@
                 outlined
                 required
               ></v-text-field>
-              <label for="">Password</label>
+              <label for="">{{ $t('login.passwordString') }}</label>
               <v-text-field
                 label="Insert a valid password"
                 v-model="password.value.value"
@@ -55,7 +55,7 @@
               ></v-text-field>
 
               <v-card-text class="text-medium-emphasis text-caption">
-                Warning: After 3 consecutive failed login attempts, you account will be temporarily locked for three hours. If you must login now, you can also click "Forgot login password?" below to reset the login password.
+                {{ $t('login.descriptionWarningString') }}
               </v-card-text>
               <center>
                 <div class="g-recaptcha" data-sitekey="6Le5gHApAAAAADv0EqDbSKVSgpcBxPFpCz6o4zVt" data-callback="onRecaptchaSuccess"></div>
@@ -76,10 +76,10 @@
             <v-divider></v-divider>
             <v-stack class="text-center mt-5">
               <router-link :to="{name: 'login-reistration'}">
-                <p class="mb-0">You do not have an account? Sign up <v-icon icon="mdi-chevron-right"></v-icon></p>
+                <p class="mb-0">{{ $t('login.registrationString') }}<v-icon icon="mdi-chevron-right"></v-icon></p>
               </router-link>
               <router-link :to="{name: 'login-mail'}">
-                <p class="mb-0">Forgot your password? Get it here<v-icon icon="mdi-chevron-right"></v-icon></p>
+                <p class="mb-0">{{ $t('login.forgotPasswordString') }}<v-icon icon="mdi-chevron-right"></v-icon></p>
               </router-link>
             </v-stack>
           </v-card-text>

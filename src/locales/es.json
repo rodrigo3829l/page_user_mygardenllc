@@ -1,5 +1,136 @@
 {
-    "greeting": "Prueba en espanol",
-    "farewell": "Adios"
+    "navbar" : {
+      "homeString": "Inicio",
+      "servicesString": "Servicios",
+      "projectsString": "Proyectos",
+      "contactString": "Contacto",
+      "faqsString": "Preguntas frecuentes",
+      "loginString": "Iniciar sesión"
+    },
+    "home" : {
+      "tittleString": "Mi Jardín LLC",
+      "subtitleString": "Servicios de Jardinería, Mantenimiento y Construcción.",
+      "button" : "EXPLORA NUESTROS SERVICIOS",
+      "CompanyString" : "Nuestra Compañía",
+      "aboutTitleString" : "Acerca de",
+      "aboutDescriptionString" : "Mi Jardín, LLC es una empresa con sede en Atlanta, Georgia, EE. UU., y se trata de hacer que los jardines luzcan increíbles y construir cosas geniales. Iniciamos en agosto de 2020, gracias a la idea de nuestro fundador, Maximus Hernández Hernández, un joven mexicano lleno de espíritu. Comenzó esta empresa con el objetivo de llevar servicios de primera categoría y geniales al ámbito de la jardinería y la construcción.",
+      "missionTitleString" : "Nuestra Misión",
+      "missionDescriptionString" : "Como empresa familiar, entendemos completamente lo crucial que es construir conexiones sólidas con nuestra gente. Nos enfocamos en ofrecer un trabajo de primera calidad que perdure en el tiempo, utilizando materiales de primera y cuidando cada detalle. Cuando eliges a Mi Jardín LLC, no solo obtienes servicios de jardinería, sino que también consigues un compañero comprometido para crear un espacio exterior en el que te sentirás a gusto durante años. ¡Confía en nosotros, será increíble!",
+      "proyectTitleString" : "Proyectos",
+      "commentsTitleString" : "Comentarios",
+      "telephoneString" : "Contacto telefónico",
+      "emailString" : "Correo de contacto"
+    },
+    "footer":{
+      "titleString":"Mi Jardín LLC",
+      "descriptionString":"Servicios de jardinería, mantenimiento y construcción",
+      "privacyPolicyString":"Política de Privacidad",
+      "termsAndConditionsString":"Términos y Condiciones",
+      "binBataString":"Bina Data",
+      "ourScheduleString":"Nuestro Horario",
+      "mondayString":"Lunes - Viernes: 9:00 AM - 5:00 PM",
+      "saturdayString":"Sábado: 10:00 AM - 2:00 PM",
+      "sundayClosedString":"Domingo: Cerrado",
+      "contactString":"Contacto",
+      "addressString":"Dirección: Calle Principal 123, Ciudad",
+      "phoneString":"Teléfono: +001 (470) 234-1526",
+      "emailString":"Correo electrónico: imygarden1526@gmail.com",
+      "mapString":"Mapa"
+    },
+
+    "services":{
+      "searchString":"Busca tu servicio favorito",
+      "gardeningString":"Jardinería",
+      "tagsString":"Etiquetas",
+      "reserveString":"Reservar",
+      "ConstructionString":"Construcción",
+      "CleaningString":"Limpieza",
+      "MaintenanceString":"Mantenimiento"
+    },
+
+    "projects":{
+      "gardeningString":"Jardinería",
+      "constructionString":"Construcción",
+      "cleaningString":"Limpieza",
+      "maintenanceString":"Mantenimiento",
+      "example5String":"Ejemplo 5",
+      "example6String":"Ejemplo 6",
+      "buttonString":"MÁS INFORMACIÓN"
+    },
+
+    "contact":{
+      "contactInformationString":"Información de contacto",
+      "countryString":"123 Calle Principal, Ciudad, País",
+      "dayOfServiceString":"Lunes a Viernes: 9:00 AM - 6:00 PM",
+      "ContactString":"Contacto",
+      "nameString":"Nombre",
+      "emailString":"Correo electrónico",
+      "affairString":"Asunto",
+      "messageString":"Mensaje",
+      "buttonString":"Enviar"
+    },
+
+    "faqs":{
+      "titleString":"Preguntas Frecuentes",
+      "buttonShowAllString":"MOSTRAR TODO",
+      "buttonHideAllString":"OCULTAR TODO"
+      
+    },
+
+    "login":{
+      "titleString":"Iniciar sesión",
+      "emailString":"Correo electrónico o usuario",
+      "InsertUserEmailString":"Inserta un usuario o correo electrónico válido",
+      "passwordString":"Contraseña",
+      "insertValidPasswordString":"Inserta una contraseña válida",
+      "descriptionWarningString":"Advertencia: Después de 3 intentos fallidos consecutivos de inicio de sesión, tu cuenta se bloqueará temporalmente durante tres horas. Si necesitas iniciar sesión ahora, también puedes hacer clic en ¿Olvidaste tu contraseña? abajo para restablecer la contraseña de inicio de sesión.",
+      "buttonString":"INGRESAR",
+      "registrationString":"¿No tienes una cuenta? Regístrate",
+      "forgotPasswordString":"¿Olvidaste tu contraseña? Recupérala aquí"
+    },
+
+    "registration":{
+      "personalInformation":{
+        "titleString":"Información Personal",
+        "firstNameString":"Nombre",
+        "lastNameString":"Apellido",
+        "middleString":"Segundo Nombre",
+        "dateString":"Fecha de Nacimiento",
+        "genderString":"Selecciona tu género",
+        "ladeString":"Señor",
+        "phoneString":"Número de teléfono",
+        "titlePictureString":"Foto de Perfil",
+        "selectPictureString":"Selecciona foto de perfil",
+        "selectImageString":"Seleccionar Imagen",
+        "buttonString":"SIGUIENTE PASO"
+      },
+      "LocationDetails":{
+        "titleString":"Detalles de Ubicación",
+        "postalString":"Código Postal",
+        "buttonString":"VALIDAR",
+        "cityString":"Ciudad",
+        "streetString":"Calle",
+        "neighborhoodString":"Barrio",
+        "houseString":"Número de Casa",
+        "buttonPreviousString":"PASO ANTERIOR"
+      },
+      "userdata":{
+        "titleString":"Datos de Usuario",
+        "userString":"Usuario",
+        "userNameString":"Ej.Usuario38",
+        "emailString":"Correo electrónico",
+        "userEmailString":"usuario@dominio.com",
+        "passwordString":"Contraseña",
+        "helloString":"Hola12#",
+        "confirmPasswordString":"Confirmar Contraseña",
+        "descriptionString":"Acepto los Términos y Condiciones para registrarme en esta página."
+      }
+    },
+    
+    "passwordRecovery":{
+      "emailString":"Correo electrónico",
+      "registeredString":"Correo registrado",
+      "enterEmailString":"Ingresa el correo asociado con la cuenta",
+      "buttonString":"CONFIRMAR"
+    }
 }
-  

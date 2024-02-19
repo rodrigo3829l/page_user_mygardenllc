@@ -4,10 +4,10 @@
     <v-carousel-item v-for="(image, i) in images" :key="i" :src="image" cover>
         <v-row class="fill-height" align="center" justify="center">
           <v-col class="text-center">
-            <div class="display-2 white--text texto">My Garden LLC</div>
-            <p class="title white--text texto">Gardening, Maintenance, and Construction Services.</p><br>
+            <div class="display-2 white--text texto">{{ $t('home.tittleString') }}</div>
+            <p class="title white--text texto">{{ $t('home.subtitleString') }}</p><br>
             <router-link :to="{name: 'services-services'}">
-              <v-btn color="green-darken-3">Explore Our Services</v-btn>
+              <v-btn color="green-darken-3">{{ $t('home.button') }}</v-btn>
             </router-link>
           </v-col>
         </v-row>
@@ -15,21 +15,17 @@
   </v-carousel>
 
   <v-container>
-
-    <p>Prueba</p>
-    <h1>{{ $t('greeting') }}</h1>
-
     <v-row align="center" justify="center">
       <v-col cols="12">
-        <v-card-title class="display-2 text-center text">Our Company</v-card-title>
+        <v-card-title class="display-2 text-center text">{{ $t('home.CompanyString') }}</v-card-title>
       </v-col>
     </v-row>
 
     <v-row>
       <v-col md="6">
-        <v-card-title class="display-1">About</v-card-title>
+        <v-card-title class="display-1">{{ $t('home.aboutTitleString') }}</v-card-title>
         <v-card-text>
-          "My Garden, LLC" is a company based in Atlanta, Georgia, USA, and it's all about making gardens look awesome and building cool stuff. We kicked things off in August 2020, thanks to the brainchild of our founder, Maximus Hernandez Hernandez, a spirited Mexican lad. He started this gig with the goal of bringing top-notch and kick-ass services to the gardening and construction scene.
+          {{ $t('home.aboutDescriptionString') }}
         </v-card-text>
       </v-col>
 
@@ -40,7 +36,7 @@
               <v-icon class="white--text" size="40">mdi-phone</v-icon>
             </v-col>
             <v-col cols="10" class="my-4">
-              <v-card-title class="white--text mb-4">Telephone Contact</v-card-title>
+              <v-card-title class="white--text mb-4">{{ $t('home.telephoneString') }}</v-card-title>
               <v-card-text class="white--text text">+001 (470) 234-1526</v-card-text>
             </v-col>
           </v-row>
@@ -52,7 +48,7 @@
               <v-icon class="white--text" size="40">mdi-email</v-icon>
             </v-col>
             <v-col cols="10" class="my-4">
-              <v-card-title class="white--text mb-4">Contact Email</v-card-title>
+              <v-card-title class="white--text mb-4">{{ $t('home.emailString') }}</v-card-title>
               <v-card-text class="white--text text">mygarden1526@gmail.com</v-card-text>
             </v-col>
           </v-row>
@@ -62,11 +58,11 @@
 
     <v-row align="center" justify="center">
       <v-col md="6">
-        <v-card-title class="display-1 text-center">Our Mission</v-card-title>
+        <v-card-title class="display-1 text-center">{{ $t('home.missionTitleString') }}</v-card-title>
       </v-col>
       <v-col md="6">
         <v-card-text>
-          As a family-run gig, we totally get how crucial it is to build solid connections with our peeps. We're all about dishing out top-notch work that stands the test of time, using primo materials and sweating the small stuff. When you roll with My Garden LLC, you're not just getting garden services – you're snagging a committed buddy to whip up an outdoor spot you'll be vibing in for years. Trust us, it's gonna be awesome!
+          {{ $t('home.missionDescriptionString') }}
         </v-card-text>
       </v-col>
     </v-row>
