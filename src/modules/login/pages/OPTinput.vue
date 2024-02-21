@@ -5,7 +5,7 @@
         <v-card class="elevation-12">
           <v-toolbar color="green-darken-3" dark>
             <v-toolbar-title class="white--text text-center">
-              Verify Your Account
+              {{ $t('passwordRecovery.otp.tittleString') }}
             </v-toolbar-title>
           </v-toolbar>
           <v-card-text>
@@ -23,9 +23,9 @@
             
             <v-form class="text-center mx-auto">
               <div class="text-body-2">
-                We sent a verification code to example..@gmail.com <br>
+                {{ $t('passwordRecovery.otp.messageMail') }}..@gmail.com <br>
 
-                Please check your email and paste the code below.
+                {{ $t('passwordRecovery.otp.checkMessage') }}
               </div>
               <v-sheet color="surface">
               <v-otp-input
@@ -50,10 +50,10 @@
               ></v-btn>
 
               <div class="text-caption" v-if="countdown > 0">
-                Resend in: {{ formatCountdown }}
+                {{ $t('passwordRecovery.otp.resendString') }} {{ formatCountdown }}
               </div>
               <div class="text-caption" v-else>
-                Didn't receive the code? <a href="#" @click.prevent="onClickResend" style="color: #2E7D32;">Resend</a>
+                {{ $t('passwordRecovery.otp.dontReceive') }} <a href="#" @click.prevent="onClickResend" style="color: #2E7D32;">{{ $t('passwordRecovery.otp.resend') }}</a>
               </div>
             </v-form><br>
             <v-divider></v-divider>
@@ -67,6 +67,7 @@
 <script>
 import { useRouter } from 'vue-router';
 import { api } from '@/axios/axios';
+import {i18n} from '@/main.js'
 
 export default {
   data: () => ({
@@ -116,7 +117,7 @@ export default {
           const {data} = await api.post('/user/verify', datos)
 
           if (data.success === false) {
-            this.message = 'Invalid code';
+            this.message = i18n.global.t('passwordRecovery.otp.alertInvalidCode');
             this.typeAlert = 'warning';
             this.tittleAlert = 'Warning';
             this.color = 'warning';
@@ -143,7 +144,7 @@ export default {
         const {data} = await api.post('user/resend', datos)
 
         if (data.success) {
-            this.message = 'Code resending';
+            this.message = i18n.global.t('passwordRecovery.otp.resendingMessage');
             this.typeAlert = 'success';
             this.tittleAlert = 'Success';
             this.color = 'green-darken-3';
@@ -153,7 +154,7 @@ export default {
             }, 2000);
         }
       } catch (error) {
-        this.message = 'Code not resending';
+        this.message = i18n.global.t('passwordRecovery.otp.notResendingMessage');
         this.typeAlert = 'warning';
         this.tittleAlert = 'Warning';
         this.color = 'warning';

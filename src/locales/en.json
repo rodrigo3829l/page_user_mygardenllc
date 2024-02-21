@@ -35,7 +35,7 @@
     "contactString":"Contact",
     "addressString":"Address: 123 Main Street, City",
     "phoneString":"Phone: +001 (470) 234-1526",
-    "emailString":"Email: imygarden1526@gmail.com",
+    "emailString":"Email: ",
     "mapString":"Map"
   },
 
@@ -66,7 +66,7 @@
     "ContactString":"Contact",
     "nameString":"Name",
     "emailString":"Email",
-    "affairString":"Affair",
+    "subjectString":"Subject",
     "messageString":"Message",
     "buttonString":"Send"
   },
@@ -87,23 +87,40 @@
     "descriptionWarningString":"Warning: After 3 consecutive failed login attempts, you account will be temporarily locked for three hours. If you must login now, you can also click Forgot login password? below to reset the login password.",
     "buttonString":"GET INTO",
     "registrationString":"You do not have an account? Sign up",
-    "forgotPasswordString":"Forgot your password? Get it here"
+    "forgotPasswordString":"Forgot your password? Get it here",
+
+    "alertLength" : "Password must be at least 6 characters long.",
+    "alertUppercase" : "Password must contain at least one uppercase letter.",
+    "alertNumber" : "Password must contain at least one number.",
+    "alertCharacter" : "Password must contain only one special character.",
+
+    "alertEmail" : "Must be a valid e-mail with a supported domain.",
+
+    "tittleAlert" : "Successful login",
+    "messageAlert" : "Bienvenido"
+    
   },
 
   "registration":{
+    "buttons" : {
+      "buttonNextString":"NEXT STEP",
+      "buttonPreviousString":"PREVIOUS STEP",
+      "signUp":"SIGN UP"
+    },
     "personalInformation":{
       "titleString":"Personal Information",
       "firstNameString":"First Name",
       "lastNameString":"Last Name",
-      "middleString":"Middle Name",
+      "middleString":"Mother's Maiden Name",
       "dateString":"Date of Birth",
       "genderString":"Select your gender",
+      "maleString" : "Male",
+      "femaleString" : "Female",
       "ladeString":"Lade",
       "phoneString":"Phone number",
       "titlePictureString":"Profile Picture",
       "selectPictureString":"Select profile picture",
-      "selectImageString":"Select Image",
-      "buttonString":"NEXT STEP"
+      "selectImageString":"Select Image"
     },
     "LocationDetails":{
       "titleString":"Location details",
@@ -112,8 +129,9 @@
       "cityString":"City",
       "streetString":"Street",
       "neighborhoodString":"Neighborhood",
-      "houseString":"House Number",
-      "buttonPreviousString":"PREVIOUS STEP"
+      "placeholderNeighboorhood" : "Enter your Neighborhood",
+      "houseString":"House number",
+      "placeholderNumHouse" : "Enter your house number"
     },
     "userdata":{
       "titleString":"User Data",
@@ -124,14 +142,85 @@
       "passwordString":"Password",
       "helloString":"Hello12#",
       "confirmPasswordString":"Confirm Password",
-      "descriptionString":"I accept the Terms and Conditions for signing up to this page."
+      "descriptionString":"I accept the Terms and Conditions for signing up to this page.",
+      "weakPasswordString" : "Weak password",
+      "goodPassword" : "Good password",
+      "excellentPassword" : "Excellent password"
+    },
+    "alerts" : {
+      "postalCode" : "Invalid postal code",
+      "serviceOnly" : "Service is only offered in Atlanta",
+      "imageFile" : "Please select an image file.",
+      "sizeFile" : "File size must be up to 4 megabytes.",
+      "validImage" : "Please select a valid image file.",
+      "firstName" : "Invalid first name",
+      "lastName" : "Invalid last name",
+      "maidenName" : "Invalid Mother's Maiden Name",
+      "dateBirth" : "Invalid date of birth",
+      "lade" : "Lade is required",
+      "number" : "Invalid phone number",
+      "validatingPhone" : "Error validating phone number",
+      "city" : "City is required",
+      "neighborhood" : "Neighborhood is required",
+      "invalidChars" : "Only letters, numbers, spaces, apostrophes, and '#' are allowed",
+      "street" : "Street is required",
+      "houseNumber" : "Invalid house number",
+      "userName" : "Invalid username",
+      "email" : "Must be a valid e-mail with a supported domain.",
+      "alertLength" : "Password must be at least 6 characters long.",
+      "alertUppercase" : "Password must contain at least one uppercase letter.",
+      "alertNumber" : "Password must contain at least one number.",
+      "alertCharacter" : "Password must contain only one special character.",
+      "dontMatch" : "Passwords do not match.",
+      "tittleAlertError" : "Something went wrong while registering your gardening account! 🌿🚨",
+      "tittleAlertSuccess" : "uccessful gardening account registration! 🌟🌻"
     }
   },
   
   "passwordRecovery":{
-    "emailString":"Email",
-    "registeredString":"Registered mail",
-    "enterEmailString":"Enter the email associated with the account",
-    "buttonString":"CONFIRM"
+    "email" : {
+      "emailString":"Email",
+      "registeredString":"Registered mail",
+      "enterEmailString":"Enter the email associated with the account",
+      "buttonString":"CONFIRM",
+      "alertEmail" : "Must be a valid e-mail with a supported domain.",
+      "messageEmail" : "This email has not been registered"
+    },
+    "otp" : {
+      "tittleString" : "Verify Your Account",
+      "messageMail" : "We sent a verification code to: ",
+      "checkMessage" : "Please check your email and paste the code below.",
+      "resendString" : "Resend in:",
+      "dontReceive" : "Didn't receive the code?",
+      "resend" : "Resend",
+      "alertInvalidCode" : "Invalid code",
+      "resendingMessage" : "Code resending",
+      "notResendingMessage" : "Code not resending"
+    },
+    "confirm" : {
+      "tittleString" : "Change password",
+      "passwordTittleString" : "New password",
+      "passwordLabel" : "Insert new password valid",
+      "weakPasswordString" : "Weak password",
+      "goodPassword" : "Good password",
+      "excellentPassword" : "Excellent password",
+
+      "confirmPasswordTittle" : "Confirm your password",
+      "confirmPasswordLabel" : "Valid your password",
+      "buttonString" : "Confirm",
+
+      
+      "alertLength" : "Password must be at least 6 characters long.",
+      "alertUppercase" : "Password must contain at least one uppercase letter.",
+      "alertNumber" : "Password must contain at least one number.",
+      "alertCharacter" : "Password must contain only one special character.",
+      "alertDontMatch" : "Passwords do not match.",
+      "alertDontChange" : "Error al cambiar contraseña",
+      "alertChange" : "Contraseña cambiada con exito"
+    }
+  },
+  "servicesCard" : {
+    "tagsString" : "Tags",
+    "btnString" : "Reserve"
   }
 }

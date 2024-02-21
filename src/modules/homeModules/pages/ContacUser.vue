@@ -12,22 +12,20 @@
           <h2 class="mb-4">{{ $t('contact.contactInformationString') }}</h2>
           <v-list dense>
             <v-list-item>
-              <v-list-item-icon>
+               
                 <v-icon>mdi-phone</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>+1 123 456 789</v-list-item-content>
+               
+               +1 123 456 789 
             </v-list-item>
             <v-list-item>
-              <v-list-item-icon>
+               
                 <v-icon>mdi-map-marker</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>{{ $t('contact.countryString') }}</v-list-item-content>
+               
+               {{ $t('contact.countryString') }} 
             </v-list-item>
             <v-list-item>
-              <v-list-item-icon>
                 <v-icon>mdi-clock</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>{{ $t('contact.dayOfServiceString') }}</v-list-item-content>
+              {{ $t('contact.dayOfServiceString') }}
             </v-list-item>
           </v-list>
         </v-card-text>
@@ -41,11 +39,11 @@
           </v-card-title>
           <v-card-text>
             <v-form>
-              <v-text-field variant="underlined" color="green-darken-3" label="Nombre" required></v-text-field>
-              <v-text-field variant="underlined" color="green-darken-3" label="Correo" type="email" required></v-text-field>
-              <v-text-field variant="underlined" color="green-darken-3" label="Asunto" required></v-text-field>
-              <v-textarea variant="outlined" color="green-darken-3" label="Mensaje" rows="4" required></v-textarea>
-              <v-btn block color="green-darken-3" :loading="loading" @click="load">Enviar</v-btn>
+              <v-text-field variant="underlined" color="green-darken-3" :label="$t('contact.nameString')" required></v-text-field>
+              <v-text-field variant="underlined" color="green-darken-3" :label="$t('contact.emailString')" type="email" required></v-text-field>
+              <v-text-field variant="underlined" color="green-darken-3" :label="$t('contact.subjectString')" required></v-text-field>
+              <v-textarea variant="outlined" color="green-darken-3" :label="$t('contact.messageString')" rows="4" required></v-textarea>
+              <v-btn block color="green-darken-3" :loading="loading" @click="load">{{ $t('contact.buttonString') }}</v-btn>
             </v-form>
           </v-card-text>
         </v-card>

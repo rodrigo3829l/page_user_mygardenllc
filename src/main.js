@@ -14,7 +14,7 @@ import en from './locales/en.json';
 
 loadFonts();
 const pinia = createPinia();
-const i18n = createI18n({
+export const i18n = createI18n({
   locale: 'en', // idioma inicial
   fallbackLocale: 'es', // idioma de reserva
   messages: { es, en }

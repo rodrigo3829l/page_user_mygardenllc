@@ -519,24 +519,23 @@ export default {
               </v-menu>
             </v-col>
             <v-col cols="auto" class="d-flex align-items-center">
-  <v-btn icon variant="text" @click="changeLanguage('en')" class="mx-1">
-    <v-img
-      src="https://flagcdn.com/16x12/us.webp"
-      alt="USA"
-      width="16"
-      height="12"
-    ></v-img>
-  </v-btn>
-  <v-btn icon variant="text" @click="changeLanguage('es')" class="mx-1">
-    <v-img
-      src="https://flagcdn.com/16x12/mx.webp"
-      alt="Mexico"
-      width="16"
-      height="12"
-    ></v-img>
-  </v-btn>
-</v-col>
-
+              <v-btn icon variant="text" @click="changeLanguage('en')" class="mx-1" v-if="this.$i18n.locale === 'es'">
+                <v-img
+                  src="https://flagcdn.com/16x12/us.webp"
+                  alt="USA"
+                  width="16"
+                  height="12"
+                ></v-img>
+              </v-btn>
+              <v-btn icon variant="text" @click="changeLanguage('es')" class="mx-1" v-if="this.$i18n.locale === 'en'" >
+                <v-img
+                  src="https://flagcdn.com/16x12/mx.webp"
+                  alt="Mexico"
+                  width="16"
+                  height="12"
+                ></v-img>
+              </v-btn>
+            </v-col>
           </v-row>
         </div>
       </v-container>
@@ -546,6 +545,8 @@ export default {
   <script>
     import { useUserStore } from '@/store/store';
     import { useRouter } from 'vue-router';
+    import { setLanguage } from '@/store/languajeStore';
+    // import { setLanguage } from '@/store/languageStore'
     
     export default {
       setup() {
@@ -591,6 +592,7 @@ export default {
       methods: {
         changeLanguage(lang) {
           this.$i18n.locale = lang;
+          setLanguage(lang);
         }
       },
       mounted() {

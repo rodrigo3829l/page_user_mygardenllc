@@ -32,7 +32,7 @@
           <div class="contact-list">
             <p><i class="fa fa-map-marker-alt"></i>{{ $t('footer.addressString') }}</p>
             <p><i class="fa fa-phone"></i>{{ $t('footer.phoneString') }}</p>
-            <p><i class="fa fa-envelope"></i>{{ $t('footer.emailString') }}</p>
+            <p><i class="fa fa-envelope"></i>{{ $t('footer.emailString') }}mygarden1526@gmail.com</p>
           </div>
         </v-col>
         <v-col md="3">

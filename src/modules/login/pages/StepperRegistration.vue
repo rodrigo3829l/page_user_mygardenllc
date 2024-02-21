@@ -15,17 +15,16 @@
             v-model="step"
             :items="items"
             hide-actions
-            @click:step="handleStepClick"
           >
             <template v-slot:item.1>
               
-              <h3 class="text-h6">Personal Information</h3>
+              <h3 class="text-h6">{{ $t('registration.personalInformation.titleString') }}</h3>
 
               <br>
                 <v-row>
                   <v-col cols="12" md="6">
                     <v-text-field
-                      label="First Name"
+                      :label="$t('registration.personalInformation.firstNameString')"
                       v-model="formData.nombre"
                       required
                       :error-messages="errors.nombre"
@@ -35,7 +34,7 @@
                   </v-col>
                   <v-col cols="12" md="6">
                     <v-text-field
-                      label="Last Name"
+                      :label="$t('registration.personalInformation.lastNameString')"
                       v-model="formData.apellidoPaterno"
                       required
                       :error-messages="errors.apellidoPaterno"
@@ -45,7 +44,7 @@
                   </v-col>
                   <v-col cols="12" md="6">
                     <v-text-field
-                      label="Middle Name"
+                      :label="$t('registration.personalInformation.middleString')"
                       v-model="formData.apellidoMaterno"
                       required
                       :error-messages="errors.apellidoMaterno"
@@ -55,7 +54,7 @@
                   </v-col>
                   <v-col cols="12" md="6">
                     <v-text-field
-                      label="Date of Birth"
+                      :label="$t('registration.personalInformation.dateString')"
                       type="date"
                       v-model="formData.fechaNacimiento"
                       required
@@ -66,9 +65,9 @@
                   </v-col>
                   <v-col cols="12" md="6">
                     <v-select
-                      label="Select your gender"
+                      :label="$t('registration.personalInformation.genderString')"
                       v-model="formData.sexo"
-                      :items="['Male', 'Female']"
+                      :items="[$t('registration.personalInformation.maleString'), $t('registration.personalInformation.femaleString')]"
                       required
                       variant="underlined"
                       color="green-darken-3"
@@ -80,7 +79,7 @@
                         <v-select
                           v-model="formData.lada"
                           :items="['+1 (USA)', '+52 (Mexico)']"
-                          label="Lada"
+                          :label="$t('registration.personalInformation.ladeString')"
                           :error-messages="errors.lada"
                           variant="underlined"
                           color="green-darken-3"
@@ -88,7 +87,7 @@
                       </v-col>
                       <v-col cols="8">
                         <v-text-field
-                          label="Phone number"
+                          :label="$t('registration.personalInformation.phoneString')"
                           v-model="formData.phone"
                           required
                           :error-messages="errors.phone"
@@ -104,7 +103,7 @@
                 </v-row>
               
               <v-divider></v-divider>
-              <h3 class="text-h6">Profile Picture</h3>
+              <h3 class="text-h6">{{ $t('registration.personalInformation.titlePictureString') }}</h3>
 
               <br>
               <v-row>
@@ -113,7 +112,7 @@
                     @change="handleImageUpload"
                     accept="image/*"
                     :error-messages="errors.image"
-                    label="Select profile picture"
+                    :label="$t('registration.personalInformation.selectPictureString')"
                   ></v-file-input>
                 </v-col>
                 <v-col cols="12" md="6">
@@ -125,7 +124,7 @@
                     contain
                   ></v-img>
                   <v-row v-else class="image-preview" justify="center" align="center">
-                    <div class="image-placeholder">Selected Image</div>
+                    <div class="image-placeholder">{{ $t('registration.personalInformation.selectImageString') }}</div>
                   </v-row>
                 </v-col>
               </v-row>
@@ -135,7 +134,7 @@
                 color="red-darken-4"
                 variant="text"
               >
-                Previous Step
+                {{ $t('registration.buttons.buttonPreviousString') }}
               </v-btn>
               <v-btn
                 v-if="step !== items.length"
@@ -143,14 +142,14 @@
                 color="green-darken-3"
                 variant="text"
               >
-                Next Step
+                {{ $t('registration.buttons.buttonNextString') }}
               </v-btn>
 
             </template>
             
 
             <template v-slot:item.2>
-              <h3 class="text-h6">Location details</h3>
+              <h3 class="text-h6">{{ $t('registration.LocationDetails.titleString') }}</h3>
 
               <br>
               <v-row>
@@ -159,7 +158,7 @@
                     <v-col cols="8" sm="9">
                       <v-text-field
                         v-model="formData.postalCode"
-                        label="Postal Code"
+                        :label="$t('registration.LocationDetails.postalString')"
                         required
                         type="number"
                         :error-messages="errors.postalCode"
@@ -177,14 +176,14 @@
                         :loading="loadBtn"
                         :disabled="loadBtn"
                       >
-                        Validate
+                        {{ $t('registration.LocationDetails.buttonString') }}
                       </v-btn>
                     </v-col>
                   </v-row>
 
                   <v-autocomplete
                     v-model="formData.city"
-                    label="City"
+                    :label="$t('registration.LocationDetails.cityString')"
                     color="green-darken-3"
                     required
                     :disabled="true"
@@ -194,7 +193,7 @@
   
                   <v-select
                     v-model="formData.street"
-                    label="Street"
+                    :label="$t('registration.LocationDetails.streetString')"
                     required
                     :disabled="!cpValidate"
                     :error-messages="errors.street"
@@ -224,10 +223,10 @@
 
                   <v-text-field
                     v-model="formData.neighborhood"
-                    label="Neighborhood"
+                    :label="$t('registration.LocationDetails.neighborhoodString')"
                     required
                     :disabled="!cpValidate"
-                    placeholder="Enter your neighborhood"
+                    :placeholder="$t('registration.LocationDetails.placeholderNeighboorhood')"
                     :error-messages="errors.neighborhood"
                     variant="underlined"
                     color="green-darken-3"
@@ -235,13 +234,13 @@
   
                   <v-text-field
                     v-model="formData.houseNumber"
-                    label="House Number"
+                    :label="$t('registration.LocationDetails.houseString')"
                     required
                     :disabled="!cpValidate"
                     :error-messages="errors.houseNumber"
                     variant="underlined"
                     color="green-darken-3"
-                    placeholder="Enter you house number"
+                    :placeholder="$t('registration.LocationDetails.placeholderNumHouse')"
                     type="number"
                   ></v-text-field>
 
@@ -252,7 +251,7 @@
                     color="red-darken-4"
                     variant="text"
                   >
-                    Previous Step
+                    {{ $t('registration.buttons.buttonPreviousString') }}
                   </v-btn>
                   <v-btn
                     v-if="step !== items.length"
@@ -261,47 +260,47 @@
                     variant="text"
                     :disabled="!cpValidate"
                   >
-                    Next Step
+                    {{ $t('registration.buttons.buttonNextString') }}
                   </v-btn>
                 </v-col>
               </v-row>
             </template>
 
             <template v-slot:item.3>
-              <h3 class="text-h6">User data</h3>
-
+              <h3 class="text-h6">{{ $t('registration.userdata.titleString') }}</h3>
+              <!-- DE AQUI EN ADELANTE NO APARECEN NI LOS CAMPOS NI LOS BOTONES -->
               <br>
               <v-row>
                 <v-col>
                   <v-text-field
                     v-model="formData.userName"
-                    label="Username"
+                    :label="$t('registration.userdata.userString')"
                     color="green-darken-3"
                     required
                     :error-messages="errors.userName"
                     variant="underlined"
-                    placeholder="Ex. UserName38"
+                    :placeholder="$t('registration.userdata.userNameString')"
                   ></v-text-field>
     
                   <v-text-field
                     v-model="formData.email"
-                    label="Email"
+                    :label="$t('registration.userdata.emailString')"
                     required
                     :error-messages="errors.email"
                     variant="underlined"
-                    placeholder="useremail@domain.com"
+                    :placeholder="$t('registration.userdata.userEmailString')"
                     type="email"
                     color="green-darken-3"
                   ></v-text-field>
     
                   <v-text-field
                     v-model="formData.password"
-                    label="Password"
+                    :label="$t('registration.userdata.passwordString')"
                     required
                     :error-messages="errors.password"
                     variant="underlined"
                     color="green-darken-3"
-                    placeholder="Hello12#"
+                    :placeholder="$t('registration.userdata.helloString')"
                     :append-inner-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
                     :type="passwordVisible ? 'text' : 'password'"
                     outlined
@@ -310,19 +309,19 @@
                   ></v-text-field>
 
                   <div v-if="formData.password.length > 0">
-                    <span v-if="formData.passwordStrength === 'weak'" class="red--text">Weak password</span>
-                    <span v-else-if="formData.passwordStrength === 'good'" class="orange--text">Good password</span>
-                    <span v-else class="green--text">Excellent password</span>
+                    <span v-if="formData.passwordStrength === 'weak'" class="red--text">{{ $t('registration.userdata.weakPasswordString') }}</span>
+                    <span v-else-if="formData.passwordStrength === 'good'" class="orange--text">{{ $t('registration.userdata.goodPassword') }}</span>
+                    <span v-else class="green--text">{{ $t('registration.userdata.excellentPassword') }}</span>
                   </div>
     
                   <v-text-field
                     v-model="formData.confirmPassword"
-                    label="Confirm Password"
+                    :label="$t('registration.userdata.confirmPasswordString')"
                     required
                     :error-messages="errors.confirmPassword"
                     variant="underlined"
                     color="green-darken-3"
-                    placeholder="Hello12#"
+                    :placeholder="$t('registration.userdata.helloString')"
                     :append-inner-icon="passwordVisibleConfirm ? 'mdi-eye-off' : 'mdi-eye'"
                     :type="passwordVisibleConfirm ? 'text' : 'password'"
                     outlined
@@ -333,7 +332,7 @@
                     v-model="formData.agreeToTerms"
                     :required="true"
                     :error-messages="errors.agreeToTerms"
-                    label="I accept the Terms and Conditions for signing up to this page."
+                    :label="$t('registration.userdata.descriptionString')"
                     color="green-darken-3"
                   ></v-checkbox>
                 
@@ -343,7 +342,7 @@
                   color="red-darken-4"
                   variant="text"
                 >
-                  Previous Step
+                  {{ $t('registration.buttons.buttonPreviousString') }}
                 </v-btn>
                 <v-btn
                 :disabled="!formData.agreeToTerms"
@@ -351,7 +350,7 @@
                   color="green-darken-3"
                   variant="text"
                 >
-                  Sign Up
+                  {{ $t('registration.buttons.signUp') }}
                 </v-btn>
                 
                 </v-col>
@@ -447,7 +446,7 @@ export default {
       },
       shipping: 0,
       step: 1,
-      items: ['Personal Information', 'Location Details', 'User Data'],
+      items: [this.$t('registration.personalInformation.titleString'), this.$t('registration.LocationDetails.titleString'), this.$t('registration.userdata.titleString')],
       routes: [
         {
           title: 'Home',
@@ -528,7 +527,7 @@ export default {
 
       // Verificación inicial del formato del código postal
       if (this.formData.postalCode.length !== 5 || !/^\d+$/.test(this.formData.postalCode)) {
-        this.errors.postalCode = 'Invalid postal code';
+        this.errors.postalCode = this.$t('registration.alerts.postalCode');
         this.cpValidate = false; // Asume que la validación es falsa inicialmente
         this.loadBtn = false;
         return;
@@ -547,12 +546,12 @@ export default {
           this.cpValidate = true;
           this.formData.city = placeName; // Asigna el nombre del lugar al campo de ciudad
         } else {
-          this.errors.postalCode = 'Service is only offered in Atlanta'; // Mensaje de error si no es Atlanta
+          this.errors.postalCode = this.$t('registration.alerts.serviceOnly'); // Mensaje de error si no es Atlanta
           this.cpValidate = false;
         }
       } catch (error) {
         console.error("Error fetching postal code info:", error);
-        this.errors.postalCode = 'Invalid postal code';
+        this.errors.postalCode = this.$t('registration.alerts.postalCode');
         this.cpValidate = false;
       } finally {
         this.loadBtn = false;
@@ -569,11 +568,11 @@ export default {
       const file = event.target.files[0];
 
       // Check if a file is selected
-      this.errors.image = (!file) ? 'Please select an image file.' : '';
+      this.errors.image = (!file) ? this.$t('registration.alerts.imageFile') : '';
 
       // Check the file size (in bytes)
       const maxSize = 4 * 1024 * 1024; // 4 megabytes
-      this.errors.image = (file.size > maxSize) ? 'File size must be up to 4 megabytes.' : '';
+      this.errors.image = (file.size > maxSize) ? this.$t('registration.alerts.sizeFile')  : '';
 
       // Read the image as a Blob object
       const reader = new FileReader();
@@ -585,7 +584,7 @@ export default {
       if (file.type.startsWith('image/')) {
         reader.readAsDataURL(file);
       } else {
-        this.errors.image = 'Please select a valid image file.';
+        this.errors.image = this.$t('registration.alerts.validImage') ;
       }
     },
 
@@ -597,22 +596,22 @@ export default {
 
       // Validation for Personal Information step
       this.errors.nombre = (this.formData.nombre.length < 3 || !/^[a-zA-ZüÜáéíóúÁÉÍÓÚñÑ' ]+$/.test(this.formData.nombre))
-          ? 'Invalid first name'
+          ? this.$t('registration.alerts.firstName') 
           : '';
 
       this.errors.apellidoPaterno = (this.formData.apellidoPaterno.length < 4 || !/^[a-zA-ZüÜáéíóúÁÉÍÓÚñÑ' ]+$/.test(this.formData.apellidoPaterno))
-          ? 'Invalid last name'
+          ? this.$t('registration.alerts.lastName') 
           : '';
 
       this.errors.apellidoMaterno = (this.formData.apellidoMaterno.length < 4 || !/^[a-zA-ZüÜáéíóúÁÉÍÓÚñÑ' ]+$/.test(this.formData.apellidoMaterno))
-          ? 'Invalid middle name'
+          ? this.$t('registration.alerts.maidenName') 
           : '';
 
       this.errors.fechaNacimiento = (new Date().getFullYear() - new Date(this.formData.fechaNacimiento).getFullYear() < 18)
-        ? 'Invalid date of birth'
+        ? this.$t('registration.alerts.dateBirth') 
         : '';
       this.errors.lada = (!this.formData.lada)
-        ? 'Lada is required'
+        ? this.$t('registration.alerts.lade') 
         : '';
 
       // Validación del número de teléfono con la API
@@ -626,11 +625,11 @@ export default {
         if (response.data.valid) {
           this.errors.phone = '';
         } else {
-          this.errors.phone = 'Invalid phone number';
+          this.errors.phone = this.$t('registration.alerts.number') 
         }
       } catch (error) {
         console.error(error);
-        this.errors.phone = 'Error validating phone number';
+        this.errors.phone = this.$t('registration.alerts.validatingPhone') 
       }
 
 
@@ -644,29 +643,29 @@ export default {
     validateDirecion() {
       // Validation for Location Details step
       this.errors.city = (!this.formData.city)
-        ? 'City is required'
+        ?this.$t('registration.alerts.city') 
         : '';
       
         // Define the regex pattern to match valid characters
         const validPattern = /^[a-zA-Z0-9\s'#]+$/;
         const hasInvalidChars = !validPattern.test(this.formData.neighborhood);
         if (!this.formData.neighborhood) {
-            this.errors.neighborhood = 'Neighborhood is required';
+            this.errors.neighborhood = this.$t('registration.alerts.neighborhood') 
         } 
 
         // Check for invalid characters
         else if (hasInvalidChars) {
-            this.errors.neighborhood = 'Only letters, numbers, spaces, apostrophes, and "#" are allowed';
+            this.errors.neighborhood = this.$t('registration.alerts.invalidChars')
         }
         else{
           this.errors.neighborhood = ''
         }
             
       this.errors.street = (!this.formData.street)
-        ? 'Street is required'
+        ? this.$t('registration.alerts.street')
         : '';
       this.errors.houseNumber = (this.formData.houseNumber.length < 3 || !/^\d+$/.test(this.formData.houseNumber))
-        ? 'Invalid house number'
+        ? this.$t('registration.alerts.houseNumber')
         : '';
 
       if (Object.values(this.errors).some(error => error !== '')) {
@@ -677,11 +676,11 @@ export default {
     validateUser() {
       // Validation for User Data step
       this.errors.userName = (!this.formData.userName || this.formData.userName.length < 6 || !/^[a-zA-Z0-9]+$/.test(this.formData.userName))
-        ? 'Invalid username'
+        ? this.$t('registration.alerts.userName')
         : '';
         this.errors.email = (/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(this.formData.email))
         ? ''
-        : 'Must be a valid e-mail with a supported domain.';
+        : this.$t('registration.alerts.email')
 
 
       if (this.formData.password === this.formData.confirmPassword){
@@ -689,49 +688,49 @@ export default {
         this.errors.password = ''
       }
       if (this.formData.password < 6) {
-        this.errors.password = 'Password must be at least 6 characters long.';
+        this.errors.password = this.$t('registration.alerts.alertLength');
       }
 
       // Check for at least one uppercase letter
       if (!/[A-Z]/.test(this.formData.password)) {
-        this.errors.password =  'Password must contain at least one uppercase letter.';
+        this.errors.password =  this.$t('registration.alerts.alertUppercase')
       }
 
       // Check for at least one number
       if (!/\d/.test(this.formData.password)) {
-        this.errors.password =  'Password must contain at least one number.';
+        this.errors.password =  this.$t('registration.alerts.alertNumber')
       }
-
+      
       // Check for only one special character
       const specialCharCount = (this.formData.password.match(/[^A-Za-z0-9]/g) || []).length;
       if (specialCharCount !== 1) {
-        this.errors.password =  'Password must contain only one special character.';
+        this.errors.password =  this.$t('registration.alerts.alertCharacter')
       }
 
 
       if (this.formData.confirmPassword < 6) {
-        this.errors.confirmPassword = 'Password must be at least 6 characters long.';
+        this.errors.confirmPassword = this.$t('registration.alerts.alertLength');
       }
 
       // Check for at least one uppercase letter
       if (!/[A-Z]/.test(this.formData.confirmPassword)) {
-        this.errors.confirmPassword =  'Password must contain at least one uppercase letter.';
+        this.errors.confirmPassword =  this.$t('registration.alerts.alertUppercase');
       }
 
       // Check for at least one number
       if (!/\d/.test(this.formData.confirmPassword)) {
-        this.errors.confirmPassword =  'Password must contain at least one number.';
+        this.errors.confirmPassword =  this.$t('registration.alerts.alertNumber')
       }
 
       // Check for only one special character
       const specialCharCountTwo = (this.formData.confirmPassword.match(/[^A-Za-z0-9]/g) || []).length;
       if (specialCharCountTwo !== 1) {
-        this.errors.confirmPassword =  'Password must contain only one special character.';
+        this.errors.confirmPassword =  this.$t('registration.alerts.alertCharacter')
       }
 
       if(this.formData.password !== this.formData.confirmPassword){
-        this.errors.confirmPassword = 'Passwords do not match.'
-        this.errors.password = 'Passwords do not match.'
+        this.errors.confirmPassword = this.$t('registration.alerts.dontMatch')
+        this.errors.password = this.$t('registration.alerts.dontMatch')
       }
       
 
@@ -777,14 +776,14 @@ export default {
         const {data} = await api.post('/user/signup', datos);
         
         if(data.success === false){
-          this.tittle = 'Something went wrong while registering your gardening account! 🌿🚨'
+          this.tittle = this.$t('registration.alerts.tittleAlertError')
           this.message = data.msg
           this.icon = 'mdi-alert-octagon-outline'
           this.color = 'red-darken-4'
           this.progress = false
         }else{
-          this.tittle = 'Successful gardening account registration! 🌟🌻'
-          this.message = "Kindly check your inbox; we've sent you a verification code. Happy cultivating! 🪴📬"
+          this.tittle = this.$t('registration.alerts.tittleAlertSuccess')
+          this.message = data.msg
           this.icon = 'mdi-check-circle'
           this.color = 'green-darken-3'
           this.progress = false

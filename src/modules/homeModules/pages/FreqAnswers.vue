@@ -10,10 +10,10 @@
         <h2>{{ $t('faqs.titleString') }}</h2>
         <div class="text-center d-flex pb-4">
           <v-btn class="ma-2" @click="all">
-            Show All
+            {{  $t('faqs.buttonShowAllString') }}
           </v-btn>
           <v-btn class="ma-2" @click="none">
-            Hide All
+            {{  $t('faqs.buttonHideAllString') }}
           </v-btn>
         </div>
         <v-expansion-panels

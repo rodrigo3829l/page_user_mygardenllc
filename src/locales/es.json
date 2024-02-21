@@ -34,7 +34,7 @@
       "contactString":"Contacto",
       "addressString":"Dirección: Calle Principal 123, Ciudad",
       "phoneString":"Teléfono: +001 (470) 234-1526",
-      "emailString":"Correo electrónico: imygarden1526@gmail.com",
+      "emailString":"Correo electrónico: ",
       "mapString":"Mapa"
     },
 
@@ -65,7 +65,7 @@
       "ContactString":"Contacto",
       "nameString":"Nombre",
       "emailString":"Correo electrónico",
-      "affairString":"Asunto",
+      "subjectString":"Asunto",
       "messageString":"Mensaje",
       "buttonString":"Enviar"
     },
@@ -86,23 +86,41 @@
       "descriptionWarningString":"Advertencia: Después de 3 intentos fallidos consecutivos de inicio de sesión, tu cuenta se bloqueará temporalmente durante tres horas. Si necesitas iniciar sesión ahora, también puedes hacer clic en ¿Olvidaste tu contraseña? abajo para restablecer la contraseña de inicio de sesión.",
       "buttonString":"INGRESAR",
       "registrationString":"¿No tienes una cuenta? Regístrate",
-      "forgotPasswordString":"¿Olvidaste tu contraseña? Recupérala aquí"
+      "forgotPasswordString":"¿Olvidaste tu contraseña? Recupérala aquí",
+
+      "alertLength" : "La contraseña debe tener al menos 6 caracteres de longitud.",
+      "alertUppercase" : "La contraseña debe contener al menos una letra mayúscula.",
+      "alertNumber" : "La contraseña debe contener al menos un número.",
+      "alertCharacter" : "La contraseña debe contener solo un carácter especial.",
+
+      "alertEmail" : "Debe ser un correo electrónico válido con un dominio admitido.",
+
+      "tittleAlert" : "Inicio de sesión exitoso",
+      "messageAlert" : "Bienvenido" 
     },
 
     "registration":{
+      "buttons" : {
+        "buttonNextString":"SIGUIENTE PASO",
+        "buttonPreviousString":"PASO ANTERIOR",
+        "signUp":"REGISTRARME"
+
+      },
       "personalInformation":{
         "titleString":"Información Personal",
         "firstNameString":"Nombre",
-        "lastNameString":"Apellido",
-        "middleString":"Segundo Nombre",
+        "lastNameString":"Apellido paterno",
+        "middleString":"Apellido materno",
         "dateString":"Fecha de Nacimiento",
         "genderString":"Selecciona tu género",
-        "ladeString":"Señor",
+        "maleString" : "Hombre",
+        "femaleString" : "Mujer",
+        "ladeString":"lada",
         "phoneString":"Número de teléfono",
         "titlePictureString":"Foto de Perfil",
-        "selectPictureString":"Selecciona foto de perfil",
-        "selectImageString":"Seleccionar Imagen",
-        "buttonString":"SIGUIENTE PASO"
+        "selectPictureString":"Selecciona tu foto de perfil",
+        "selectImageString":"Seleccionar Imagen"
+        
       },
       "LocationDetails":{
         "titleString":"Detalles de Ubicación",
@@ -110,27 +128,99 @@
         "buttonString":"VALIDAR",
         "cityString":"Ciudad",
         "streetString":"Calle",
-        "neighborhoodString":"Barrio",
+        "neighborhoodString":"Vecindario",
+        "placeholderNeighboorhood" : "Ingresa tu vecindario",
         "houseString":"Número de Casa",
-        "buttonPreviousString":"PASO ANTERIOR"
+        "placeholderNumHouse" : "Ingresa tu numero de casa"
       },
       "userdata":{
         "titleString":"Datos de Usuario",
-        "userString":"Usuario",
-        "userNameString":"Ej.Usuario38",
+        "userString":"Nombre de Usuario",
+        "userNameString":"Ej. Usuario38",
         "emailString":"Correo electrónico",
         "userEmailString":"usuario@dominio.com",
         "passwordString":"Contraseña",
         "helloString":"Hola12#",
         "confirmPasswordString":"Confirmar Contraseña",
-        "descriptionString":"Acepto los Términos y Condiciones para registrarme en esta página."
+        "descriptionString":"Acepto los Términos y Condiciones para registrarme en esta página.",
+        "weakPasswordString" : "Contraseña débil",
+        "goodPassword" : "Contraseña buena",
+        "excellentPassword" : "Contraseña excelente"
+      },
+      "alerts" : {
+        "postalCode" : "Código postal inválido",
+        "serviceOnly" : "El servicio solo se ofrece en Atlanta",
+        "imageFile" : "Por favor, seleccione un archivo de imagen.",
+        "sizeFile" : "El tamaño del archivo debe ser de hasta 4 megabytes.",
+        "validImage" : "Por favor, seleccione un archivo de imagen válido.",
+        "firstName" : "Nombre inválido",
+        "lastName" : "Apellido paterno inválido",
+        "maidenName" : "Apellido materno invalido",
+        "dateBirth" : "Fecha de nacimiento inválida",
+        "lade" : "La Lada es obligatoria",
+
+        "number" : "Número de teléfono inválido",
+        "validatingPhone" : "Error al validar el número de teléfono",
+        "city" : "La ciudad es obligatoria",
+        "neighborhood" : "El vecindadio es obligatorio",
+        "invalidChars" : "Solo se permiten letras, números, espacios, apóstrofes y '#'",
+
+        "street" : "La calle es obligatoria",
+        "houseNumber" : "Número de casa inválido",
+
+        "userName" : "Nombre de usuario inválido",
+        "email" : "Debe ser un correo electrónico válido con un dominio admitido.",
+        "alertLength" : "La contraseña debe tener al menos 6 caracteres de longitud.",
+        "alertUppercase" : "La contraseña debe contener al menos una letra mayúscula.",
+        "alertNumber" : "La contraseña debe contener al menos un número.",
+        "alertCharacter" : "La contraseña debe contener solo un carácter especial.",
+        "dontMatch" : "Las contraseñas no coinciden.",
+        "tittleAlertError" : "¡Algo salió mal al registrar tu cuenta de jardinería! 🌿🚨",
+        "tittleAlertSuccess" : "¡Registro exitoso de cuenta de jardinería! 🌟🌻"
       }
     },
     
     "passwordRecovery":{
-      "emailString":"Correo electrónico",
-      "registeredString":"Correo registrado",
-      "enterEmailString":"Ingresa el correo asociado con la cuenta",
-      "buttonString":"CONFIRMAR"
+      "email" : {
+        "emailString":"Correo electrónico",
+        "registeredString":"Correo registrado",
+        "enterEmailString":"Ingrese el correo electrónico asociado a la cuenta",
+        "buttonString":"CONFIRMAR",
+        "alertEmail" : "Debe ser un correo electrónico válido con un dominio admitido.",
+        "messageEmail" : "Este correo electrónico no ha sido registrado"
+      },
+      "otp" : {
+        "tittleString" : "Verifique Su Cuenta",
+        "messageMail" : "Enviamos un código de verificación a: ",
+        "checkMessage" : "Por favor, revise su correo electrónico y pegue el código a continuación.",
+        "resendString" : "Reenviando en:",
+        "dontReceive" : "¿No recibió el código?",
+        "resend" : "Reenviar",
+        "alertInvalidCode" : "Código inválido",
+        "resendingMessage" : "Codigo reenviado",
+        "notResendingMessage" : "Código no reenviado"
+      },
+      "confirm" : {
+        "tittleString" : "Cambiar contraseña",
+        "passwordTittleString" : "Nueva contraseña",
+        "passwordLabel" : "Ingrese una nueva contraseña válida",
+        "weakPasswordString" : "Contraseña débil",
+        "goodPassword" : "Contraseña buena",
+        "excellentPassword" : "Contraseña excelente",
+        "confirmPasswordTittle" : "Confirme su contraseña",
+        "confirmPasswordLabel" : "Valide su contraseña",
+        "buttonString" : "Confirmar",
+        "alertLength" : "La contraseña debe tener al menos 6 caracteres de longitud.",
+        "alertUppercase" : "La contraseña debe contener al menos una letra mayúscula.",
+        "alertNumber" : "La contraseña debe contener al menos un número.",
+        "alertCharacter" : "La contraseña debe contener solo un carácter especial.",
+        "alertDontMatch" : "Las contraseñas no coinciden.",
+        "alertDontChange" : "Error al cambiar la contraseña",
+        "alertChange" : "Contraseña cambiada con éxito"
+      }
+    },
+    "servicesCard" : {
+      "tagsString" : "Etiquetas",
+      "btnString" : "Reservar"
     }
 }

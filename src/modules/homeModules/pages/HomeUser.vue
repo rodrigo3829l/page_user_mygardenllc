@@ -20,7 +20,6 @@
         <v-card-title class="display-2 text-center text">{{ $t('home.CompanyString') }}</v-card-title>
       </v-col>
     </v-row>
-
     <v-row>
       <v-col md="6">
         <v-card-title class="display-1">{{ $t('home.aboutTitleString') }}</v-card-title>
@@ -70,16 +69,16 @@
 
     <h2>Proyectos</h2>
       <v-slide-group center-active>
-        <v-slide-item v-for="(proyecto, i) in proyectos" :key="i">
+        <v-slide-group-item v-for="(proyecto, i) in proyectos" :key="i">
           <div style="max-width: 400px ; margin-left: 10px; margin-right: 10px;" >
             <ProyectsCard :proyecto="proyecto" />
           </div>
-        </v-slide-item>
+        </v-slide-group-item>
       </v-slide-group>
 
     <h2>Comentarios</h2>
       <v-slide-group center-active>
-        <v-slide-item v-for="(comentario, i) in Comentarios" :key="i">
+        <v-slide-group-item v-for="(comentario, i) in Comentarios" :key="i">
           <div style="max-width: 440px ; margin-left: 10px; margin-right: 10px;">
             <ComentsUserCard
               :userAvatar="comentario.userAvatar"
@@ -88,7 +87,7 @@
               :rating="comentario.rating"
             />
           </div>
-        </v-slide-item>
+        </v-slide-group-item>
       </v-slide-group>
   </v-container><br>
 </template>

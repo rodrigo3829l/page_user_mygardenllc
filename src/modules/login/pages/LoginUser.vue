@@ -10,7 +10,7 @@
         <v-card class="elevation-12">
           <v-toolbar color="green-darken-3" dark>
             <v-toolbar-title class="white--text text-center">
-              Login
+              {{ $t('login.titleString') }}
             </v-toolbar-title>
           </v-toolbar>
           <v-card-text>
@@ -32,7 +32,7 @@
               <v-text-field
                 v-model="email.value.value"
                 :error-messages="email.errorMessage.value"
-                label="Insert valid user or email"
+                :label="$t('login.InsertUserEmailString')"
                 variant="underlined"
                 prepend-inner-icon="mdi-account"
                 color="green-darken-3"
@@ -41,7 +41,7 @@
               ></v-text-field>
               <label for="">{{ $t('login.passwordString') }}</label>
               <v-text-field
-                label="Insert a valid password"
+                :label="$t('login.insertValidPasswordString')"
                 v-model="password.value.value"
                 :error-messages="password.errorMessage.value"
                 variant="underlined"
@@ -57,9 +57,11 @@
               <v-card-text class="text-medium-emphasis text-caption">
                 {{ $t('login.descriptionWarningString') }}
               </v-card-text>
-              <center>
-                <div class="g-recaptcha" data-sitekey="6Le5gHApAAAAADv0EqDbSKVSgpcBxPFpCz6o4zVt" data-callback="onRecaptchaSuccess"></div>
-              </center>
+              <v-row justify="center">
+                <v-col cols="12" sm="8" md="6" lg="16" align="center">
+                  <div class="g-recaptcha" data-sitekey="6Le5gHApAAAAADv0EqDbSKVSgpcBxPFpCz6o4zVt" data-callback="onRecaptchaSuccess"></div>
+                </v-col>
+              </v-row>
               <v-divider></v-divider>
               <v-btn 
                 color="green-darken-3" 
@@ -70,18 +72,18 @@
                 :loading="dialog"
               >
                   <v-icon left>mdi-login</v-icon>
-                  Ingresar
+                  {{ $t('login.buttonString') }}
                 </v-btn>
             </v-form><br>
             <v-divider></v-divider>
-            <v-stack class="text-center mt-5">
+            <div class="text-center mt-5">
               <router-link :to="{name: 'login-reistration'}">
                 <p class="mb-0">{{ $t('login.registrationString') }}<v-icon icon="mdi-chevron-right"></v-icon></p>
               </router-link>
               <router-link :to="{name: 'login-mail'}">
                 <p class="mb-0">{{ $t('login.forgotPasswordString') }}<v-icon icon="mdi-chevron-right"></v-icon></p>
               </router-link>
-            </v-stack>
+            </div>
           </v-card-text>
         </v-card>
       </v-col>
@@ -94,6 +96,7 @@ import { useRouter } from 'vue-router';
 import { ref, nextTick } from 'vue'
 import { useField, useForm } from 'vee-validate'
 import  {useUserStore} from '../../../store/store.js'
+import {i18n} from '@/main.js'
 
 export default {
   data: () => ({
@@ -121,30 +124,32 @@ export default {
           if (/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(value)) {
             return true;
           }
-          return 'Must be a valid e-mail with a supported domain.';
+          return i18n.global.t('login.alertEmail');
         },
 
 
         password(value) {
+
+          const stringValue = value || '';
           // Check minimum length of 6 characters
-          if (value.length < 6) {
-            return 'Password must be at least 6 characters long.';
+          if (stringValue.length < 6) {
+            return i18n.global.t('login.alertLength');
           }
 
           // Check for at least one uppercase letter
           if (!/[A-Z]/.test(value)) {
-            return 'Password must contain at least one uppercase letter.';
+            return i18n.global.t('login.alertUppercase');
           }
 
           // Check for at least one number
           if (!/\d/.test(value)) {
-            return 'Password must contain at least one number.';
+            return i18n.global.t('login.alertNumber');
           }
 
           // Check for only one special character
           const specialCharCount = (value.match(/[^A-Za-z0-9]/g) || []).length;
           if (specialCharCount !== 1) {
-            return 'Password must contain only one special character.';
+            return i18n.global.t('login.alertCharacter');
           }
 
           // If all conditions are met, the password is valid
@@ -182,10 +187,10 @@ export default {
           tittleAlert.value = 'Warning';
           color.value = 'warning';
         } else {
-          message.value = 'Welcome';
+          message.value = i18n.global.t('login.messageAlert');
           typeAlert.value = 'success';
           color.value = 'green-darken-3';
-          tittleAlert.value = 'Successful login';
+          tittleAlert.value = i18n.global.t('login.tittleAlert');
         }
 
         // Espera a que se actualice el DOM antes de mostrar la alerta
@@ -235,4 +240,4 @@ export default {
 .fade-alert.v-leave-active {
   opacity: 0;
 }
-</style>s
+</style>

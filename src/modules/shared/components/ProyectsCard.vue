@@ -90,7 +90,7 @@ export default {
 
     <v-divider class="mx-4 mb-1"></v-divider>
 
-    <v-card-title>Tags</v-card-title>
+    <v-card-title>{{ $t('servicesCard.tagsString') }}</v-card-title>
 
     <div class="px-4">
       <v-chip-group v-model="selection">
@@ -109,7 +109,7 @@ export default {
         @click="reserve"
 
       >
-        Reserve
+      {{ $t('servicesCard.btnString') }}
       </v-btn>
     </v-card-actions>
   </v-card>

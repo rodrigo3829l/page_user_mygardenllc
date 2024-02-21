@@ -10,7 +10,7 @@
         <v-card class="elevation-12">
           <v-toolbar color="green-darken-3" dark>
             <v-toolbar-title class="white--text text-center">
-              Email
+              {{ $t('passwordRecovery.email.emailString') }}
             </v-toolbar-title>
           </v-toolbar>
           <v-card-text>
@@ -25,11 +25,11 @@
               border="top" 
             ></v-alert>
             <v-form  @submit.prevent="submit">
-              <label for="">Registered mail</label>
+              <label for="">{{ $t('passwordRecovery.email.registeredString') }}</label>
               <v-text-field
                 v-model="email.value.value"
                 :error-messages="email.errorMessage.value"
-                label="Enter the email associated with the account"
+                :label="$t('passwordRecovery.email.enterEmailString')"
                 variant="underlined"
                 prepend-inner-icon="mdi-account"
                 color="green-darken-3"
@@ -49,7 +49,7 @@
                 :loading="dialog"
                 >
                   <v-icon left>mdi-login</v-icon>
-                  Confirm
+                  {{ $t('passwordRecovery.email.buttonString') }}
                 </v-btn>
 
             </v-form><br>
@@ -66,6 +66,7 @@ import { useRouter } from 'vue-router';
 import { ref, nextTick } from 'vue'
 import { useField, useForm } from 'vee-validate'
 import { api } from '@/axios/axios';
+import {i18n} from '@/main.js'
 
 export default {
   data: () => ({
@@ -94,7 +95,7 @@ export default {
           if (/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(value)) {
             return true;
           }
-          return 'Must be a valid e-mail with a supported domain.';
+          return i18n.global.t('passwordRecovery.email.alertEmail')
         },
         
       },
@@ -122,7 +123,7 @@ export default {
         dialog.value = false;
 
         if (data.success === false) {
-          message.value = 'This email has not been registered';
+          message.value = i18n.global.t('passwordRecovery.email.messageEmail')
           typeAlert.value = 'warning'
           tittleAlert.value = 'Warning'
           showAlert.value = true;

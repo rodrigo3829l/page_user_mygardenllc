@@ -13,7 +13,7 @@
         <v-text-field
           density="compact"
           variant="solo"
-          label="Search your favorite service"
+          :label="$t('services.searchString')"
           append-inner-icon="mdi-magnify"
           single-line
           hide-details
@@ -47,11 +47,11 @@
         </v-row>
 
         <v-slide-group center-active>
-          <v-slide-item v-for="(proyecto, i) in proyectos" :key="i">
+          <v-slide-group-item v-for="(proyecto, i) in proyectos" :key="i">
             <div v-if="proyecto.tipo === 'jardineria'" style="max-width: 300px; margin-left: 10px; margin-right: 10px;">
               <ProyectsCard  :proyecto="proyecto" />
             </div>
-          </v-slide-item>
+          </v-slide-group-item>
         </v-slide-group>
       </v-col>
     </v-row>
@@ -80,11 +80,11 @@
     <v-row>
       <v-col>
         <v-slide-group center-active>
-          <v-slide-item v-for="(proyecto, i) in proyectos" :key="i">
+          <v-slide-group-item v-for="(proyecto, i) in proyectos" :key="i">
             <div v-if="proyecto.tipo === 'construccion'" style="max-width: 400px; margin-left: 10px; margin-right: 10px;">
               <ProyectsCard  :proyecto="proyecto" />
             </div>
-          </v-slide-item>
+          </v-slide-group-item>
         </v-slide-group>
       </v-col>
     </v-row>
@@ -114,11 +114,11 @@
     <v-row>
       <v-col>
         <v-slide-group center-active>
-          <v-slide-item v-for="(proyecto, i) in proyectos" :key="i">
+          <v-slide-group-item v-for="(proyecto, i) in proyectos" :key="i">
             <div v-if="proyecto.tipo === 'limpieza'" style="max-width: 400px; margin-left: 10px; margin-right: 10px;">
               <ProyectsCard  :proyecto="proyecto" />
             </div>
-          </v-slide-item>
+          </v-slide-group-item>
         </v-slide-group>
       </v-col>
     </v-row>
@@ -147,11 +147,11 @@
     <v-row>
       <v-col>
         <v-slide-group center-active>
-          <v-slide-item v-for="(proyecto, i) in proyectos" :key="i">
+          <v-slide-group-item v-for="(proyecto, i) in proyectos" :key="i">
             <div v-if="proyecto.tipo === 'mantenimiento'" style="max-width: 400px; margin-left: 10px; margin-right: 10px;">
               <ProyectsCard  :proyecto="proyecto" />
             </div>
-          </v-slide-item>
+          </v-slide-group-item>
         </v-slide-group>
       </v-col>
     </v-row>

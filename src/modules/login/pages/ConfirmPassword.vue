@@ -10,14 +10,14 @@
         <v-card class="elevation-12">
           <v-toolbar color="green-darken-3" dark>
             <v-toolbar-title class="white--text text-center">
-              Login
+              {{ $t('passwordRecovery.confirm.tittleString') }}
             </v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-alert
               v-if="showAlert"
               :type="typeAlert"
-              :title="tittleAlert"
+              :title="titleAlert"
               :text="message"
               class="fade-alert" 
               variant="outlined"
@@ -25,9 +25,9 @@
               border="top"
             ></v-alert>
             <v-form  @submit.prevent="submit">
-              <label for="">New Pasword</label>
+              <label for="">{{ $t('passwordRecovery.confirm.passwordTittleString') }}</label>
               <v-text-field
-                label="Insert new password valid"
+                :label="$t('passwordRecovery.confirm.passwordLabel')"
                 v-model="password.value.value"
                 :error-messages="password.errorMessage.value"
                 variant="underlined"
@@ -41,13 +41,13 @@
                 @input="checkStrength"
               ></v-text-field>
               <div v-if="password.value.value">
-                <span v-if="passwordStrength === 'weak'" class="red--text">Weak password</span>
-                <span v-else-if="passwordStrength === 'good'" class="orange--text">Good password</span>
-                <span v-else class="green--text">Excellent password</span>
+                <span v-if="passwordStrength === 'weak'" class="red--text">{{ $t('passwordRecovery.confirm.weakPasswordString') }}</span>
+                <span v-else-if="passwordStrength === 'good'" class="orange--text">{{ $t('passwordRecovery.confirm.goodPassword') }}</span>
+                <span v-else class="green--text">{{ $t('passwordRecovery.confirm.excellentPassword') }}</span>
               </div>
-              <label for="">Confirm your password</label>
+              <label for="">{{ $t('passwordRecovery.confirm.confirmPasswordTittle') }}</label>
               <v-text-field
-                label="Valid your password"
+              :label="$t('passwordRecovery.confirm.confirmPasswordLabel')"
                 v-model="confirmPassword.value.value"
                 :error-messages="confirmPassword.errorMessage.value"
                 variant="underlined"
@@ -69,7 +69,7 @@
                 :loading="dialog"
                 >
                   <v-icon left>mdi-login</v-icon>
-                  Confirm
+                  {{ $t('passwordRecovery.confirm.buttonString') }}
                 </v-btn>
 
             </v-form><br>
@@ -86,6 +86,7 @@ import { ref,nextTick } from 'vue'
 import { useRouter } from 'vue-router';
 import { useField, useForm } from 'vee-validate'
 import { api } from '@/axios/axios';
+import {i18n} from '@/main.js'
 
 export default {
   data: () => ({
@@ -122,24 +123,26 @@ export default {
       validationSchema: {
         password(value) {
           // Check minimum length of 6 characters
-          if (value.length < 6) {
-            return 'Password must be at least 6 characters long.';
+          const stringValue = value || '';
+          // Check minimum length of 6 characters
+          if (stringValue.length < 6) {
+            return i18n.global.t('passwordRecovery.confirm.alertLength');
           }
 
           // Check for at least one uppercase letter
           if (!/[A-Z]/.test(value)) {
-            return 'Password must contain at least one uppercase letter.';
+            return i18n.global.t('passwordRecovery.confirm.alertUppercase');
           }
 
           // Check for at least one number
           if (!/\d/.test(value)) {
-            return 'Password must contain at least one number.';
+            return i18n.global.t('passwordRecovery.confirm.alertNumber');
           }
 
           // Check for only one special character
           const specialCharCount = (value.match(/[^A-Za-z0-9]/g) || []).length;
           if (specialCharCount !== 1) {
-            return 'Password must contain only one special character.';
+            return i18n.global.t('passwordRecovery.confirm.alertCharacter');
           }
 
           // If all conditions are met, the password is valid
@@ -147,24 +150,26 @@ export default {
       },
       confirmPassword(value) {
           // Check minimum length of 6 characters
-          if (value.length < 6) {
-            return 'Password must be at least 6 characters long.';
+          const stringValue = value || '';
+          // Check minimum length of 6 characters
+          if (stringValue.length < 6) {
+            return i18n.global.t('passwordRecovery.confirm.alertLength');
           }
 
           // Check for at least one uppercase letter
           if (!/[A-Z]/.test(value)) {
-            return 'Password must contain at least one uppercase letter.';
+            return i18n.global.t('passwordRecovery.confirm.alertUppercase');
           }
 
           // Check for at least one number
           if (!/\d/.test(value)) {
-            return 'Password must contain at least one number.';
+            return i18n.global.t('passwordRecovery.confirm.alertNumber');
           }
 
           // Check for only one special character
           const specialCharCount = (value.match(/[^A-Za-z0-9]/g) || []).length;
           if (specialCharCount !== 1) {
-            return 'Password must contain only one special character.';
+            return i18n.global.t('passwordRecovery.confirm.alertCharacter');
           }
 
           // If all conditions are met, the password is valid
@@ -188,7 +193,7 @@ export default {
     const submit = handleSubmit(async (values) => {
       try {
         if (values.password !== values.confirmPassword) {
-          message.value = 'Passwords do not match.';
+          message.value = i18n.global.t('passwordRecovery.confirm.alertDontMatch');
           typeAlert.value = 'warning';
           titleAlert.value = 'Warning';
           showAlert.value = true;
@@ -210,12 +215,12 @@ export default {
         dialog.value = false;
 
         if(!data.success){
-          message.value = 'Error al cambiar contraseña';
+          message.value = i18n.global.t('passwordRecovery.confirm.alertDontChange');
           typeAlert.value = 'warning';
           titleAlert.value = 'Warning';
           showAlert.value = true;
         }else{
-          message.value = 'Contraseña cambiada con exito';
+          message.value = i18n.global.t('passwordRecovery.confirm.alertChange');
           typeAlert.value = 'success';
           titleAlert.value = 'success';
           showAlert.value = true;
@@ -230,6 +235,7 @@ export default {
           }
         }, 2000);
       } catch (error) {
+        console.log(error)
         router.push({ name: 'serverError' });
       }
 
@@ -238,7 +244,7 @@ export default {
 
     const checkStrength = () => {
       const patterns = {
-        length: /.{6,}/,
+        length: /.{8,}/,
         lowercase: /[a-z]+/,
         uppercase: /[A-Z]+/,
         number: /\d+/,
