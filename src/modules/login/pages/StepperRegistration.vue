@@ -281,7 +281,17 @@
                     variant="underlined"
                     :placeholder="$t('registration.userdata.userNameString')"
                   ></v-text-field>
-    
+                  <!-- Este es el problema -->
+                  <!-- <v-text-field
+                    v-model="formData.email"
+                    label="Username"
+                    required
+                    :error-messages="errors.email"
+                    variant="underlined"
+                    placeholder="ex User38"
+                    type="email"
+                    color="green-darken-3"
+                  ></v-text-field> -->
                   <v-text-field
                     v-model="formData.email"
                     :label="$t('registration.userdata.emailString')"

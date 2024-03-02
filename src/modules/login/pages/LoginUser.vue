@@ -68,12 +68,12 @@
                 block 
                 class="mt-4" 
                 type="submit"
-                :disabled="dialog || !captchaVerified"
+                :disabled="dialog"
                 :loading="dialog"
               >
-                  <v-icon left>mdi-login</v-icon>
-                  {{ $t('login.buttonString') }}
-                </v-btn>
+                <v-icon left>mdi-login</v-icon>
+                {{ $t('login.buttonString') }}
+              </v-btn>
             </v-form><br>
             <v-divider></v-divider>
             <div class="text-center mt-5">
@@ -176,7 +176,7 @@ export default {
     const submit = handleSubmit(async (values) => {
       dialog.value = true;
       try {
-        const res = await userStore.login(values.email, values.password);
+        const res = await userStore.login(values.email, values.password, 'client');
         console.log(res);
 
         dialog.value = false;

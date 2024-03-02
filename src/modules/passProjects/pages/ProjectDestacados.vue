@@ -9,7 +9,7 @@
       >
         <v-hover v-slot:default="{ hover }">
           <router-link
-            :to="{ name: 'categorie-view', params: { category: item } }"
+            :to="{ name: 'categorie-view', params: { category: item._id } }"
           >
             <v-card
               class="mx-auto on-hover"
@@ -24,7 +24,7 @@
                 cover
               >
                 <v-card-title class="fill-height d-flex align-center justify-center text-center title-effect" style="color: white;">
-                  {{ item }}
+                  {{ item.tipo }}
                 </v-card-title>
               </v-img>
             </v-card>
@@ -36,13 +36,28 @@
 </template>
 
 <script>
+import { api } from '@/axios/axios';
 export default {
   data() {
     return {
       imageUrl: "https://res.cloudinary.com/dui4i9f4e/image/upload/v1697990498/logos/p3xyl9xetmmg6vlamwkt.jpg",
-      items: ["Gardening", "Construction", "Cleaning", "Maintenance", "ejemplo 5", "ejemplo 6"],
+      items: [],
     };
   },
+  methods : {
+    async getTypes (){
+      try {
+        const {data} = await api.get("/typeservice/get")
+        console.log(data)
+        this.items = data.tipesServices
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  },
+  mounted(){
+    this.getTypes()
+  }
 }
 </script>
 
@@ -56,14 +71,10 @@ export default {
   transition: opacity 0.4s ease-in-out;
   opacity: 0.6;
 }
-
 .on-hover:hover .image-effect {
   opacity: 1;
 }
-
 .title-effect {
-  font-size: 1.5em; /* Mantiene tu ajuste para el tamaño de la fuente */
+  font-size: 1.5em;
 }
-
-
 </style>

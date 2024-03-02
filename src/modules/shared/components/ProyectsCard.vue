@@ -1,8 +1,8 @@
 <!-- <template>
   <v-card class="small-card" elevation="2">
-    <v-img :src="proyecto.img" class="card-image" aspect-ratio="1.78"></v-img>
+    <v-img :src="service.img" class="card-image" aspect-ratio="1.78"></v-img>
     <v-card-text class="card-content">
-      <p>{{ proyecto.descripcion }}</p>
+      <p>{{ service.descripcion }}</p>
     </v-card-text>
   </v-card>
 </template>
@@ -10,7 +10,7 @@
 <script>
 export default {
   props: {
-    proyecto: {
+    service: {
       type: Object,
     },
   },
@@ -56,11 +56,11 @@ export default {
     <v-img
       cover
       height="250"
-      :src="proyecto.img"
+      :src="service.img.secure_url"
     ></v-img>
 
     <v-card-item>
-      <v-card-title>{{proyecto.nombre}}</v-card-title>
+      <v-card-title>{{service.name}}</v-card-title>
 
     </v-card-item>
 
@@ -70,7 +70,7 @@ export default {
         class="mx-0"
       >
         <v-rating
-          :model-value="proyecto.rating"
+          :model-value="service.Calificacion.total"
           color="amber"
           density="compact"
           half-increments
@@ -79,28 +79,17 @@ export default {
         ></v-rating>
 
         <div class="text-grey ms-4">
-          {{ proyecto.rating }} (413)
+          {{ service.Calificacion.total }} ({{ service.Calificacion.totales }})
+          <!-- {{ service.Calificacion }} -->
         </div>
       </v-row>
       <br>
       
 
-      <div>{{ proyecto.descripcion   }}</div>
+      <div>{{ service.description   }}</div>
     </v-card-text>
 
     <v-divider class="mx-4 mb-1"></v-divider>
-
-    <v-card-title>{{ $t('servicesCard.tagsString') }}</v-card-title>
-
-    <div class="px-4">
-      <v-chip-group v-model="selection">
-        <v-chip>Gardening</v-chip>
-
-        <v-chip>Pruning</v-chip>
-
-        <v-chip>Maintenance</v-chip>
-      </v-chip-group>
-    </div>
 
     <v-card-actions>
       <v-btn
@@ -118,7 +107,7 @@ export default {
 <script>
   export default {
     props: {
-      proyecto: {
+      service: {
         type: Object,
       },
     },
@@ -130,8 +119,12 @@ export default {
     methods: {
       reserve () {
         this.loading = true
+        setTimeout(() => (this.loading = false), 1000)
+        // Obtener el ID del servicio (suponiendo que está almacenado en 'service._id')
+        const serviceId = this.service._id;
 
-        setTimeout(() => (this.loading = false), 2000)
+        // Navegar a la ruta 'services-Schedule' con el ID del servicio como parámetro
+        this.$router.push({ name: 'services-Schedule', params: { id: serviceId } });
       },
     },
   }

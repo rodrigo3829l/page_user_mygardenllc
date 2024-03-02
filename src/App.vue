@@ -2,8 +2,9 @@
   <v-app>
     <v-main>
       <NavBar></NavBar>
+      <AccessibilityButtons></AccessibilityButtons>
       <router-view></router-view>
-      <FooterComponent></FooterComponent>
+      <FooterComponent ></FooterComponent>
     </v-main>
   </v-app>
 </template>
@@ -26,11 +27,10 @@ export default {
   components: {
     NavBar: defineAsyncComponent(() => import('@/modules/shared/components/NavBar.vue')),
     FooterComponent: defineAsyncComponent(() => import('@/modules/shared/components/FooterComponent.vue')),
+    AccessibilityButtons: defineAsyncComponent(() => import('@/modules/shared/components/AccessibilityButtons.vue')),
   }, 
   methods:{
-    verifyBdConecction (){
-      
-    },
+
   }
 };
 </script>
@@ -42,5 +42,7 @@ a {
   color: inherit; /* Usa el color heredado (mismo color que el texto circundante) */
   cursor: pointer; /* Establece el cursor a pointer para indicar que es interactivo */
 }
+
+
 </style>
 

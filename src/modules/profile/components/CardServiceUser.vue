@@ -1,28 +1,60 @@
 <template>
-  <div class="service-card card shadow my-4">
-    <div class="row align-items-center">
-      <div class="col-md-4 service-image text-center">
-        <img :src="service.image" alt="Servicio" class="img-fluid">
-      </div>
-      <div class="col-md-5 service-info">
-        <h3 class="title">{{ service.name }}</h3>
-        <p class="description">{{ service.description }}</p>
-      </div>
-      <div class="col-md-3 service-status text-center">
-        <p class="status">Status</p>
-        <p class="status">{{ service.status }}</p>
-        <router-link :to="{ name: 'profile-pay' }">
-          <button v-if="service.status === 'Cotizado'" class="btn button-action">Pagar</button>
-        </router-link>
-      </div>
-    </div>
-  </div>
+  <v-card
+    class="mx-auto"
+    max-width="344"
+  >
+    <v-img
+      :src="service.img.secure_url"
+      height="200px"
+      cover
+    ></v-img>
+
+    <v-card-title>
+     {{ service.description }}
+    </v-card-title>
+
+    <v-card-subtitle>
+      Status: {{ service.status }}
+    </v-card-subtitle>
+    
+    <v-card-subtitle v-if="service.status === 'quoted'">
+      Please pay the service
+    </v-card-subtitle>
+    <v-card-subtitle v-if="service.status === 'pay'">
+      Paid service
+    </v-card-subtitle>
+
+    <v-card-actions>
+      <v-btn
+        color="green-darken-3"
+        variant="text"
+        @click="info"
+      >
+        Info
+      </v-btn>
+      <v-spacer></v-spacer>
+      
+
+      
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
 export default {
   props: {
-    service: Object,
+    service: {
+      type: Object,
+    },
   },
+  methods : {
+    info(){
+      this.$router.push({name: 'profile-infomyservices', params: {id: this.service._id} })
+    }
+  }
 };
 </script>
+
+<style>
+
+</style>

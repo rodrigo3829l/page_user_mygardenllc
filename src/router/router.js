@@ -149,6 +149,16 @@ const routes = [
                 component: () => import ( /* webpackChunkName: "EditProfile" */ '@/modules/profile/pages/EditProfile.vue'),
             },
             {
+                path: 'myservices',
+                name: 'profile-myservices',
+                component: () => import ( /* webpackChunkName: "EditProfile" */ '@/modules/profile/pages/MyServices.vue'),
+            },
+            {
+                path: 'infomyservices/:id',
+                name: 'profile-infomyservices',
+                component: () => import ( /* webpackChunkName: "EditProfile" */ '@/modules/profile/pages/InfoMyService.vue'),
+            },
+            {
                 path: 'pay',
                 name: 'profile-pay',
                 meta: {
@@ -187,7 +197,7 @@ const routes = [
                 component: () => import ( /* webpackChunkName: "ServicesWindow" */ '@/modules/services/pages/ServicesWindow.vue'),
             },
             {
-                path: 'schedule',
+                path: 'schedule/:id',
                 name: 'services-Schedule',
                 meta: {
                     title: 'Services information',
@@ -308,6 +318,9 @@ const router = createRouter({
     routes,
 })
 
+router.afterEach(() => {
+    window.scrollTo(0, 0);
+});
 
 router.beforeEach( async (to, from, next) =>{
 

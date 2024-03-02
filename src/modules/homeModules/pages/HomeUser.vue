@@ -68,13 +68,13 @@
   
 
     <h2>Proyectos</h2>
-      <v-slide-group center-active>
+      <!-- <v-slide-group center-active>
         <v-slide-group-item v-for="(proyecto, i) in proyectos" :key="i">
           <div style="max-width: 400px ; margin-left: 10px; margin-right: 10px;" >
             <ProyectsCard :proyecto="proyecto" />
           </div>
         </v-slide-group-item>
-      </v-slide-group>
+      </v-slide-group> -->
 
     <h2>Comentarios</h2>
       <v-slide-group center-active>
@@ -132,15 +132,15 @@
         ],
         images: [
           "https://res.cloudinary.com/dui4i9f4e/image/upload/v1697990267/logos/nhqsptfuorp4dkmutlcm.jpg",
-          "https://res.cloudinary.com/dui4i9f4e/image/upload/v1697990267/logos/nhqsptfuorp4dkmutlcm.jpg",
-          "https://res.cloudinary.com/dui4i9f4e/image/upload/v1697990267/logos/nhqsptfuorp4dkmutlcm.jpg",
-          "https://res.cloudinary.com/dui4i9f4e/image/upload/v1697990267/logos/nhqsptfuorp4dkmutlcm.jpg",
+          "https://png.pngtree.com/background/20230611/original/pngtree-picturesque-garden-in-a-lawn-with-trees-and-flowers-picture-image_3160419.jpg",
+          "https://img.freepik.com/foto-gratis/foto-banco-blanco-parque_181624-48161.jpg?t=st=1709034581~exp=1709035181~hmac=35d9b81bf3f82969cf1cfc4a1f063871cfec03ead125adb4531bd5ce226d291a",
+          "https://www.comunicare.es/wp-content/uploads/2020/12/Servicios-de-jardineria.jpg",
           "https://res.cloudinary.com/dui4i9f4e/image/upload/v1697990267/logos/nhqsptfuorp4dkmutlcm.jpg"
         ]
       }
     },
     components: {
-        ProyectsCard: defineAsyncComponent(() => import(/* webpackChunkName: "Navbar" */ '@/modules/shared/components/ProyectsCard.vue')),
+        // ProyectsCard: defineAsyncComponent(() => import(/* webpackChunkName: "Navbar" */ '@/modules/shared/components/ProyectsCard.vue')),
         ComentsUserCard: defineAsyncComponent(() => import(/* webpackChunkName: "Navbar" */ '@/modules/shared/components/ComentsUserCard.vue')),
     }
   };

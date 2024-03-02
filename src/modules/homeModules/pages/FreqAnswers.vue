@@ -5,10 +5,8 @@
       </template>
     </v-breadcrumbs>
   <v-container>
-    <v-row justify="center">
-      <v-col cols="12" md="8">
-        <h2>{{ $t('faqs.titleString') }}</h2>
-        <div class="text-center d-flex pb-4">
+    <h2>{{ $t('faqs.titleString') }}</h2>
+    <div class="text-center d-flex pb-4">
           <v-btn class="ma-2" @click="all">
             {{  $t('faqs.buttonShowAllString') }}
           </v-btn>
@@ -16,25 +14,32 @@
             {{  $t('faqs.buttonHideAllString') }}
           </v-btn>
         </div>
-        <v-expansion-panels
-          color="green-darken-3"
+    <v-row>
+      <v-col cols="12" md="6">
+        <v-expansion-panels multiple color="green-darken-3"
           v-model="panel"
-          variant="inset"
-          multiple
-        >
-          <v-expansion-panel
-            v-for="(item, i) in faqs"
-            :key="i"
-            :title="item.question"
+          variant="inset">
+          <v-expansion-panel v-for="(item, i) in faqs.slice(0, faqs.length / 2)" :key="i" :title="item.question"
             :text="item.answer"
-            :value="item.question"
-          ></v-expansion-panel>
+            :value="item.question">
+                      
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </v-col>
+      <v-col cols="12" md="6">
+        <v-expansion-panels multiple color="green-darken-3"
+          v-model="panel"
+          variant="inset">
+          <v-expansion-panel v-for="(item, i) in faqs.slice(faqs.length / 2)" :key="i" :title="item.question"
+            :text="item.answer"
+            :value="item.question">
+
+          </v-expansion-panel>
         </v-expansion-panels>
       </v-col>
     </v-row>
   </v-container>
 </template>
-
 <script>
 export default {
   data() {

@@ -8,21 +8,18 @@ export const useUserStore = defineStore('user', () => {
     const name = ref (null);
     const email = ref (null);
 
-    const login = async (email, pass) => {
+    const login = async (email, pass, rol) => {
         const datos = {
-            email: email,
-            password: pass 
+            email,
+            password: pass,
+            rol
         }
         try {
             const {data} = await api.post('/user/login', datos)
-            console.log(data)
-            console.log('desde el store')
-
+            name.value = data.name
+            // email.value = data.email 
             token.value = data.token;
             expireIn.value = data.expiresIn
-
-            // name.value = data.name
-            // email.value = data.email
 
             setTime();
             const resp = await api({
@@ -37,7 +34,8 @@ export const useUserStore = defineStore('user', () => {
             localStorage.setItem('token', token.value)
             return({exito : 'inicio se sesion exitoso'})
         } catch (error) {
-            return({error: error.response.data.error})
+            const {response} = error
+            return({error: response.data.error})
         }
     }
     const logout = async () => {
@@ -68,13 +66,16 @@ export const useUserStore = defineStore('user', () => {
             refreshToken();
         }, expireIn.value * 1000 - 6000)
     }
-    
+
     const refreshToken = async () =>{
         try {
             const {data} = await api.get ('/user/refresh');
+            // console.log("Desde el refresh")
+            // console.log(data)
             token.value = data.token;
             expireIn.value = data.expiresIn;
-
+            name.value = data.name
+            email.value = data.email
             const resp = await api({
                 method: 'GET',
                 url : '/user/protected',
@@ -82,7 +83,6 @@ export const useUserStore = defineStore('user', () => {
                     'Authorization' : 'Bearer ' + token.value,
                 },
             })
-            console.log(resp.data)
             localStorage.setItem('rol', resp.data.tipo)
             localStorage.setItem('token', token.value,);
             setTime();
@@ -107,6 +107,8 @@ export const useUserStore = defineStore('user', () => {
         login,
         logout,
         refreshToken,
-        initializeStore
+        initializeStore,
+        name,
+        email
     }
   })
