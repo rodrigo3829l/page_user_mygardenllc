@@ -42,7 +42,19 @@ a {
   color: inherit; /* Usa el color heredado (mismo color que el texto circundante) */
   cursor: pointer; /* Establece el cursor a pointer para indicar que es interactivo */
 }
+.toastify.toastify-success {
+  background-color: #2E7D32;
+}
 
+/* Estilo para notificaciones de error */
+.toastify.toastify-error {
+  background-color: #D50000;
+}
+
+/* Estilo para notificaciones de advertencia */
+.toastify.toastify-warning {
+  background-color: #FFD600;
+}
 
 </style>
 

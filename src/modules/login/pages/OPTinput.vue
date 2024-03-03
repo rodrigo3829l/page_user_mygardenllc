@@ -9,18 +9,6 @@
             </v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-alert
-              v-if="showAlert"
-              :type="typeAlert"
-              :title="tittleAlert"
-              :text="message"
-              class="fade-alert" 
-              :color="color"
-              variant="outlined"
-              prominent
-              border="top" 
-            ></v-alert>
-            
             <v-form class="text-center mx-auto">
               <div class="text-body-2">
                 {{ $t('passwordRecovery.otp.messageMail') }}..@gmail.com <br>
@@ -68,16 +56,12 @@
 import { useRouter } from 'vue-router';
 import { api } from '@/axios/axios';
 import {i18n} from '@/main.js'
+import { toast } from 'vue3-toastify';
 
 export default {
   data: () => ({
     otp: '',
     validating: false,
-    message: '',
-    typeAlert: '',
-    tittleAlert: '',
-    color: '',
-    showAlert: false,
     resending: false,
     countdown: 60, // 5 minutes in seconds
     intervalId: null,
@@ -117,14 +101,7 @@ export default {
           const {data} = await api.post('/user/verify', datos)
 
           if (data.success === false) {
-            this.message = i18n.global.t('passwordRecovery.otp.alertInvalidCode');
-            this.typeAlert = 'warning';
-            this.tittleAlert = 'Warning';
-            this.color = 'warning';
-            this.showAlert = true;
-            setTimeout(() => {
-              this.showAlert = false;
-            }, 2000);
+            toast.warning(i18n.global.t('passwordRecovery.otp.alertInvalidCode'))
           }
           else {
               this.router.push({ name: 'login-confirm' });
@@ -144,24 +121,10 @@ export default {
         const {data} = await api.post('user/resend', datos)
 
         if (data.success) {
-            this.message = i18n.global.t('passwordRecovery.otp.resendingMessage');
-            this.typeAlert = 'success';
-            this.tittleAlert = 'Success';
-            this.color = 'green-darken-3';
-            this.showAlert = true;
-            setTimeout(() => {
-              this.showAlert = false;
-            }, 2000);
+          toast.success('passwordRecovery.otp.resendingMessage')
         }
       } catch (error) {
-        this.message = i18n.global.t('passwordRecovery.otp.notResendingMessage');
-        this.typeAlert = 'warning';
-        this.tittleAlert = 'Warning';
-        this.color = 'warning';
-        this.showAlert = true;
-        setTimeout(() => {
-          this.showAlert = false;
-        }, 2000);
+        toast.error(i18n.global.t('passwordRecovery.otp.notResendingMessage'))
       }
       this.resending = false;
     }

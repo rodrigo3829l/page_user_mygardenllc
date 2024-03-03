@@ -14,16 +14,6 @@
             </v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-alert
-              v-if="showAlert"
-              :type="typeAlert"
-              :title="titleAlert"
-              :text="message"
-              class="fade-alert" 
-              variant="outlined"
-              prominent
-              border="top"
-            ></v-alert>
             <v-form  @submit.prevent="submit">
               <label for="">{{ $t('passwordRecovery.confirm.passwordTittleString') }}</label>
               <v-text-field
@@ -82,11 +72,12 @@
 </template>
 
 <script>
-import { ref,nextTick } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router';
 import { useField, useForm } from 'vee-validate'
 import { api } from '@/axios/axios';
 import {i18n} from '@/main.js'
+import { toast } from 'vue3-toastify';
 
 export default {
   data: () => ({
@@ -183,26 +174,15 @@ export default {
     const passwordVisible = ref(false);
     const passwordVisibleConfirm = ref(false);
     const dialog = ref(false);
-    const message = ref('');
     const passwordStrength = ref('');
-    const typeAlert = ref('')
-    const titleAlert = ref('')
-    const showAlert = ref(false);
     const router = useRouter();
 
     const submit = handleSubmit(async (values) => {
       try {
         if (values.password !== values.confirmPassword) {
-          message.value = i18n.global.t('passwordRecovery.confirm.alertDontMatch');
-          typeAlert.value = 'warning';
-          titleAlert.value = 'Warning';
-          showAlert.value = true;
+          toast.warning(i18n.global.t('passwordRecovery.confirm.alertDontMatch'))
           return; // No continuar si las contraseñas no coinciden
         }
-
-        setTimeout(() => {
-          showAlert.value = false;
-        }, 2000);
 
         dialog.value = true;
         const datos ={
@@ -211,29 +191,19 @@ export default {
         }
         const {data} = await api.post('/user/change', datos)
 
-        console.log(data)
         dialog.value = false;
 
         if(!data.success){
-          message.value = i18n.global.t('passwordRecovery.confirm.alertDontChange');
-          typeAlert.value = 'warning';
-          titleAlert.value = 'Warning';
-          showAlert.value = true;
+          toast.warning( i18n.global.t('passwordRecovery.confirm.alertDontChange'))
+
         }else{
-          message.value = i18n.global.t('passwordRecovery.confirm.alertChange');
-          typeAlert.value = 'success';
-          titleAlert.value = 'success';
-          showAlert.value = true;
+          toast.success( i18n.global.t('passwordRecovery.confirm.alertChange'))
+          setTimeout(() => {
+            router.push({ name: 'home-home' });
+          }, 2000);
         }
 
-        await nextTick();
-      
-        setTimeout(() => {
-          showAlert.value = false;
-          if(typeAlert.value !== 'warning'){
-            router.push({ name: 'home-home' });
-          }
-        }, 2000);
+        
       } catch (error) {
         console.log(error)
         router.push({ name: 'serverError' });
@@ -286,10 +256,6 @@ export default {
       passwordVisible,
       passwordVisibleConfirm,
       dialog,
-      message,
-      typeAlert,
-      titleAlert,
-      showAlert,
       submit,
       togglePasswordVisibility,
       togglePasswordVisibilityConfirm,

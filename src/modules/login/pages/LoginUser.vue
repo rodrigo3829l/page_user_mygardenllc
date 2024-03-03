@@ -14,18 +14,6 @@
             </v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-alert
-              v-if="showAlert"
-              :type="typeAlert"
-              :title="tittleAlert"
-              :text="message"
-              class="fade-alert" 
-              :color="color" 
-              variant="outlined"
-              prominent
-              border="top"
-            ></v-alert>
-            <br v-if="showAlert">
             <v-divider></v-divider>
             <v-form  @submit.prevent="submit">
               <label for="">{{ $t('login.emailString') }}</label>
@@ -93,11 +81,11 @@
 
 <script>
 import { useRouter } from 'vue-router';
-import { ref, nextTick } from 'vue'
+import { ref } from 'vue'
 import { useField, useForm } from 'vee-validate'
 import  {useUserStore} from '../../../store/store.js'
 import {i18n} from '@/main.js'
-
+import { toast } from 'vue3-toastify';
 export default {
   data: () => ({
       items: [
@@ -164,11 +152,6 @@ export default {
     const password = useField('password')
     const passwordVisible = ref(false);
     const dialog = ref(false);
-    const message = ref('');
-    const color = ref('')
-    const typeAlert = ref('')
-    const tittleAlert = ref('')
-    const showAlert = ref(false);
     const router = useRouter();
     const userStore = useUserStore();
     const captchaVerified = ref(false);
@@ -182,30 +165,15 @@ export default {
         dialog.value = false;
 
         if (res.error) {
-          message.value = res.error;
-          typeAlert.value = 'warning';
-          tittleAlert.value = 'Warning';
-          color.value = 'warning';
+          toast.warning(res.error)
         } else {
-          message.value = i18n.global.t('login.messageAlert');
-          typeAlert.value = 'success';
-          color.value = 'green-darken-3';
-          tittleAlert.value = i18n.global.t('login.tittleAlert');
-        }
-
-        // Espera a que se actualice el DOM antes de mostrar la alerta
-        await nextTick();
-        showAlert.value = true;
-        setTimeout(() => {
-          showAlert.value = false;
-          // Redirige a 'home-home' después de que la alerta se haya mostrado
-          if (typeAlert.value === 'success') {
+          toast.success(i18n.global.t('login.tittleAlert'))
+          setTimeout(() => {
             router.push({ name: 'home-home' });
-          }
-        }, 2000);
+          }, 2000);
+        }
       } catch (error) {
         console.error(error);
-        // Si hay un error al realizar la solicitud, redirige a 'serverError'
         router.push({ name: 'serverError' });
       }
     });
@@ -221,11 +189,6 @@ export default {
       password,
       passwordVisible,
       dialog,
-      color,
-      message,
-      typeAlert,
-      tittleAlert,
-      showAlert,
       submit,
       togglePasswordVisibility
     }

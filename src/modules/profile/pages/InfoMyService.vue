@@ -115,16 +115,6 @@
       <v-card>
         <v-card-title class="headline">{{ $t('profile.pages.infoMyService.paymentFormString') }}</v-card-title>
         <v-card-text>
-          <v-alert
-            v-if="showAlert"
-            variant="outlined"
-            :type="typeMessage"
-            prominent
-            border="top"
-            class="mb-5"
-          >
-            {{ message }}
-          </v-alert>
           <v-text-field
             v-model="cardName"
             :label="$t('profile.pages.infoMyService.cardNameString')"
@@ -254,6 +244,7 @@
 import { defineAsyncComponent } from 'vue';
 import { api } from '@/axios/axios.js'
 import { useUserStore } from '@/store/store'
+import { toast } from 'vue3-toastify';
 const userStore = useUserStore()
 export default {
   data() {
@@ -276,10 +267,7 @@ export default {
       pending : 0,
       expYear: '',
       cvv: '',
-      message: '',
       porcentage: 0,
-      typeMessage : '',
-      showAlert : false,
       overlay: false,
       paymentPercentage: '100%',
       months: Array.from({ length: 12 }, (v, k) => k + 1),
@@ -308,6 +296,7 @@ export default {
         console.log(datos)
         const {data} = await api.post('/comment/add', datos)
         console.log(data)
+        toast.success('Mensage registrado con exito, gracias.')
         this.commentDialog = false
       } catch (error) {
         console.log(error)
@@ -343,17 +332,10 @@ export default {
       }
     },
     openPaymentDialog() {
-      console.log("Se abrio")
       this.paymentDialog = true
-      this.typeMessage = ''
-      this.message = ''
-      this.showAlert = false
     },
     closePaymentDialog() {
       this.paymentDialog = false
-      this.typeMessage = ''
-      this.message = ''
-      this.showAlert = false
     },
     async submitPayment() {
       const isMonthSelected = this.expMonth !== '';
@@ -390,18 +372,14 @@ export default {
         const {data} = await api.post('/pays/pay', datos)
         this.overlay = false
         if(!data.success){
-          this.typeMessage = 'warning'
-          this.message = data.msg
-          this.showAlert = true
+          toast.warning(data.msg)
           return
         }
-        this.typeMessage = 'success'
-        this.message = data.msg
+        toast.success(data.msg)
         const newService = await api.get(`/schedule/scheduleservice/${this.$route.params.id}`)
         this.pending = newService.data.newService.pending
         this.porcentage = newService.data.newService.pay.porcentage
-        this.status =   newService.data.newService.pay.status
-        this.showAlert = true
+        this.status =   newService.data.newService.status
         this.paymentPercentage = '100%'
         console.log(newService.data)
         if(newService.data.newService.status === 'finish') {

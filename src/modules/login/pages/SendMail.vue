@@ -14,16 +14,6 @@
             </v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-alert
-              v-if="showAlert"
-              :type="typeAlert"
-              :title="tittleAlert"
-              :text="message"
-              class="fade-alert" 
-              variant="outlined"
-              prominent
-              border="top" 
-            ></v-alert>
             <v-form  @submit.prevent="submit">
               <label for="">{{ $t('passwordRecovery.email.registeredString') }}</label>
               <v-text-field
@@ -67,6 +57,7 @@ import { ref, nextTick } from 'vue'
 import { useField, useForm } from 'vee-validate'
 import { api } from '@/axios/axios';
 import {i18n} from '@/main.js'
+import { toast } from 'vue3-toastify';
 
 export default {
   data: () => ({
@@ -103,10 +94,6 @@ export default {
 
     const email = useField('email')
     const dialog = ref(false);
-    const message = ref('');
-    const typeAlert = ref('')
-    const tittleAlert = ref('')
-    const showAlert = ref(false);
     const router = useRouter();
 
     const submit = handleSubmit(async (values) => {
@@ -116,29 +103,19 @@ export default {
         const datos = {
           email: values.email
         }
-
-        console.log(datos)
         const { data } = await api.post('/user/recover', datos )
-        console.log(data)
         dialog.value = false;
 
-        if (data.success === false) {
-          message.value = i18n.global.t('passwordRecovery.email.messageEmail')
-          typeAlert.value = 'warning'
-          tittleAlert.value = 'Warning'
-          showAlert.value = true;
+        if (!data.success) {
+          toast.warning(i18n.global.t('passwordRecovery.email.messageEmail'))
         }
 
         // Espera a que se actualice el DOM antes de mostrar la alerta
         await nextTick();
         if(data.success === true){
-            localStorage.setItem('tokenData', data.token);
-            router.push({ name: 'login-optconfirm' });
-          }
-        setTimeout(() => {
-          showAlert.value = false;
-
-        }, 2000);
+          localStorage.setItem('tokenData', data.token);
+          router.push({ name: 'login-optconfirm' });
+        }
       } catch (error) {
         router.push({ name: 'serverError' });
       }
@@ -150,10 +127,6 @@ export default {
     return {
       email,
       dialog,
-      message,
-      typeAlert,
-      tittleAlert,
-      showAlert,
       submit,
     }
   }
