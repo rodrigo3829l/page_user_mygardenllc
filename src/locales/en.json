@@ -5,7 +5,12 @@
     "projectsString": "Projects",
     "contactString": "Contact",
     "faqsString": "FaQS",
-    "loginString": "Login"
+    "loginString": "Login",
+    "yourAccountString" :  "Your account",
+    "yourServices" : "Your services",
+    "logoutString" : "Log Out",
+    "subtitleString" : "Gardening Services and More."
+    
   },
   "home" : {
     "tittleString": "My Garden LLC",

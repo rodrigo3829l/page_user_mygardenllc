@@ -9,7 +9,7 @@
         class="text-subtitle-1 text-center"
         cols="12"
       >
-        Getting you service
+      {{ $t('profile.pages.infoMyService.getYourServiceString') }}
       </v-col>
       <v-col cols="6">
         <v-progress-linear
@@ -35,21 +35,21 @@
       </v-col>
       <v-col cols="12" md="6">
         <v-list lines="two">
-          <h2>Detalles del Servicio</h2>
+          <h2>{{ $t('profile.pages.infoMyService.serviceDetailsString') }}</h2>
           <v-list-item>
-            <v-list-item-title>Descripción</v-list-item-title>
+            <v-list-item-title>{{ $t('profile.pages.infoMyService.descriptionString') }}</v-list-item-title>
             <v-list-item-subtitle>{{ serviceDescription }}</v-list-item-subtitle>
           </v-list-item>
           <v-list-item>
-            <v-list-item-title>Precio Total</v-list-item-title>
+            <v-list-item-title>{{ $t('profile.pages.infoMyService.totalPriceString') }}</v-list-item-title>
             <v-list-item-subtitle>${{ servicePrice }}</v-list-item-subtitle>
           </v-list-item>
           <v-list-item>
-            <v-list-item-title>Pago pendiente</v-list-item-title>
+            <v-list-item-title>{{ $t('profile.pages.infoMyService.pendingPaymentString') }}</v-list-item-title>
             <v-list-item-subtitle>${{ pending }}</v-list-item-subtitle>
           </v-list-item>
           <v-list-item>
-            <v-list-item-title>Estatus</v-list-item-title>
+            <v-list-item-title>{{ $t('profile.pages.infoMyService.statusString') }}</v-list-item-title>
             <v-list-item-subtitle>{{ status }}</v-list-item-subtitle>
           </v-list-item>
         </v-list>
@@ -60,13 +60,13 @@
 
     <v-row v-if="status !== 'quoting'">
       <v-col cols="12" md="6">
-        <h2>Productos Utilizados</h2>
+        <h2>{{ $t('profile.pages.infoMyService.usedProductsString') }}</h2>
         <v-table density="compact">
           <thead>
             <tr>
-              <th class="text-left">Producto</th>
-              <th class="text-left">Cantidad</th>
-              <th class="text-left">Total</th>
+              <th class="text-left">{{ $t('profile.pages.infoMyService.productString') }}</th>
+              <th class="text-left">{{ $t('profile.pages.infoMyService.quantityString') }}</th>
+              <th class="text-left">{{ $t('profile.pages.infoMyService.totalString') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -82,20 +82,20 @@
         <v-row>
           <v-col cols="12" md="6">
             <v-list>
-              <h2>Costos Desglosados</h2>
+              <h2>{{ $t('profile.pages.infoMyService.costBreakdownString') }}</h2>
               <v-list-item>
-                <v-list-item-title>Mano de Obra</v-list-item-title>
+                <v-list-item-title>{{ $t('profile.pages.infoMyService.laborString') }}</v-list-item-title>
                 <v-list-item-subtitle>${{ laborCost }}</v-list-item-subtitle>
               </v-list-item>
               <v-list-item>
-                <v-list-item-title>Maquinaria</v-list-item-title>
+                <v-list-item-title>{{ $t('profile.pages.infoMyService.machineryString') }}</v-list-item-title>
                 <v-list-item-subtitle>${{ machineryCost }}</v-list-item-subtitle>
               </v-list-item>
             </v-list>
           </v-col>
           <v-col cols="12" md="6">
             <v-list>
-              <h2>Empleados Asignados</h2>
+              <h2>{{ $t('profile.pages.infoMyService.assignedEmployeesString') }}</h2>
               <v-list-item v-for="(employee, index) in employeeList" :key="index">
                 <v-list-item-title>{{ employee }}</v-list-item-title>
               </v-list-item>
@@ -113,7 +113,7 @@
 
     <v-dialog v-if="showComment" v-model="paymentDialog" max-width="600" persistent >
       <v-card>
-        <v-card-title class="headline">Formulario de Pago</v-card-title>
+        <v-card-title class="headline">{{ $t('profile.pages.infoMyService.paymentFormString') }}</v-card-title>
         <v-card-text>
           <v-alert
             v-if="showAlert"
@@ -134,7 +134,7 @@
 
           <v-text-field
             v-model="cardNumber"
-            label="Número de la tarjeta"
+            :label="$t('profile.pages.infoMyService.cardNameString')"
             :error-messages="this.errors.cardNumber"
             :counter="16"
             required
@@ -146,7 +146,7 @@
                 v-model="expMonth"
                 :items="months"
                 :error-messages="this.errors.expMonth"
-                label="Mes de expiración"
+                :label="$t('profile.pages.infoMyService.expirationMonthString')"
                 required
               ></v-select>
             </v-col>
@@ -156,7 +156,7 @@
                 v-model="expYear"
                 :items="years"
                 :error-messages="this.errors.expYear"
-                label="Año de expiración"
+                :label="$t('profile.pages.infoMyService.expirationYearString')"
                 required
               ></v-select>
             </v-col>
@@ -181,8 +181,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closePaymentDialog">Cerrar</v-btn>
-          <v-btn color="blue darken-1" text @click="submitPayment">Pagar</v-btn>
+          <v-btn color="blue darken-1" text @click="closePaymentDialog">{{ $t('profile.pages.infoMyService.buttonClose') }}</v-btn>
+          <v-btn color="blue darken-1" text @click="submitPayment">{{ $t('profile.pages.infoMyService.buttonPay') }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -193,9 +193,7 @@
     <v-col cols="12" sm="8" md="6">
       <v-card class="mx-auto" outlined>
         <v-card-title class="justify-center text-h5">
-          <v-icon class="mr-2">mdi-comment-outline</v-icon>
-          Comparte tu opinión
-        </v-card-title>
+          <v-icon class="mr-2">mdi-comment-outline</v-icon>{{ $t('profile.pages.infoMyService.shareOpinionString') }}</v-card-title>
 
         <v-divider></v-divider>
 
@@ -203,7 +201,7 @@
           <v-form>
             <v-textarea
               v-model="comment"
-              label="Deja tu comentario aquí"
+              :label="$t('profile.pages.infoMyService.leaveCommentString')"
               auto-grow
               rows="1"
               outlined
@@ -211,7 +209,7 @@
               class="my-4"
             ></v-textarea>
 
-            <div class="text-center mb-2">Tu calificación:</div>
+            <div class="text-center mb-2">{{ $t('profile.pages.infoMyService.yourRatingString') }}</div>
             <div class="d-flex justify-center mb-4">
               <v-rating
                 v-model="rating"
@@ -357,20 +355,20 @@ export default {
     },
     async submitPayment() {
       const isMonthSelected = this.expMonth !== '';
-      this.errors.expMonth = !isMonthSelected ? 'El mes de expiración es requerido.' : '';
+      this.errors.expMonth = !isMonthSelected ? this.$t('profile.pages.infoMyService.script.expirationMonthString') : '';
 
       const isYearSelected = this.expYear !== '';
-      this.errors.expYear = !isYearSelected ? 'El año de expiración es requerido.' : '';
+      this.errors.expYear = !isYearSelected ? this.$t('profile.pages.infoMyService.script.expirationRequiredString') : '';
 
       this.errors.cardName = (this.cardName.length < 3 || !/^[a-zA-ZüÜáéíóúÁÉÍÓÚñÑ' ]+$/.test(this.cardName))
           ? this.$t('registration.alerts.firstName') 
           : '';
 
           const isValidNumber = /^\d{16}$/.test(this.cardNumber);
-      this.errors.cardNumber = !isValidNumber ? 'El número de tarjeta debe ser de 16 dígitos numéricos.' : '';
+      this.errors.cardNumber = !isValidNumber ? this.$t('profile.pages.infoMyService.script.cardNumberString') : '';
 
       const isValidCVV = /^\d{3,4}$/.test(this.cvv);
-      this.errors.cvv = !isValidCVV ? 'El código CVV es requerido y debe tener 3 o 4 dígitos.' : '';
+      this.errors.cvv = !isValidCVV ? this.$t('profile.pages.infoMyService.script.theCodeString') : '';
 
       if (Object.values(this.errors).some(error => error !== '')) {
         return;

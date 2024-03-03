@@ -9,12 +9,12 @@
         <p>{{ service.description }}</p><br>
         <v-divider></v-divider>
         <br>
-        <label>Por favor describa brevemente como es que desea que se haga el servcio, proporcione una fotografia del lugar y seleccione una fecha para la cotizacion</label>
+        <label>{{ $t('service.pages.scheduleService.descriptionString') }}</label>
         <br>
         <v-textarea
           outlined
           name="descripcion"
-          label="Describa brevemente como desea su servicio"
+          :label="$t('service.pages.scheduleService.describeServiceString')"
           rows="4"
           :error-messages="this.errors.description"
           v-model="formData.description"
@@ -26,7 +26,7 @@
           <v-col cols="12" sm="6" class="d-flex flex-column justify-center" @dragover.prevent>
             
             <v-file-input
-              label="Seleccione una foto del área a trabajar"
+              :label="$t('service.pages.scheduleService.selectPhotoString')"
               @change="handleImageUpload"
               @drop.prevent = "handleImageDrop"
               accept="image/*"
@@ -39,7 +39,7 @@
               <v-img :src="formData.imagen" aspect-ratio="1" contain></v-img>
             </div>
             <div v-else class="image-placeholder" @dragover.prevent>
-              Arrastre y suelte una imagen aquí
+              {{ $t('service.pages.scheduleService.dragImageString') }}
             </div>
           </v-col>
 
@@ -61,9 +61,9 @@
       </v-card-text>
       <v-card-actions class="d-flex justify-space-between">
         <router-link :to="{name: 'services-services'}">
-          <v-btn color="red darken-1" text>Cancelar</v-btn>
+          <!-- <v-btn color="red darken-1" text>Cancelar</v-btn> -->
         </router-link>
-          <v-btn color="green darken-1" @click="validate()" text>Cotizar</v-btn>
+          <v-btn color="green darken-1" @click="validate()" text>{{ $t('service.pages.scheduleService.scheduleString') }}</v-btn>
       </v-card-actions>
     </v-card>
     <v-dialog v-model="scheduleDialog" max-width="600" persistent >
@@ -100,7 +100,7 @@
               width="90"
               @click="closeScheduleDialog"
             >
-              Close
+              {{ $t('service.pages.scheduleService.closeString') }}
             </v-btn>
           </div>
         </div>
@@ -152,7 +152,7 @@ export default {
   methods: {
     validate(){
       this.errors.description = (!this.formData.description) 
-        ? 'La descripcion es requerida'
+        ? this.$t('service.pages.scheduleService.script.description')
         : ''
 
       this.errors.image = (!this.formData.imagen) 
@@ -181,11 +181,11 @@ export default {
     },
     processImage(file) {
       // Check if a file is selected
-      this.errors.image = (!file) ? 'La descripción de la imagen es requerida' : '';
+      this.errors.image = (!file) ? this.$t('service.pages.scheduleService.script.imageRequired') : '';
 
       // Check the file size (in bytes)
       const maxSize = 4 * 1024 * 1024; // 4 megabytes
-      this.errors.image = (file.size > maxSize) ? 'La imagen seleccionada es demasiado grande' : '';
+      this.errors.image = (file.size > maxSize) ? this.$t('registration.alerts.sizeFile') : '';
 
       // Read the image as a Blob object
       const reader = new FileReader();
@@ -197,7 +197,7 @@ export default {
       if (file.type.startsWith('image/')) {
         reader.readAsDataURL(file);
       } else {
-        this.errors.image = 'Por favor, seleccione un archivo de imagen válido';
+        this.errors.image = this.$t('registration.alerts.validImage');
       }
     },
     allowedDates(val) {
@@ -224,8 +224,8 @@ export default {
       console.log(date)
       try {
         if(date === actualDate){
-          this.tittle = 'Upss parece que estamos ocupados'
-          this.message = 'Lastimosamente no podemos visittarte hoy mismo ya que estamos muy ocuados, por favor selecciona otra fecha. 🌱☘️'
+          this.tittle = this.$t('service.pages.scheduleService.script.busy')
+          this.message = this.$t('service.pages.scheduleService.script.busyMessage')
           this.icon = 'mdi-alert-octagon-outline'
           this.color = 'gred-darken-4'
           this.overlay = false
@@ -245,13 +245,13 @@ export default {
         }
         const {data} = await api.post('/schedule/schedule', datos)
         if(data.success === false){
-          this.tittle = 'Lo sentimos mucho, parece que algo ha pasado.'
+          this.tittle = this.$t('service.pages.scheduleService.script.error')
           this.message = data.msg
           this.icon = 'mdi-alert-octagon-outline'
           this.color = 'red-darken-4'
           this.openScheduleDialog()
         }else{
-          this.tittle = 'Se agendo correctamente tu servicio'
+          this.tittle = this.$t('service.pages.scheduleService.script.success')
           this.message = data.msg
           this.icon = 'mdi-check-circle'
           this.color = 'green-darken-3'

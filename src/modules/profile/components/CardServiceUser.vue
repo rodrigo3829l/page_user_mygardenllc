@@ -14,14 +14,14 @@
     </v-card-title>
 
     <v-card-subtitle>
-      Status: {{ service.status }}
+      {{ $t('profile.components.cardServiceUser.statusString') }}: {{ service.status }}
     </v-card-subtitle>
     
     <v-card-subtitle v-if="service.status === 'quoted'">
-      Please pay the service
+      {{ $t('profile.components.cardServiceUser.payServicesString') }}
     </v-card-subtitle>
     <v-card-subtitle v-if="service.status === 'pay'">
-      Paid service
+      {{ $t('profile.components.cardServiceUser.payServiceString') }}
     </v-card-subtitle>
 
     <v-card-actions>
@@ -30,7 +30,7 @@
         variant="text"
         @click="info"
       >
-        Info
+      {{ $t('profile.components.cardServiceUser.informationString') }}
       </v-btn>
       <v-spacer></v-spacer>
       

@@ -5,7 +5,11 @@
       "projectsString": "Proyectos",
       "contactString": "Contacto",
       "faqsString": "Preguntas frecuentes",
-      "loginString": "Iniciar sesión"
+      "loginString": "Iniciar sesión",
+      "yourAccountString" :  "Tu cuenta",
+      "yourServices" : "Tus servicios",
+      "logoutString" : "Cerrar sesion",
+      "subtitleString" : "Servicios de jardineria y mas."
     },
     "home" : {
       "tittleString": "Mi Jardín LLC",
@@ -222,5 +226,74 @@
     "servicesCard" : {
       "tagsString" : "Etiquetas",
       "btnString" : "Reservar"
+    },
+
+    "profile":{
+      "components":{
+        "cardServiceUser":{
+          "statusString":"Estatus",
+          "payServicesString": "Por favor paga el servicio",
+          "payServiceString": "Pagar servicio",
+          "informationString": "Informacion"
+        }
+      },
+      "pages":{
+        "infoMyService": {
+          "getYourServiceString": "Obteniendo tu servicio",
+          "serviceDetailsString": "Detalles del Servicio",
+          "descriptionString": "Descripcion",
+          "totalPriceString": "Precio Total",
+          "pendingPaymentString": "Pago pendiente",
+          "statusString": "Estatus",
+          "usedProductsString": "Productos Utilizados",
+          "productString": "Producto",
+          "quantityString": "Cantidad",
+          "totalString": "Total",
+          "costBreakdownString": "Costos Desglosados",
+          "laborString": "Mano de Obra",
+          "machineryString": "Maquinaria",
+          "assignedEmployeesString": "Empleados Asignados",
+          "paymentFormString": "Formulario de Pago",
+          "cardNameString": "Nombre de la Tarjeta",
+          "expirationMonthString":"Mes de expiración",
+          "expirationYearString":"Año de expiración",
+          "buttonClose":"Cerrar",
+          "buttonPay":"Pagar",
+          "shareOpinionString":"Comparte tu opinión",
+          "leaveCommentString":"Deja tu comentario aquí",
+          "yourRatingString":"Tu calificación:",
+          "script":{
+            "expirationMonthString":"El mes de expiración es requerido",
+            "expirationRequiredString":"El año de expiración es requerido",
+            "cardNumberString":"El número de tarjeta debe ser de 16 dígitos numéricos",
+            "theCodeString":"El código CVV es requerido y debe tener 3 o 4 dígitos"
+          }
+
+        },
+        "myServices":{
+          "servicesString":"Mis Servicios"
+        }
+    },
+    "service":{
+      "pages":{ 
+        "scheduleService":{
+          "descriptionString":"Por favor describa brevemente como es que desea que se haga el servcio, proporcione una fotografia del lugar y seleccione una fecha para la cotizacion",
+          "describeServiceString":"Describa brevemente como desea su servicio",
+          "selectPhotoString":"Seleccione una foto del área a trabajar",
+          "dragImageString":"Arrastre y suelte una imagen aquí",
+          "guoteString":"Cotizar",
+          "closeString":"Cerrar",
+          "script" : {
+            "description" : "La descripcion es requerida",
+            "imageRequired" : "La imagen es requerida",
+            "busy" : "Upss parece que estamos ocupados",
+            "busyMessage" : "Lastimosamente no podemos visittarte hoy mismo ya que estamos muy ocuados, por favor selecciona otra fecha. 🌱☘️",
+            "error" : "'Lo sentimos mucho, parece que algo ha pasado.",
+            "success" : "Se agendo correctamente tu servicio"
+          }
+        }
+
+      }
     }
+  }
 }

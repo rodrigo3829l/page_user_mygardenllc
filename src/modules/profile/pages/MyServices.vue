@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="d-flex justify-center">
-      <h1>Mis Servicios</h1>
+      <h1>{{ $t('profile.pages.myServices.servicesString') }}</h1>
     </v-row>
     
     <v-row v-if="!loaded">
