@@ -106,12 +106,12 @@
     </v-row>
 
     <v-row v-if="pending !== 0" justify="center">
-      <v-btn color="green" dark class="mt-8 mb-6" @click="openPaymentDialog">Pagar</v-btn>
+      <v-btn color="green" dark class="mt-8 mb-6" @click="openPaymentDialog">{{ $t('profile.pages.infoMyService.payBtn') }}</v-btn>
     </v-row>
 
-    <CommentCard :comment = "commentUser"></CommentCard>
+    <CommentCard v-if="showComment" :comment = "commentUser"></CommentCard>
 
-    <v-dialog v-if="showComment" v-model="paymentDialog" max-width="600" persistent >
+    <v-dialog v-model="paymentDialog" max-width="600" persistent >
       <v-card>
         <v-card-title class="headline">{{ $t('profile.pages.infoMyService.paymentFormString') }}</v-card-title>
         <v-card-text>
@@ -127,16 +127,17 @@
           </v-alert>
           <v-text-field
             v-model="cardName"
-            label="Nombre en la tarjeta"
+            :label="$t('profile.pages.infoMyService.cardNameString')"
             required
             :error-messages="this.errors.cardName"
           ></v-text-field>
 
           <v-text-field
             v-model="cardNumber"
-            :label="$t('profile.pages.infoMyService.cardNameString')"
+            :label="$t('profile.pages.infoMyService.cardNumberString')"
             :error-messages="this.errors.cardNumber"
             :counter="16"
+            type="number"
             required
           ></v-text-field>
 
@@ -164,7 +165,7 @@
             <v-col cols="4">
               <v-text-field
                 v-model="cvv"
-                label="Código CVV"
+                label="CVV"
                 :error-messages="this.errors.cvv"
                 required
               ></v-text-field>
@@ -342,6 +343,7 @@ export default {
       }
     },
     openPaymentDialog() {
+      console.log("Se abrio")
       this.paymentDialog = true
       this.typeMessage = ''
       this.message = ''

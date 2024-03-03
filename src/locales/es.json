@@ -228,6 +228,11 @@
       "btnString" : "Reservar"
     },
 
+
+
+
+
+
     "profile":{
       "components":{
         "cardServiceUser":{
@@ -255,6 +260,7 @@
           "assignedEmployeesString": "Empleados Asignados",
           "paymentFormString": "Formulario de Pago",
           "cardNameString": "Nombre de la Tarjeta",
+          "cardNumberString": "Numero de tarjeta",
           "expirationMonthString":"Mes de expiración",
           "expirationYearString":"Año de expiración",
           "buttonClose":"Cerrar",
@@ -262,6 +268,7 @@
           "shareOpinionString":"Comparte tu opinión",
           "leaveCommentString":"Deja tu comentario aquí",
           "yourRatingString":"Tu calificación:",
+          "payBtn" : "Pagar",
           "script":{
             "expirationMonthString":"El mes de expiración es requerido",
             "expirationRequiredString":"El año de expiración es requerido",
@@ -273,7 +280,8 @@
         "myServices":{
           "servicesString":"Mis Servicios"
         }
-    },
+    }
+  },
     "service":{
       "pages":{ 
         "scheduleService":{
@@ -295,5 +303,4 @@
 
       }
     }
-  }
 }

@@ -63,7 +63,7 @@
         <router-link :to="{name: 'services-services'}">
           <!-- <v-btn color="red darken-1" text>Cancelar</v-btn> -->
         </router-link>
-          <v-btn color="green darken-1" @click="validate()" text>{{ $t('service.pages.scheduleService.scheduleString') }}</v-btn>
+          <v-btn color="green darken-1" @click="validate()" text>{{ $t('service.pages.scheduleService.guoteString') }}</v-btn>
       </v-card-actions>
     </v-card>
     <v-dialog v-model="scheduleDialog" max-width="600" persistent >

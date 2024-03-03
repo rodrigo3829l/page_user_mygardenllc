@@ -227,5 +227,77 @@
   "servicesCard" : {
     "tagsString" : "Tags",
     "btnString" : "Reserve"
-  }
+  },
+
+
+
+  "profile": {
+    "components": {
+      "cardServiceUser": {
+        "statusString": "Status",
+        "payServicesString": "Please pay for the service",
+        "payServiceString": "Pay service",
+        "informationString": "Information"
+      }
+    },
+    "pages": {
+      "infoMyService": {
+        "getYourServiceString": "Getting your service",
+        "serviceDetailsString": "Service Details",
+        "descriptionString": "Description",
+        "totalPriceString": "Total Price",
+        "pendingPaymentString": "Pending Payment",
+        "statusString": "Status",
+        "usedProductsString": "Used Products",
+        "productString": "Product",
+        "quantityString": "Quantity",
+        "totalString": "Total",
+        "costBreakdownString": "Cost Breakdown",
+        "laborString": "Labor",
+        "machineryString": "Machinery",
+        "assignedEmployeesString": "Assigned Employees",
+        "paymentFormString": "Payment Form",
+        "cardNameString": "Card Name",
+        "cardNumberString": "Card Number",
+        "expirationMonthString": "Expiration Month",
+        "expirationYearString": "Expiration Year",
+        "buttonClose": "Close",
+        "buttonPay": "Pay",
+        "shareOpinionString": "Share your opinion",
+        "leaveCommentString": "Leave your comment here",
+        "yourRatingString": "Your rating:",
+        "payBtn" : "Pay",
+        "script": {
+          "expirationMonthString": "The expiration month is required",
+          "expirationRequiredString": "The expiration year is required",
+          "cardNumberString": "The card number must be 16 numeric digits",
+          "theCodeString": "The CVV code is required and must be 3 or 4 digits"
+        }
+      },
+      "myServices": {
+        "servicesString": "My Services"
+      }
+    }
+  },
+    "service": {
+      "pages": {
+        "scheduleService": {
+          "descriptionString": "Please briefly describe how you would like the service to be done, provide a photograph of the place, and select a date for the quote",
+          "describeServiceString": "Briefly describe how you want your service",
+          "selectPhotoString": "Select a photo of the area to work on",
+          "dragImageString": "Drag and drop an image here",
+          "guoteString": "Quote",
+          "closeString": "Close",
+          "script": {
+            "description": "The description is required",
+            "imageRequired": "The image is required",
+            "busy": "Oops, it seems we are busy",
+            "busyMessage": "Unfortunately, we cannot visit you today as we are very busy, please select another date. 🌱☘️",
+            "error": "We are very sorry, it seems that something has happened.",
+            "success": "Your service was successfully scheduled"
+          }
+        }
+      }
+    }
+  
 }
