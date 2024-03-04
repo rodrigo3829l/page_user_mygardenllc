@@ -30,11 +30,26 @@
                 required
                 @input="checkStrength"
               ></v-text-field>
+
               <div v-if="password.value.value">
-                <span v-if="passwordStrength === 'weak'" class="red--text">{{ $t('passwordRecovery.confirm.weakPasswordString') }}</span>
+
+                <v-progress-linear
+                      :color="color"
+                      height="10"
+                      :model-value="passwordStrength"
+                      striped
+                    ></v-progress-linear>
+
+                    <span v-if="passwordStrength >= 0 && passwordStrength < 50" class="red--text">{{ $t('registration.userdata.veryWeakPasswordString') }}</span>
+                    <span v-else-if="passwordStrength >= 50 && passwordStrength < 75" class="red--text">{{ $t('registration.userdata.weakPasswordString') }}</span>
+                    <span v-else-if="passwordStrength >= 75 && passwordStrength < 100" class="orange--text">{{ $t('registration.userdata.goodPassword') }}</span>
+                    <span v-else class="green--text">{{ $t('registration.userdata.excellentPassword') }}</span>
+
+                <!-- <span v-if="passwordStrength === 'weak'" class="red--text">{{ $t('passwordRecovery.confirm.weakPasswordString') }}</span>
                 <span v-else-if="passwordStrength === 'good'" class="orange--text">{{ $t('passwordRecovery.confirm.goodPassword') }}</span>
-                <span v-else class="green--text">{{ $t('passwordRecovery.confirm.excellentPassword') }}</span>
+                <span v-else class="green--text">{{ $t('passwordRecovery.confirm.excellentPassword') }}</span> -->
               </div>
+
               <label for="">{{ $t('passwordRecovery.confirm.confirmPasswordTittle') }}</label>
               <v-text-field
               :label="$t('passwordRecovery.confirm.confirmPasswordLabel')"
@@ -78,6 +93,7 @@ import { useField, useForm } from 'vee-validate'
 import { api } from '@/axios/axios';
 import {i18n} from '@/main.js'
 import { toast } from 'vue3-toastify';
+import zxcvbn from 'zxcvbn';
 
 export default {
   data: () => ({
@@ -174,7 +190,8 @@ export default {
     const passwordVisible = ref(false);
     const passwordVisibleConfirm = ref(false);
     const dialog = ref(false);
-    const passwordStrength = ref('');
+    const passwordStrength = ref(0);
+    const color = ref('');
     const router = useRouter();
 
     const submit = handleSubmit(async (values) => {
@@ -213,34 +230,66 @@ export default {
 
 
     const checkStrength = () => {
-      const patterns = {
-        length: /.{8,}/,
-        lowercase: /[a-z]+/,
-        uppercase: /[A-Z]+/,
-        number: /\d+/,
-        special: /[@$!%*?&#^*]+/,
-      };
 
-      const checks = {
-        length: patterns.length.test(password.value.value),
-        lowercase: patterns.lowercase.test(password.value.value),
-        uppercase: patterns.uppercase.test(password.value.value),
-        number: patterns.number.test(password.value.value),
-        special: patterns.special.test(password.value.value),
-      };
 
-      const passedChecks = Object.values(checks).filter(Boolean).length;
-
-      switch (passedChecks) {
-        case 5:
-          passwordStrength.value = 'excellent';
+      const passwordResult = zxcvbn(password.value.value);
+      console.log(passwordResult.score)
+      // Asigna la puntuación de la contraseña a la variable passwordStrength según el puntaje obtenido.
+      switch (passwordResult.score) {
+        case 0:
+          passwordStrength.value= 0;
+          color.value = 'red-darken-4'
+          break;
+        case 1:
+          passwordStrength.value= 25;
+          color.value = 'red-darken-4'
+          break;
+        case 2:
+          passwordStrength.value= 50;
+          color.value = 'orange-darken-4'
+          break;
+        case 3:
+          passwordStrength.value= 75;
+          color.value = 'deep-orange-darken-4'
           break;
         case 4:
-          passwordStrength.value = 'good';
+          passwordStrength.value= 100;
+          color.value = 'green-darken-4'
           break;
         default:
-          passwordStrength.value = 'weak';
+          // En caso de que la puntuación no esté dentro del rango esperado, mantén el valor anterior.
+          break;
       }
+
+
+      // const patterns = {
+      //   length: /.{8,}/,
+      //   lowercase: /[a-z]+/,
+      //   uppercase: /[A-Z]+/,
+      //   number: /\d+/,
+      //   special: /[@$!%*?&#^*]+/,
+      // };
+
+      // const checks = {
+      //   length: patterns.length.test(password.value.value),
+      //   lowercase: patterns.lowercase.test(password.value.value),
+      //   uppercase: patterns.uppercase.test(password.value.value),
+      //   number: patterns.number.test(password.value.value),
+      //   special: patterns.special.test(password.value.value),
+      // };
+
+      // const passedChecks = Object.values(checks).filter(Boolean).length;
+
+      // switch (passedChecks) {
+      //   case 5:
+      //     passwordStrength.value = 'excellent';
+      //     break;
+      //   case 4:
+      //     passwordStrength.value = 'good';
+      //     break;
+      //   default:
+      //     passwordStrength.value = 'weak';
+      // }
     }
 
     const togglePasswordVisibility = () => {
@@ -260,7 +309,8 @@ export default {
       togglePasswordVisibility,
       togglePasswordVisibilityConfirm,
       checkStrength,
-      passwordStrength
+      passwordStrength,
+      color
     }
   }
 }

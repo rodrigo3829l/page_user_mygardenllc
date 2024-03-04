@@ -319,9 +319,19 @@
                   ></v-text-field>
 
                   <div v-if="formData.password.length > 0">
-                    <span v-if="formData.passwordStrength === 'weak'" class="red--text">{{ $t('registration.userdata.weakPasswordString') }}</span>
-                    <span v-else-if="formData.passwordStrength === 'good'" class="orange--text">{{ $t('registration.userdata.goodPassword') }}</span>
+
+                    <v-progress-linear
+                      :color="formData.color"
+                      height="10"
+                      :model-value="formData.passwordStrength"
+                      striped
+                    ></v-progress-linear>
+
+                    <span v-if="formData.passwordStrength >= 0 && formData.passwordStrength < 50" class="red--text">{{ $t('registration.userdata.veryWeakPasswordString') }}</span>
+                    <span v-else-if="formData.passwordStrength >= 50 && formData.passwordStrength < 75" class="red--text">{{ $t('registration.userdata.weakPasswordString') }}</span>
+                    <span v-else-if="formData.passwordStrength >= 75 && formData.passwordStrength < 100" class="orange--text">{{ $t('registration.userdata.goodPassword') }}</span>
                     <span v-else class="green--text">{{ $t('registration.userdata.excellentPassword') }}</span>
+
                   </div>
     
                   <v-text-field
@@ -429,6 +439,7 @@
 <script>
 import { api } from '@/axios/axios';
 import axios from 'axios';
+import zxcvbn from 'zxcvbn';
 
 export default {
   data() {
@@ -447,7 +458,8 @@ export default {
         userName: '',
         email: '',
         password: '',
-        passwordStrength: '',
+        passwordStrength: 0,
+        color : '',
         confirmPassword: '',
         houseNumber: '',
         street: '',
@@ -503,33 +515,34 @@ export default {
   methods: {
 
     checkStrength() {
-      const patterns = {
-        length: /.{6,}/,
-        lowercase: /[a-z]+/,
-        uppercase: /[A-Z]+/,
-        number: /\d+/,
-        special: /[@$!%*?&#^*]+/,
-      };
 
-      const checks = {
-        length: patterns.length.test(this.formData.password),
-        lowercase: patterns.lowercase.test(this.formData.password),
-        uppercase: patterns.uppercase.test(this.formData.password),
-        number: patterns.number.test(this.formData.password),
-        special: patterns.special.test(this.formData.password),
-      };
-
-      const passedChecks = Object.values(checks).filter(Boolean).length;
-
-      switch (passedChecks) {
-        case 5:
-          this.formData.passwordStrength = 'excellent';
+      const passwordResult = zxcvbn(this.formData.password);
+      console.log(passwordResult.score)
+      // Asigna la puntuación de la contraseña a la variable passwordStrength según el puntaje obtenido.
+      switch (passwordResult.score) {
+        case 0:
+          this.formData.passwordStrength = 0;
+          this.formData.color = 'red-darken-4'
+          break;
+        case 1:
+          this.formData.passwordStrength = 25;
+          this.formData.color = 'red-darken-4'
+          break;
+        case 2:
+          this.formData.passwordStrength = 50;
+          this.formData.color = 'orange-darken-4'
+          break;
+        case 3:
+          this.formData.passwordStrength = 75;
+          this.formData.color = 'deep-orange-darken-4'
           break;
         case 4:
-          this.formData.passwordStrength = 'good';
+          this.formData.passwordStrength = 100;
+          this.formData.color = 'green-darken-4'
           break;
         default:
-          this.formData.passwordStrength = 'weak';
+          // En caso de que la puntuación no esté dentro del rango esperado, mantén el valor anterior.
+          break;
       }
     },
     async validatePostalCode() {

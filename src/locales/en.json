@@ -148,6 +148,7 @@
       "helloString":"Hello12#",
       "confirmPasswordString":"Confirm Password",
       "descriptionString":"I accept the Terms and Conditions for signing up to this page.",
+      "veryWeakPasswordString" : "very weak password",
       "weakPasswordString" : "Weak password",
       "goodPassword" : "Good password",
       "excellentPassword" : "Excellent password"

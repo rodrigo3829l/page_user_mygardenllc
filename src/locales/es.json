@@ -147,6 +147,7 @@
         "helloString":"Hola12#",
         "confirmPasswordString":"Confirmar Contraseña",
         "descriptionString":"Acepto los Términos y Condiciones para registrarme en esta página.",
+        "veryWeakPasswordString" : "Contraseña muy débil",
         "weakPasswordString" : "Contraseña débil",
         "goodPassword" : "Contraseña buena",
         "excellentPassword" : "Contraseña excelente"
