@@ -109,6 +109,14 @@ const routes = [
                 component: () => import ( /* webpackChunkName: "SendMail" */ '@/modules/login/pages/SendMail.vue'),
             },
             {
+                path: 'phone',
+                name: 'login-phone',
+                meta: {
+                    title: 'Send phone',
+                },
+                component: () => import ( /* webpackChunkName: "SendMail" */ '@/modules/login/pages/SendPhoneCode.vue'),
+            },
+            {
                 path: 'optconfirm',
                 name: 'login-optconfirm',
                 meta: {

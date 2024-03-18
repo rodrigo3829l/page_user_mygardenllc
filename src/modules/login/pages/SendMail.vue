@@ -44,6 +44,12 @@
 
             </v-form><br>
             <v-divider></v-divider>
+            <div class="text-center mt-3">
+              <router-link :to="{name: 'login-phone'}" class="green--text text-darken-3">
+                No te gusta esta opción, probemos por el teléfono
+              </router-link>
+            </div>
+            <!-- <router-link :to="{ name: 'login-phone' }">Recuperar por teléfono</router-link> -->
           </v-card-text>
         </v-card>
       </v-col>

@@ -1,4 +1,9 @@
 <template>
+  <v-breadcrumbs :items="bread">
+      <template v-slot:divider>
+        <v-icon icon="mdi-chevron-right"></v-icon>
+      </template>
+    </v-breadcrumbs>
   <v-container>
     <v-row>
       <v-col cols="12" sm="6" md="4" lg="3" v-for="card in cards" :key="card.title">
@@ -26,6 +31,18 @@
 export default {
   data() {
     return {
+      bread: [
+        {
+          title: 'Home',
+          disabled: false,
+          href: '/home/homeuser',
+        },
+        {
+          title: 'accesibility',
+          disabled: false,
+          href: '/accesibility',
+        },
+      ],
       cards: [
       { title: 'Regresar', icon: 'mdi-arrow-left', color: 'primary', to:'home-home'},
         { title: 'Inicio', icon: 'mdi-home', color: 'success', to:'home-home' },

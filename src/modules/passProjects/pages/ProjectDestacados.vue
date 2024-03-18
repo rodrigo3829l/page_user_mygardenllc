@@ -1,4 +1,9 @@
 <template>
+  <v-breadcrumbs :items="bread">
+      <template v-slot:divider>
+        <v-icon icon="mdi-chevron-right"></v-icon>
+      </template>
+    </v-breadcrumbs>
   <v-container>
     <v-row>
       <v-col
@@ -40,6 +45,18 @@ import { api } from '@/axios/axios';
 export default {
   data() {
     return {
+      bread: [
+        {
+          title: 'Home',
+          disabled: false,
+          href: '/home/homeuser',
+        },
+        {
+          title: 'projects',
+          disabled: false,
+          href: '/proyects/destacados',
+        },
+      ],
       imageUrl: "https://res.cloudinary.com/dui4i9f4e/image/upload/v1697990498/logos/p3xyl9xetmmg6vlamwkt.jpg",
       items: [],
     };

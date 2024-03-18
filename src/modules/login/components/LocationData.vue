@@ -1,112 +1,188 @@
 <template>
-  <div class="container">
-    <div class="card">
-      <div class="card-header">
-        <!-- Progress bar in the form of circles -->
-        <div class="progress">
-          <div class="progress-circle">1</div>
-          <div class="progress-line"></div>
-          <div class="progress-circle current">2</div>
-          <div class="progress-line"></div>
-          <div class="progress-circle">3</div>
-        </div>
-      </div>
-      <div class="card-body">
-        <form @submit.prevent="submitLocation">
-          <div class="registration-section">
-            <h3>Section 2: Location Details</h3>
-            <div class="mb-3">
-              <label for="ciudad" class="form-label">City</label>
-              <input type="text" class="form-control" id="ciudad" v-model="formData.ciudad" placeholder="Enter the city" required>
-            </div>
-            <div class="mb-3">
-              <label for="colonia" class="form-label">Neighborhood</label>
-              <input type="text" class="form-control" id="colonia" v-model="formData.colonia" placeholder="Enter your neighborhood" required>
-            </div>
-            <div class="mb-3">
-              <label for="calle" class="form-label">Street</label>
-              <input type="text" class="form-control" id="calle" v-model="formData.calle" placeholder="Enter your street" required>
-            </div>
-            <div class="mb-3">
-              <label for="numeroCasa" class="form-label">House Number</label>
-              <input type="number" class="form-control" id="numeroCasa" v-model="formData.numeroCasa" placeholder="Enter your house number" required>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="card-footer d-flex justify-content-between">
-        <router-link :to="{ name: 'login-login' }">
-          <button class="btn button-danger">Cancel</button>
-        </router-link>
-        <router-link :to="{ name: 'login-userdata' }">
-          <button class="btn button-succes">Continue</button>
-        </router-link>
-      </div>
-    </div>
-  </div>
+<h3 class="text-h6">{{ $t('registration.LocationDetails.titleString') }}</h3>
+
+<br>
+<v-row>
+  <v-col>
+    <v-row>
+      <v-col cols="8" sm="9">
+        <v-text-field
+          v-model="formData.postalCode"
+          :label="$t('registration.LocationDetails.postalString')"
+          required
+          type="number"
+          :error-messages="errors.postalCode"
+          variant="underlined"
+          color="green-darken-3"
+          
+        ></v-text-field>
+      </v-col>
+      <v-col cols="4" sm="3">
+        <v-btn
+          @click="validatePostalCode"
+          color="green-darken-3"
+          class="ma-2"
+          small
+          :loading="loadBtn"
+          :disabled="loadBtn"
+        >
+          {{ $t('registration.LocationDetails.buttonString') }}
+        </v-btn>
+      </v-col>
+    </v-row>
+
+    <v-autocomplete
+      v-model="formData.ciudad"
+      :label="$t('registration.LocationDetails.cityString')"
+      color="green-darken-3"
+      required
+      :disabled="true"
+      :error-messages="errors.ciudad"
+      variant="underlined"
+    ></v-autocomplete>
+
+    <v-select
+      v-model="formData.calle"
+      :label="$t('registration.LocationDetails.streetString')"
+      required
+      @update:focused="validateStreet"
+      :disabled="!cpValidate"
+      :error-messages="errors.calle"
+      variant="underlined"
+      color="green-darken-3"
+      :items="['Peachtree Street',
+        'Marietta Street', 
+        'Decatur Street', 
+        'Spring Street', 
+        'Auburn Avenue', 
+        'Monroe Drive', 
+        'North Avenue', 
+        'Boulevard', 
+        'Ponce de Leon Avenue', 
+        'Irwin Street', 
+        'Edgewood Avenue', 
+        'Mitchell Street',
+        'Chicory Way',
+        'Churchill Heights',
+        'Clarinbridge Way',
+        'Cobblestone Way',
+        'Columbia Bay',
+        'Cranchester Way',
+        'Whittenham Clse'
+      ]"
+    ></v-select>
+
+    <v-text-field
+      v-model="formData.neighborhood"
+      :label="$t('registration.LocationDetails.neighborhoodString')"
+      required
+      @input="validateNeighborhood"
+      :disabled="!cpValidate"
+      :placeholder="$t('registration.LocationDetails.placeholderNeighboorhood')"
+      :error-messages="errors.neighborhood"
+      variant="underlined"
+      color="green-darken-3"
+    ></v-text-field>
+
+    <v-text-field
+      v-model="formData.numCasa"
+      :label="$t('registration.LocationDetails.houseString')"
+      required
+      @input="validateNumberHouse"
+      :disabled="!cpValidate"
+      :error-messages="errors.numCasa"
+      variant="underlined"
+      color="green-darken-3"
+      :placeholder="$t('registration.LocationDetails.placeholderNumHouse')"
+      type="number"
+    ></v-text-field>
+  </v-col>
+</v-row>
 </template>
 
 <script>
+import axios from 'axios';
+
+import { 
+  streetValidate,
+  houseNumberValidate,
+  neighborhoodValidate
+ } from '@/plugins/validations';
 export default {
-  data() {
+  data () {
     return {
-      formData: {
-        ciudad: '',
-        colonia: '',
+      formData : {
+        postalCode: '',
+        numCasa: '',
         calle: '',
-        numeroCasa: '',
+        neighborhood: '',
+        ciudad: '',
       },
-    };
+      loadBtn: false,
+      cpValidate : false,
+      errors : {
+        postalCode: '',
+        numCasa: '',
+        calle: '',
+        neighborhood: '',
+        ciudad: '',
+      }
+    }
   },
-  methods: {
-    submitLocation() {
-      // Envía los datos del formulario de datos de ubicación
-      console.log(this.formData);
+  methods : {
+    async validatePostalCode() { 
+      this.loadBtn = true;
+
+      // Verificación inicial del formato del código postal
+      if (this.formData.postalCode.length !== 5 || !/^\d+$/.test(this.formData.postalCode)) {
+        this.errors.postalCode = this.$t('registration.alerts.postalCode');
+        this.cpValidate = false; 
+        this.loadBtn = false;
+        return;
+      }
+
+      try {
+        // Llamada a la API de Zippopotam para validar el código postal
+        const {data} = await axios.get(`https://api.zippopotam.us/us/${this.formData.postalCode}`);
+
+        // Verifica si el lugar es Atlanta
+        const placeName = data.places[0]['place name'];
+        console.log(placeName)
+        if (placeName.toLowerCase() === 'atlanta') {
+          this.errors.postalCode = '';
+          this.cpValidate = true;
+          this.formData.ciudad = placeName; // Asigna el nombre del lugar al campo de ciudad
+        } else {
+          this.errors.postalCode = this.$t('registration.alerts.serviceOnly'); // Mensaje de error si no es Atlanta
+          this.cpValidate = false;
+        }
+      } catch (error) {
+        console.error("Error fetching postal code info:", error);
+        this.errors.postalCode = this.$t('registration.alerts.postalCode');
+        this.cpValidate = false;
+      } finally {
+        this.$emit('updateData', this.formData, this.errors);
+        this.loadBtn = false;
+      }
     },
+    validateStreet () {
+      console.log("calle: ", this.formData.calle)
+      this.errors.calle = streetValidate(this.formData.calle)
+      this.$emit('updateData', this.formData, this.errors);
+    },
+    validateNumberHouse () {
+      console.log("numero: ", this.formData.numCasa)
+      this.errors.numCasa = houseNumberValidate(this.formData.numCasa)
+      this.$emit('updateData', this.formData, this.errors);
+    },
+    validateNeighborhood () {
+      this.errors.neighborhood = neighborhoodValidate(this.formData.neighborhood)
+      this.$emit('updateData', this.formData, this.errors);
+    }
   },
+  mounted () {
+    this.$emit('updateData', this.formData, this.errors);
+  }
 };
+
 </script>
-<style scoped>
-.card {
-  margin: 50px 20px;
-  max-width: 600px;
-}
-
-.card-header {
-  background-color: #3E7347;
-}
-
-.progress {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.progress-circle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  background-color: #ccc;
-  border-radius: 50%;
-  font-weight: bold;
-}
-
-.progress-circle.current {
-  background-color: #ff0000;
-  color: #fff;
-}
-
-.progress-line {
-  flex: 1;
-  height: 2px;
-  background-color: #ccc;
-}
-
-.registration-section {
-  margin-bottom: 20px;
-}
-
-</style>

@@ -1,4 +1,9 @@
 <template>
+  <v-breadcrumbs :items="bread">
+      <template v-slot:divider>
+        <v-icon icon="mdi-chevron-right"></v-icon>
+      </template>
+    </v-breadcrumbs>
   <v-container class="container">
     <v-card>
       <v-card-title class="green darken-1 white--text">
@@ -66,6 +71,7 @@
           <v-btn color="green darken-1" @click="validate()" text>{{ $t('service.pages.scheduleService.guoteString') }}</v-btn>
       </v-card-actions>
     </v-card>
+    
     <v-dialog v-model="scheduleDialog" max-width="600" persistent >
       <v-sheet
         elevation="12"
@@ -127,6 +133,23 @@ const userStore = useUserStore();
 export default {
   data() {
     return {
+      bread: [
+        {
+          title: 'Home',
+          disabled: false,
+          href: '/home/homeuser',
+        },
+        {
+          title: 'services',
+          disabled: false,
+          href: '/services/servicespage',
+        },
+        {
+          title: 'Schedule service',
+          disabled: true,
+          href: '/services/schedule/id',
+        },
+      ],
       formData: {
         imagen: null,
         description : ''

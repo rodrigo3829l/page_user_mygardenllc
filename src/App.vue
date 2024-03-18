@@ -4,7 +4,19 @@
       <NavBar></NavBar>
       <AccessibilityButtons></AccessibilityButtons>
       <router-view></router-view>
-      <FooterComponent ></FooterComponent>
+      <FooterComponent></FooterComponent>
+      <v-snackbar 
+        v-model="snackbar.show" 
+        :color="snackbar.color" 
+        top
+        variant="tonal"
+        :timeout="snackbar.timeout"
+      >
+        {{ snackbar.message }}
+        <template v-slot:actions>
+          <v-btn text @click="snackbar.show = false">Cerrar</v-btn>
+        </template>
+      </v-snackbar>
     </v-main>
   </v-app>
 </template>
@@ -24,17 +36,52 @@ export default {
       ],
     };
   },
+  data() {
+    return {
+      snackbar: {
+        show: false,
+        message: '',
+        color: '',
+        timeout : 2000
+      }
+    }
+  },
   components: {
     NavBar: defineAsyncComponent(() => import('@/modules/shared/components/NavBar.vue')),
     FooterComponent: defineAsyncComponent(() => import('@/modules/shared/components/FooterComponent.vue')),
     AccessibilityButtons: defineAsyncComponent(() => import('@/modules/shared/components/AccessibilityButtons.vue')),
-  }, 
-  methods:{
+  },
+  mounted() {
+    // Verifica el estado de conexión al cargar el componente
+    this.checkOnlineStatus();
 
-  }
+    // Suscribirse al evento de conexión en línea
+    window.addEventListener('online', this.checkOnlineStatus);
+
+    // Suscribirse al evento de conexión sin conexión
+    window.addEventListener('offline', this.checkOnlineStatus);
+  },
+  methods: {
+    checkOnlineStatus() {
+      // Verifica si el navegador está en línea
+      if (navigator.onLine) {
+        this.snackbar.show = true;
+        this.snackbar.message = 'Se ha restaurado la conexion';
+        this.snackbar.color = 'success';
+      } else {
+        this.snackbar.show = true;
+        this.snackbar.message = 'Estas sin conexion';
+        this.snackbar.color = 'error';
+      }
+    }
+  },
+  // beforeDestroy() {
+  //   // Asegúrate de eliminar los event listeners al destruir el componente
+  //   window.removeEventListener('online', this.checkOnlineStatus);
+  //   window.removeEventListener('offline', this.checkOnlineStatus);
+  // }
 };
 </script>
-
 
 <style>
 a {
@@ -57,4 +104,3 @@ a {
 }
 
 </style>
-

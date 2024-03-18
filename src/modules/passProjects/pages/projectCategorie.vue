@@ -1,4 +1,9 @@
 <template>
+  <v-breadcrumbs :items="bread">
+      <template v-slot:divider>
+        <v-icon icon="mdi-chevron-right"></v-icon>
+      </template>
+    </v-breadcrumbs>
     <div>
       <v-container>
         <h1>{{ $route.params.category.toLowerCase() }}</h1>
@@ -26,6 +31,23 @@
   export default {
     data() {
       return {
+        bread: [
+        {
+          title: 'Home',
+          disabled: false,
+          href: '/home/homeuser',
+        },
+        {
+          title: 'projects',
+          disabled: false,
+          href: '/proyects/destacados',
+        },
+        {
+          title: 'Information',
+          disabled: false,
+          href: '/categirue/id',
+        },
+      ],
         proyectos: [],
         loaded: false,
       };

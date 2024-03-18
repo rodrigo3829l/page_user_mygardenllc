@@ -7,10 +7,10 @@
   <v-container>
     <h2>{{ $t('faqs.titleString') }}</h2>
     <div class="text-center d-flex pb-4">
-          <v-btn class="ma-2" @click="all">
+          <v-btn v-if="!allShow" class="ma-2" @click="all">
             {{  $t('faqs.buttonShowAllString') }}
           </v-btn>
-          <v-btn class="ma-2" @click="none">
+          <v-btn v-if="allShow" class="ma-2" @click="none">
             {{  $t('faqs.buttonHideAllString') }}
           </v-btn>
         </div>
@@ -44,6 +44,7 @@
 export default {
   data() {
     return {
+      allShow : false,
       items: [
         {
           title: 'Home',
@@ -76,9 +77,11 @@ export default {
   },
   methods: {
     all() {
+      this.allShow = true
       this.panel = this.faqs.map(faq => faq.question);
     },
     none() {
+      this.allShow = false
       this.panel = [];
     },
   },

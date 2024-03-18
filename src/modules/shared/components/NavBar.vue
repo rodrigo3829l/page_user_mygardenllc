@@ -21,8 +21,8 @@
       <v-list-item v-if="!userStore.token" prepend-icon="mdi-login" :title="$t('navbar.loginString')"></v-list-item>
 
       <div v-if="userStore.token">
-        <v-list-item prepend-icon="mdi-account" :title="$t('navbar.yourAccountString')"></v-list-item>
-        <v-list-item prepend-icon="mdi-cogs" :title="$t('navbar.yourServices')"></v-list-item>
+        <v-list-item prepend-icon="mdi-account" @click="$router.push({ name: 'profile-profile' })" :title="$t('navbar.yourAccountString')"></v-list-item>
+        <v-list-item prepend-icon="mdi-cogs" @click="$router.push({ name: 'profile-myservices' })" :title="$t('navbar.yourServices')"></v-list-item>
       </div>
 
       <v-list-item v-if="theme.global.name.value === 'dark'" prepend-icon="mdi-white-balance-sunny" title="Light" @click="toggleTheme"></v-list-item>
@@ -45,7 +45,7 @@
           <v-col cols="auto">
             <router-link to="/" class="navbar-brand">
               <div class="d-flex align-items-center">
-                <img src="https://res.cloudinary.com/dui4i9f4e/image/upload/v1697989916/logos/jgkamjqwy97zkb0hfsye.png" alt="Logo" class="logo">
+                <img src="https://res.cloudinary.com/dui4i9f4e/image/upload/v1709677547/logos/jb7aaqsuesjivzmiz5mg.png" alt="Logo" class="logo">
               </div>
             </router-link>
           </v-col>
@@ -187,7 +187,6 @@
 
 <script>
   import { useUserStore } from '@/store/store';
-  import { onMounted } from 'vue'
   import { setLanguage } from '@/store/languajeStore';
   import { useDisplay } from 'vuetify'
   import { useTheme } from 'vuetify'
@@ -200,10 +199,6 @@
         const toggleTheme = () => {
           theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
         }
-        onMounted(() => {
-          console.log(width.value) // 960
-          console.log(mobile.value) // true
-        })
         return {
           theme,
           toggleTheme,
@@ -261,7 +256,6 @@
       if (storedToken) {
         this.userStore.refreshToken();
       }
-      console.log(this.$vuetify)
       let lastScrollTop = 0; 
 
       window.addEventListener('scroll', () => {

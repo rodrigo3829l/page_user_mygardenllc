@@ -27,26 +27,85 @@
         v-for="(service, index) in services"
         :key="index"
       >
-        <ServicesCard :service="service"></ServicesCard>
+      <div>
+        <ServicesCard @updateData="updateData" :service="service"></ServicesCard>
+
+      </div>
       </v-col>
     </v-row>
   </v-container>
+
+
+  <v-dialog 
+    v-model="rescheduleDialog"
+    width="auto"
+    persistent
+  >
+    <CalendarCard @updateData="updateData"></CalendarCard>
+  </v-dialog>
+
+
+  <v-dialog 
+    v-model="cancelDialog" 
+    width="auto"
+    persistent
+  >
+    <v-card>
+      <v-card-title>
+        Confirmar Cancelación
+      </v-card-title>
+      <v-card-text>
+        ¿Está seguro de que desea cancelar el servicio?
+      </v-card-text>
+      <v-card-actions class="justify-end">
+        <v-btn color="primary" @click="closeCancel">No</v-btn>
+        <v-btn color="error" @click="confirmCancel">Sí, estoy seguro</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+  <v-overlay
+      :model-value="overlay"
+      class="align-center justify-center"
+    >
+      <v-progress-circular
+        color="primary"
+        indeterminate
+        size="64"
+      ></v-progress-circular>
+    </v-overlay>
 </template>
 
 <script>
 import { defineAsyncComponent } from 'vue';
 import {api} from '@/axios/axios.js'
 import { useUserStore } from '@/store/store';
+import { toast } from 'vue3-toastify';
 const userStore = useUserStore();
 export default {
   data(){
     return {
       userStore,
       services : [],
-      loaded : false
+      loaded : false,
+      cancelDialog : false,
+      idService : '',
+      overlay : false,
+      rescheduleDialog : false
     }
   },
   methods : {
+    updateData( id, action) {
+      if (action === 'cancel'){
+        this.cancelDialog = true
+        this.idService = id
+      }else if (action === 'reschedule'){
+        this.rescheduleDialog = !this.rescheduleDialog
+        this.idService = id
+      }else{
+        this.reschedule(id)
+      }
+      
+    },
     async getServices () {
       try {
         const {data} = await api.get(`/schedule/userservices/${userStore.token}`)
@@ -56,13 +115,61 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    }
+    },
+    async confirmCancel() {
+      try {
+        this.cancelDialog = false
+        this.overlay = true
+        const {data} = await api.put(`/schedule/cancel/${this.idService}`)
+        if(!data.success){
+          toast.warning(data.msg)
+        }else{
+          this.getServices()
+          toast.success(data.msg)
+        }
+        this.idService = ''
+        this.overlay = false
+      } catch (error) {
+        this.overlay = false
+        toast.error('Error al cancelar el servicio intente mas tarde')
+        console.log(error)
+      }
+    },
+    async reschedule(date){
+      try {
+        this.rescheduleDialog = false
+        this.overlay = true
+        const datos = {
+          newDate : date
+        }
+        const {data} = await api.put(`/schedule/rescheduleservice/${this.idService}`, datos)
+
+        if(!data.success){
+          toast.warning(data.msg)
+        }else{
+          this.getServices()
+          toast.success(data.msg)
+        }
+        this.idService = ''
+        this.overlay = false 
+      } catch (error) {
+        this.overlay = false 
+        console.log(error)
+      }
+    },
+    closeCancel() {
+      this.cancelDialog = false,
+      this.idService = ''
+    },
+
   },
+  
   created() {
     this.getServices()
   },
   components: {
     ServicesCard: defineAsyncComponent(() => import('../components/CardServiceUser.vue')),
+    CalendarCard: defineAsyncComponent(() => import('../components/CalendarCard.vue')),
   },
 }
 </script>

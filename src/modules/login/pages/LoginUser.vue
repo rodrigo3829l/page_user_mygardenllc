@@ -159,7 +159,7 @@ export default {
     const submit = handleSubmit(async (values) => {
       dialog.value = true;
       try {
-        const res = await userStore.login(values.email, values.password, 'client');
+        const res = await userStore.login(values.email, values.password);
         console.log(res);
 
         dialog.value = false;

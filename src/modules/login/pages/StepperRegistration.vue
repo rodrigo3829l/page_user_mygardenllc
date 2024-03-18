@@ -385,7 +385,7 @@
   </v-container>
   <v-dialog v-model="dialogVisible" width="500">
     
-    <template v-slot:default="{ dialog }" >
+    <template>
       
       <v-sheet
         elevation="12"
@@ -545,13 +545,14 @@ export default {
           break;
       }
     },
-    async validatePostalCode() {
+    // falta este de validar
+    async validatePostalCode() { 
       this.loadBtn = true;
 
       // Verificación inicial del formato del código postal
       if (this.formData.postalCode.length !== 5 || !/^\d+$/.test(this.formData.postalCode)) {
         this.errors.postalCode = this.$t('registration.alerts.postalCode');
-        this.cpValidate = false; // Asume que la validación es falsa inicialmente
+        this.cpValidate = false; 
         this.loadBtn = false;
         return;
       }
@@ -701,7 +702,7 @@ export default {
       this.errors.userName = (!this.formData.userName || this.formData.userName.length < 6 || !/^[a-zA-Z0-9]+$/.test(this.formData.userName))
         ? this.$t('registration.alerts.userName')
         : '';
-        this.errors.email = (/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(this.formData.email))
+      this.errors.email = (/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(this.formData.email))
         ? ''
         : this.$t('registration.alerts.email')
 
