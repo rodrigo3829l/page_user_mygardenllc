@@ -52,14 +52,14 @@
   >
     <v-card>
       <v-card-title>
-        Confirmar Cancelación
+        {{ $t('profile.pages.myServices.cancellationString') }}
       </v-card-title>
       <v-card-text>
-        ¿Está seguro de que desea cancelar el servicio?
+        {{ $t('profile.pages.myServices.serviceString') }}
       </v-card-text>
       <v-card-actions class="justify-end">
         <v-btn color="primary" @click="closeCancel">No</v-btn>
-        <v-btn color="error" @click="confirmCancel">Sí, estoy seguro</v-btn>
+        <v-btn color="error" @click="confirmCancel">{{ $t('profile.pages.myServices.yesString') }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -131,7 +131,7 @@ export default {
         this.overlay = false
       } catch (error) {
         this.overlay = false
-        toast.error('Error al cancelar el servicio intente mas tarde')
+        toast.error(this.$t('profile.pages.myServices.cancelServiceString'))
         console.log(error)
       }
     },

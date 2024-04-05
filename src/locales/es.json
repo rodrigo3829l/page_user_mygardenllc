@@ -23,7 +23,9 @@
       "proyectTitleString" : "Proyectos",
       "commentsTitleString" : "Comentarios",
       "telephoneString" : "Contacto telefónico",
-      "emailString" : "Correo de contacto"
+      "emailString" : "Correo de contacto",
+      "proyectSring":"Proyectos",
+      "commentsString":"Comentarios"
     },
     "footer":{
       "titleString":"Mi Jardín LLC",
@@ -82,6 +84,17 @@
     },
 
     "login":{
+      "pages":{
+        "sendMail":{
+          "phoneNumberString":"Numero de Telefono",
+          "enterPhoneString":"Ingrese su número telefónico",
+          "optionEmailString":" No te gusta esta opción, probemos por el correo"
+        },
+        "sendPhoneCode":{
+          "phoneNumberString":"Numero de Telefono"
+
+        }
+      },
       "titleString":"Iniciar sesión",
       "emailString":"Correo electrónico o usuario",
       "InsertUserEmailString":"Inserta un usuario o correo electrónico válido",
@@ -101,6 +114,7 @@
 
       "tittleAlert" : "Inicio de sesión exitoso",
       "messageAlert" : "Bienvenido" 
+
     },
 
     "registration":{
@@ -147,7 +161,6 @@
         "helloString":"Hola12#",
         "confirmPasswordString":"Confirmar Contraseña",
         "descriptionString":"Acepto los Términos y Condiciones para registrarme en esta página.",
-        "veryWeakPasswordString" : "Contraseña muy débil",
         "weakPasswordString" : "Contraseña débil",
         "goodPassword" : "Contraseña buena",
         "excellentPassword" : "Contraseña excelente"
@@ -188,6 +201,7 @@
     "passwordRecovery":{
       "email" : {
         "emailString":"Correo electrónico",
+        "optionString":"No te gusta esta opción, probemos por el teléfono",
         "registeredString":"Correo registrado",
         "enterEmailString":"Ingrese el correo electrónico asociado a la cuenta",
         "buttonString":"CONFIRMAR",
@@ -229,11 +243,6 @@
       "btnString" : "Reservar"
     },
 
-
-
-
-
-
     "profile":{
       "components":{
         "cardServiceUser":{
@@ -241,7 +250,23 @@
           "payServicesString": "Por favor paga el servicio",
           "payServiceString": "Pagar servicio",
           "informationString": "Informacion"
+        },
+        "calendarCard":{
+        "cancelString":"Cancelar",
+        "rescheduleString":"Reagendar"
+        },
+        "updateUser":{
+          "updateString":"Actualizar datos de la cuenta",
+          "nameString":"Nombre",
+          "lastNameString":"Apellido Paterno",
+          "motherNameString":"Apellido Mterno",
+          "birthDateString":"Fecha de Nacimiento",
+          "phoneString":"Telefono",
+          "nameUserString":"Nombre de Usuario"
+
         }
+       
+    
       },
       "pages":{
         "infoMyService": {
@@ -261,7 +286,6 @@
           "assignedEmployeesString": "Empleados Asignados",
           "paymentFormString": "Formulario de Pago",
           "cardNameString": "Nombre de la Tarjeta",
-          "cardNumberString": "Numero de tarjeta",
           "expirationMonthString":"Mes de expiración",
           "expirationYearString":"Año de expiración",
           "buttonClose":"Cerrar",
@@ -269,20 +293,29 @@
           "shareOpinionString":"Comparte tu opinión",
           "leaveCommentString":"Deja tu comentario aquí",
           "yourRatingString":"Tu calificación:",
-          "payBtn" : "Pagar",
           "script":{
             "expirationMonthString":"El mes de expiración es requerido",
             "expirationRequiredString":"El año de expiración es requerido",
             "cardNumberString":"El número de tarjeta debe ser de 16 dígitos numéricos",
-            "theCodeString":"El código CVV es requerido y debe tener 3 o 4 dígitos"
+            "theCodeString":"El código CVV es requerido y debe tener 3 o 4 dígitos",
+            "paymentPercentageString":"Porcentaje de Pago",
+            "sendString":"Enviar"
           }
 
         },
         "myServices":{
           "servicesString":"Mis Servicios"
+        },
+        "editProfile":{
+         "editProfileString":"Editar Perfil",
+         "selectProfileString":"Seleccionar foto de perfil",
+         "selectedImageString":"Imagen seleccionada",
+         "goBackString":"Regresa",
+         "saveChangesString":"Guardar Cambios"
         }
-    }
-  },
+          
+      }
+    },
     "service":{
       "pages":{ 
         "scheduleService":{
@@ -290,7 +323,7 @@
           "describeServiceString":"Describa brevemente como desea su servicio",
           "selectPhotoString":"Seleccione una foto del área a trabajar",
           "dragImageString":"Arrastre y suelte una imagen aquí",
-          "guoteString":"Cotizar",
+          "scheduleString":"Agendar",
           "closeString":"Cerrar",
           "script" : {
             "description" : "La descripcion es requerida",
@@ -304,4 +337,20 @@
 
       }
     }
+  },
+  "accesibility":{
+    "pages":{
+      "navegacionPage":{
+        "goBackString": "Regresar",
+        "startString": "Inicio",
+        "loginString": "Login",
+        "profileString": "Perfil",
+        "servicesString": "Servicios",
+        "projectsString": "Proyectos",
+        "contactString": "Contacto",
+        "frequentQuestionsString": "Preguntas Frecuentes",
+      }
+    }
+  }
+
 }

@@ -276,7 +276,24 @@
         }
       },
       "myServices": {
-        "servicesString": "My Services"
+        "servicesString": "My Services",
+        "cancellationString":" Confirmar Cancelación",
+        "serviceString":"¿Está seguro de que desea cancelar el servicio?",
+        "yesString":"Sí, estoy seguro",
+        "cancelServiceString":"Error al cancelar el servicio intente mas tarde"
+      },
+      "ProfilePage":{
+        "helloString":"Hola",
+        "welcomeString":"Bienvenido",
+        "seeServiceString":"Ver Servicio",
+        "changeString":"Cambiar Contraseña",
+        "accountDataString":"Datos de la cuenta",
+        "nameString":"Nombre Completo",
+        "emailString":"Correo Electronico",
+        "numberString":"Numero de Telefono",
+        "userString":"Nombre de Usuario",
+        "dateString":"Cambiar Datos",
+        "closeString":"Cerrar Sesion"
       }
     }
   },

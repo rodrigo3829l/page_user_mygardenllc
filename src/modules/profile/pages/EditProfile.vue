@@ -2,7 +2,7 @@
   <v-container>
     <v-card class="max-width-card shadow">
       <v-toolbar color="primary" dark>
-        <v-toolbar-title>Edit Profile</v-toolbar-title>
+        <v-toolbar-title>{{ ($t('profile.pages.editProfile.editProfileString')) }}</v-toolbar-title>
       </v-toolbar>
       <v-card-text>
         <!-- Profile Picture -->
@@ -12,7 +12,7 @@
               @change="handleImageUpload"
               accept="image/*"
               :error-messages="errors.image"
-              label="Select profile picture"
+              :label="$t('profile.pages.editProfile.selectProfileString')"
             ></v-file-input>
           </v-col>
           <v-col cols="12" md="6">
@@ -24,7 +24,7 @@
               contain
             ></v-img>
             <v-row v-else class="image-preview" justify="center" align="center">
-              <div class="image-placeholder">Selected Image</div>
+              <div class="image-placeholder">{{ ($t('profile.pages.editProfile.selectedImageString')) }}</div>
             </v-row>
           </v-col>
         </v-row>
@@ -73,10 +73,10 @@
       </v-card-text>
       <v-card-actions class="d-flex justify-end">
         <router-link :to="{name: 'profile-profile'}">
-          <v-btn color="error">Go Back</v-btn>
+          <v-btn color="error">{{ ($t('profile.pages.editProfile.goBackString')) }}</v-btn>
         </router-link>
         <router-link :to="{name: 'profile-profile'}">
-          <v-btn color="success">Save Changes</v-btn>
+          <v-btn color="success">{{ ($t('profile.pages.editProfile.saveChangesString')) }}</v-btn>
         </router-link>
       </v-card-actions>
     </v-card>

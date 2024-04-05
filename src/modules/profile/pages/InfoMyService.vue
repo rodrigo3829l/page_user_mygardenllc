@@ -147,7 +147,7 @@
                 v-model="expYear"
                 :items="years"
                 :error-messages="this.errors.expYear"
-                :label="$t('profile.pages.infoMyService.expirationYearString')"
+                :label="$t('profile.pages.infoMyService.paymentPercentageString')"
                 required
               ></v-select>
             </v-col>
@@ -165,7 +165,7 @@
           <v-select
             v-model="paymentPercentage"
             :items="['50%', '100%']"
-            label="Porcentaje de pago"
+            :label="$t('profile.pages.infoMyService.expirationYearString')"
             v-if="porcentage < 50"
             required
           ></v-select>
@@ -217,7 +217,7 @@
 
         <v-card-actions class="justify-center">
           <v-btn color="deep-purple accent-4" dark @click="submitComment">
-            Enviar
+            {{ $t('profile.pages.infoMyService.sendString') }}
             <v-icon right>mdi-send</v-icon>
           </v-btn>
         </v-card-actions>

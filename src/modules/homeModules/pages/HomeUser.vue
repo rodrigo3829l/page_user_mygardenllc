@@ -67,7 +67,7 @@
     </v-row>
   
 
-    <h2>Proyectos</h2>
+    <h2>{{ $t('home.proyectSring') }}</h2>
       <!-- <v-slide-group center-active>
         <v-slide-group-item v-for="(proyecto, i) in proyectos" :key="i">
           <div style="max-width: 400px ; margin-left: 10px; margin-right: 10px;" >
@@ -76,7 +76,7 @@
         </v-slide-group-item>
       </v-slide-group> -->
 
-    <h2>Comentarios</h2>
+    <h2>{{ $t('home.commentsString') }}</h2>
       <v-slide-group center-active>
         <v-slide-group-item v-for="(comentario, i) in Comentarios" :key="i">
           <div style="max-width: 440px ; margin-left: 10px; margin-right: 10px;">

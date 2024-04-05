@@ -10,18 +10,18 @@
         <v-card class="elevation-12">
           <v-toolbar color="green-darken-3" dark>
             <v-toolbar-title class="white--text text-center">
-              Phone Number
+             {{($t('login.pages.sendPhoneCode.phoneNumberString'))}}
             </v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-form>
               <label for="">
-                Phone Number
+               {{ ($t('login.pages.sendMail.phoneNumberString')) }}
               </label>
               <v-text-field
                 v-model="FormData.phone"
                 :error-messages="errors.phone"
-                label="Enter your phone number"
+                :label="$t('login.pages.sendMail.enterPhoneString')"
                 variant="underlined"
                 prepend-inner-icon="mdi-phone"
                 color="green-darken-3"
@@ -45,7 +45,7 @@
             <v-divider></v-divider>
             <div class="text-center mt-3">
               <router-link :to="{name: 'login-mail'}" class="green--text text-darken-3">
-                No te gusta esta opción, probemos por el correo
+                {{ ($t('login.pages.sendMail.optionEmailString')) }}
               </router-link>
             </div>
           </v-card-text>

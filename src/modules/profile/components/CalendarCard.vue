@@ -9,8 +9,8 @@
       ></v-date-picker>
   
       <v-card-actions class="justify-end">
-        <v-btn color="primary" @click="closeCalendar">Cancelar</v-btn>
-        <v-btn color="error" @click="reagendar">Reagendar</v-btn>
+        <v-btn color="primary" @click="closeCalendar">{{ ($t('profile.components.calendarCard.cancelString')) }}</v-btn>
+        <v-btn color="error" @click="reagendar">{{ ($t('profile.components.calendarCard.rescheduleString')) }}</v-btn>
       </v-card-actions>
     </v-card>
   </template>

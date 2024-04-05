@@ -46,7 +46,7 @@
             <v-divider></v-divider>
             <div class="text-center mt-3">
               <router-link :to="{name: 'login-phone'}" class="green--text text-darken-3">
-                No te gusta esta opción, probemos por el teléfono
+                {{ $t('passwordRecovery.email.optionString') }}
               </router-link>
             </div>
             <!-- <router-link :to="{ name: 'login-phone' }">Recuperar por teléfono</router-link> -->

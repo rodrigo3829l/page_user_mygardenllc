@@ -3,32 +3,32 @@
       <v-row>
         <v-col cols="12" md="8" offset-md="2">
           <v-card>
-            <v-card-title>Actualizar datos de la cuenta</v-card-title>
+            <v-card-title>{{ ($t('profile.components.updateUser.updateString')) }}}</v-card-title>
             <v-card-text>
               <v-form ref="form">
                 <v-text-field
                   color="green-darken-3"
-                  label="Nombre"
+                  :label="$t('profile.components.updateUser.nameString')"
                   variant="underlined"
                   v-model="localUserInfo.name"
                   :rules="nameRules"
                 ></v-text-field>
                 <v-text-field
                   color="green-darken-3"
-                  label="Apellido Paterno"
+                  :label="$t('profile.components.updateUser.lastNameString')"
                   variant="underlined"
                   v-model="localUserInfo.apellidoP"
                 ></v-text-field>
                 <v-text-field
                   color="green-darken-3"
-                  label="Apellido Materno"
+                  :label="$t('profile.components.updateUser.motherNameString')"
                   variant="underlined"
                   v-model="localUserInfo.apellidoM"
                 ></v-text-field>
                 <v-text-field
                   color="green-darken-3"
                   type="date"
-                  label="Fecha de Nacimiento"
+                  :label="$t('profile.components.updateUser.birthDateString')"
                   variant="underlined"
                   v-model="localUserInfo.fechaNacimiento"
                 ></v-text-field>
@@ -49,7 +49,7 @@
                 ></v-select>
                 <v-text-field
                   color="green-darken-3"
-                  label="Teléfono"
+                  :label="$t('profile.components.updateUser.phoneString')"
                   type="number"
                   variant="underlined"
                   v-model="localUserInfo.cellPhone"
@@ -57,7 +57,7 @@
                 ></v-text-field>
                 <v-text-field
                   color="green-darken-3"
-                  label="Nombre de Usuario"
+                  :label="$t('profile.components.updateUser.nameUserString')"
                   variant="underlined"
                   v-model="localUserInfo.username"
                 ></v-text-field>
