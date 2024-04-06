@@ -384,8 +384,6 @@
     </v-row>
   </v-container>
   <v-dialog v-model="dialogVisible" width="500">
-    
-    <template>
       
       <v-sheet
         elevation="12"
@@ -432,7 +430,6 @@
           </div>
         </div>
       </v-sheet>
-    </template>
   </v-dialog>
 </template>
 

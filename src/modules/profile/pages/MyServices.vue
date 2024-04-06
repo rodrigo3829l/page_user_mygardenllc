@@ -108,7 +108,15 @@ export default {
     },
     async getServices () {
       try {
-        const {data} = await api.get(`/schedule/userservices/${userStore.token}`)
+        // const {data} = await api.get(`/schedule/userservices/${userStore.token}`)
+        const {data} = await api({
+          method : 'GET',
+          url : '/schedule/userservices',
+          headers : {
+            'Authorization' : 'Bearer ' + userStore.token,
+            'rol' : 'client'
+          }
+        })
         console.log(data)
         this.services = data.services
         this.loaded = true

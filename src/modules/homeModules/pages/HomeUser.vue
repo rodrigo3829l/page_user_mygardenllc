@@ -68,23 +68,39 @@
   
 
     <h2>{{ $t('home.proyectSring') }}</h2>
-      <!-- <v-slide-group center-active>
-        <v-slide-group-item v-for="(proyecto, i) in proyectos" :key="i">
-          <div style="max-width: 400px ; margin-left: 10px; margin-right: 10px;" >
-            <ProyectsCard :proyecto="proyecto" />
-          </div>
-        </v-slide-group-item>
-      </v-slide-group> -->
+    <v-row v-if="!loaded">
+    <v-col v-for="n in 4" :key="n" cols="12" md="3">
+      <v-skeleton-loader 
+        class="mx-auto border"
+        max-width="300"
+        max-height="500"
+        type="image, article"
+      ></v-skeleton-loader>
+    </v-col>
+  </v-row>
+
+    <v-row>
+      <v-col>
+        <v-slide-group center-active>
+          <v-slide-group-item v-for="(service, i) in services" :key="i">
+            <div style="max-width: 400px; margin-left: 10px; margin-right: 10px;">
+              <ProyectsCard  :service="service" />
+            </div>
+          </v-slide-group-item>
+        </v-slide-group>
+      </v-col>
+    </v-row>
 
     <h2>{{ $t('home.commentsString') }}</h2>
       <v-slide-group center-active>
         <v-slide-group-item v-for="(comentario, i) in Comentarios" :key="i">
           <div style="max-width: 440px ; margin-left: 10px; margin-right: 10px;">
             <ComentsUserCard
-              :userAvatar="comentario.userAvatar"
-              :userName="comentario.userName"
-              :commentText="comentario.commentText"
+              userAvatar="mdi-account"
+              :userName="comentario.user.name + ' ' + comentario.user.apellidoP + ' ' + comentario.user.apellidoM"
+              :commentText="comentario.comment"
               :rating="comentario.rating"
+              :service = "comentario.service.name"
             />
           </div>
         </v-slide-group-item>
@@ -93,42 +109,16 @@
 </template>
 
 <script>
-
+  import { api } from '@/axios/axios.js';
   import { defineAsyncComponent } from 'vue'
   export default {
     data() {
       return {
-        proyectos: [
-          {nombre: 'ejempllo1', rating: 4, img: 'https://res.cloudinary.com/dui4i9f4e/image/upload/v1697990498/logos/p3xyl9xetmmg6vlamwkt.jpg', descripcion : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus inventore impedit temporibus minima dolor? Totam obcaecati porro hic adipisci molestiae amet, delectus animi nisi omnis maiores, reiciendis officia id minima!'},
-          {nombre: 'ejempplo2', rating: 4.3, img: 'https://res.cloudinary.com/dui4i9f4e/image/upload/v1697990498/logos/p3xyl9xetmmg6vlamwkt.jpg', descripcion : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus inventore impedit temporibus minima dolor? Totam obcaecati porro hic adipisci molestiae amet, delectus animi nisi omnis maiores, reiciendis officia id minima!'},
-          {nombre: 'ejempllo3', rating: 4.1, img: 'https://res.cloudinary.com/dui4i9f4e/image/upload/v1697990498/logos/p3xyl9xetmmg6vlamwkt.jpg', descripcion : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus inventore impedit temporibus minima dolor? Totam obcaecati porro hic adipisci molestiae amet, delectus animi nisi omnis maiores, reiciendis officia id minima!'},
-          {nombre: 'ejempplo5', rating: 4, img: 'https://res.cloudinary.com/dui4i9f4e/image/upload/v1697990498/logos/p3xyl9xetmmg6vlamwkt.jpg', descripcion : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus inventore impedit temporibus minima dolor? Totam obcaecati porro hic adipisci molestiae amet, delectus animi nisi omnis maiores, reiciendis officia id minima!'},
-        ],
+        services: [],
+        loaded : false,
+        loadedComments : false,
         Comentarios : [
-          {
-            userAvatar: 'https://cdn-icons-png.flaticon.com/128/1077/1077063.png',
-            userName: 'Rodrigo Del Angel Gerardo',
-            commentText: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iure doloremque omnis, consequuntur voluptate laborum aspernatur excepturi velit aliquid suscipit! Maxime laudantium molestiae',
-            rating: 4.5, 
-          },
-          {
-            userAvatar: 'https://cdn-icons-png.flaticon.com/128/1077/1077063.png',
-            userName: 'Avelina Hernandez Hernandez',
-            commentText: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iure doloremque omnis, consequuntur voluptate laborum aspernatur excepturi velit aliquid suscipit! Maxime laudantium molestiae',
-            rating: 5, 
-          },
-          {
-            userAvatar: 'https://cdn-icons-png.flaticon.com/128/1077/1077063.png',
-            userName: 'Juan perez Hernandez Hernandez',
-            commentText: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iure doloremque omnis, consequuntur voluptate laborum aspernatur excepturi velit aliquid suscipit! Maxime laudantium molestiae',
-            rating: 3, 
-          },
-          {
-            userAvatar: 'https://cdn-icons-png.flaticon.com/128/1077/1077063.png',
-            userName: 'Josue Hernandez Guzman',
-            commentText: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iure doloremque omnis, consequuntur voluptate laborum aspernatur excepturi velit aliquid suscipit! Maxime laudantium molestiae',
-            rating: 4, 
-          }
+          
         ],
         images: [
           "https://res.cloudinary.com/dui4i9f4e/image/upload/v1697990267/logos/nhqsptfuorp4dkmutlcm.jpg",
@@ -139,9 +129,33 @@
         ]
       }
     },
+    methods : {
+      async getServices () {
+        try {
+          const {data} = await api.get('/services/get')
+          this.services = data.services
+          this.loaded = true
+        } catch (error) {
+          console.log(error)
+        }
+      },
+      async getComments () {
+        try {
+          const {data} = await api.get('/comment/get')
+          console.log(data)
+          this.Comentarios = data.comments
+        } catch (error) {
+          console.log(error)
+        }
+      },
+    },
     components: {
-        // ProyectsCard: defineAsyncComponent(() => import(/* webpackChunkName: "Navbar" */ '@/modules/shared/components/ProyectsCard.vue')),
-        ComentsUserCard: defineAsyncComponent(() => import(/* webpackChunkName: "Navbar" */ '@/modules/shared/components/ComentsUserCard.vue')),
+      ProyectsCard: defineAsyncComponent(() => import('@/modules/shared/components/ProyectsCard.vue')),
+      ComentsUserCard: defineAsyncComponent(() => import(/* webpackChunkName: "Navbar" */ '@/modules/shared/components/ComentsUserCard.vue')),
+    },
+    mounted () {
+      this.getServices()
+      this.getComments()
     }
   };
 </script>

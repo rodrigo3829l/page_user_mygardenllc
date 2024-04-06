@@ -46,17 +46,17 @@
       </v-row>
 
   <v-row v-if="!loaded">
-      <v-col v-for="n in 4" :key="n" cols="12" md="3">
-        <v-skeleton-loader 
-          class="mx-auto border"
-          max-width="300"
-          max-height="500"
-          type="image, article"
-        ></v-skeleton-loader>
-      </v-col>
-    </v-row>
+    <v-col v-for="n in 4" :key="n" cols="12" md="3">
+      <v-skeleton-loader 
+        class="mx-auto border"
+        max-width="300"
+        max-height="500"
+        type="image, article"
+      ></v-skeleton-loader>
+    </v-col>
+  </v-row>
 
-      <v-row>
+    <v-row>
       <v-col>
         <v-slide-group center-active>
           <v-slide-group-item v-for="(service, i) in services" :key="i">

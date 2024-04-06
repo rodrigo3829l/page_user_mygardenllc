@@ -252,7 +252,6 @@ export default {
           this.message = this.$t('service.pages.scheduleService.script.busyMessage')
           this.icon = 'mdi-alert-octagon-outline'
           this.color = 'gred-darken-4'
-          this.overlay = false
           this.openScheduleDialog()
           return
         } 
@@ -286,6 +285,8 @@ export default {
         }
       } catch (error) {
         console.log(error)
+      }finally{
+        this.overlay = false
       }
     },
     async getService (){

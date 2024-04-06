@@ -7,7 +7,7 @@
         <v-avatar size="56">
           <v-img src="https://cdn.vuetifyjs.com/images/john.jpg"></v-img>
         </v-avatar>
-        <h2 class="ml-3 subtitle-1">{{($t('profile.pages.ProfilePage.helloString'))}} {{ userInfo.name }}, {{($t('profile.pages.ProfilePage.welcomeString'))}}</h2>
+        <h2 class="ml-3 subtitle-1">{{ ($t('profile.pages.ProfilePage.helloString')) }} {{ userInfo.name }}, {{($t('profile.pages.ProfilePage.welcomeString'))}}</h2>
       </v-col>
       <v-col cols="12" md="6">
         <v-row class="d-flex flex-column flex-sm-row">
@@ -15,7 +15,7 @@
             <!-- Botones de acción con espaciado adicional -->
             <v-btn text @click="$router.push({ name: 'profile-myservices' })" class="mx-2 py-1">{{($t('profile.pages.ProfilePage.seeServiceString'))}}</v-btn>
             <v-btn :disabled="load" :loading="load" text @click="cambiarContraseña" class="mx-2 py-1">{{($t('profile.pages.ProfilePage.changeString'))}}</v-btn>
-            <v-btn text color="red" @click="cerrarSesion" class="mx-2 py-1">{{($t('profile.pages.ProfilePage.closeString'))}}</v-btn>
+            <v-btn text color="red" @click="logOut" class="mx-2 py-1">{{($t('profile.pages.ProfilePage.closeString'))}}</v-btn>
           </v-col>
         </v-row>
       </v-col>
@@ -108,7 +108,7 @@ export default {
       }
     },
 
-    async cerrarSesion() {
+    async logOut() {
       await userStore.logout();
       this.$router.push('/');
     },

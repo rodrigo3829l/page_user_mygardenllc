@@ -1,11 +1,12 @@
 <template>
   <v-navigation-drawer
       v-model="drawer"
+      prominent
     >
     <v-list-item
         prepend-avatar="https://randomuser.me/api/portraits/men/78.jpg"
         title="John Leider"
-        subtitle="ejemplo de correo"
+        subtitle="ejemaplo de correo"
       ></v-list-item>
 
       <v-divider></v-divider>
@@ -190,6 +191,7 @@
   import { setLanguage } from '@/store/languajeStore';
   import { useDisplay } from 'vuetify'
   import { useTheme } from 'vuetify'
+  import { i18n } from '@/main.js';
   const userStore = useUserStore();
   
   export default {
@@ -210,11 +212,11 @@
     data() {
       return {
         links : [
-          { name: this.$t('navbar.homeString'), to: 'home-home', icon: 'mdi-home' },
-          { name: this.$t('navbar.servicesString'), to: 'services-services', icon: 'mdi-hammer-screwdriver' },
-          { name: this.$t('navbar.projectsString'), to: 'proyects-view', icon: 'mdi-briefcase' },
-          { name: this.$t('navbar.contactString'), to: 'home-contact', icon: 'mdi-email' },
-          { name: this.$t('navbar.faqsString'), to: 'home-answers', icon: 'mdi-help-circle' },
+          { name: i18n.global.t('navbar.homeString'), to: 'home-home', icon: 'mdi-home' },
+          { name: i18n.global.t('navbar.servicesString'), to: 'services-services', icon: 'mdi-hammer-screwdriver' },
+          { name: i18n.global.t('navbar.projectsString'), to: 'proyects-view', icon: 'mdi-briefcase' },
+          { name: i18n.global.t('navbar.contactString'), to: 'home-contact', icon: 'mdi-email' },
+          { name: i18n.global.t('navbar.faqsString'), to: 'home-answers', icon: 'mdi-help-circle' },
         ],
         drawer: false,
         userStore,

@@ -1,237 +1,229 @@
 {
-  "navbar" : {
+  "navbar": {
     "homeString": "Home",
     "servicesString": "Services",
     "projectsString": "Projects",
     "contactString": "Contact",
-    "faqsString": "FaQS",
-    "loginString": "Login",
-    "yourAccountString" :  "Your account",
-    "yourServices" : "Your services",
-    "logoutString" : "Log Out",
-    "subtitleString" : "Gardening Services and More."
-    
+    "faqsString": "FAQs",
+    "loginString": "Log In",
+    "yourAccountString": "Your Account",
+    "yourServices": "Your Services",
+    "logoutString": "Log Out",
+    "subtitleString": "Landscaping services and more."
   },
-  "home" : {
+  "home": {
     "tittleString": "My Garden LLC",
-    "subtitleString": "Gardening, Maintenance, and Construction Services.",
-    "button" : "EXPLORE OUR SERVICES",
-    "CompanyString" : "Our Company",
-    "aboutTitleString" : "About",
-    "aboutDescriptionString" : "My Garden, LLC is a company based in Atlanta, Georgia, USA, and it's all about making gardens look awesome and building cool stuff. We kicked things off in August 2020, thanks to the brainchild of our founder, Maximus Hernandez Hernandez, a spirited Mexican lad. He started this gig with the goal of bringing top-notch and kick-ass services to the gardening and construction scene",
-    "missionTitleString" : "Our Mission",
-    "missionDescriptionString" : "As a family-run gig, we totally get how crucial it is to build solid connections with our peeps. We're all about dishing out top-notch work that stands the test of time, using primo materials and sweating the small stuff. When you roll with My Garden LLC, you're not just getting garden services – you're snagging a committed buddy to whip up an outdoor spot you'll be vibing in for years. Trust us, it's gonna be awesome!",
-    "proyectTitleString" : "Projects",
-    "commentsTitleString" : "Comments",
-    "telephoneString" : "Telephone Contact",
-    "emailString" : "Contact Email"
-
+    "subtitleString": "Landscaping, Maintenance, and Construction Services.",
+    "button": "EXPLORE OUR SERVICES",
+    "CompanyString": "Our Company",
+    "aboutTitleString": "About",
+    "aboutDescriptionString": "My Garden, LLC is a company based in Atlanta, Georgia, USA, all about making gardens look amazing and building cool stuff. We started in August 2020, thanks to the idea of our founder, Maximus Hernández Hernández, a spirited young Mexican. He began this company with the goal of bringing top-notch and cool services to the realm of landscaping and construction.",
+    "missionTitleString": "Our Mission",
+    "missionDescriptionString": "As a family-owned business, we fully understand how crucial it is to build strong connections with our people. We focus on delivering quality work that lasts using top-notch materials and caring for every detail. When you choose My Garden LLC, you not only get landscaping services, but you also get a committed partner to create an outdoor space where you'll feel at ease for years to come. Trust us, it'll be awesome!",
+    "proyectTitleString": "Projects",
+    "commentsTitleString": "Comments",
+    "telephoneString": "Telephone Contact",
+    "emailString": "Email Contact",
+    "proyectSring": "Projects",
+    "commentsString": "Comments"
   },
-  "footer":{
-    "titleString":"My Garden LLC",
-    "descriptionString":"Gardening, maintenance and construction services",
-    "privacyPolicyString":"Privacy Policy",
-    "termsAndConditionsString":"Terms and Conditions",
-    "binBataString":"Bin Data",
-    "ourScheduleString":"Our Schedule",
-    "mondayString":"Monday - Friday: 9:00 AM - 5:00 PM",
-    "saturdayString":"Saturday: 10:00 AM - 2:00 PM",
-    "sundayClosedString":"Sunday: Closed",
-    "contactString":"Contact",
-    "addressString":"Address: 123 Main Street, City",
-    "phoneString":"Phone: +001 (470) 234-1526",
-    "emailString":"Email: ",
-    "mapString":"Map"
+  "footer": {
+    "titleString": "My Garden LLC",
+    "descriptionString": "Landscaping, Maintenance, and Construction Services",
+    "privacyPolicyString": "Privacy Policy",
+    "termsAndConditionsString": "Terms and Conditions",
+    "binBataString": "Bina Data",
+    "ourScheduleString": "Our Schedule",
+    "mondayString": "Monday - Friday: 9:00 AM - 5:00 PM",
+    "saturdayString": "Saturday: 10:00 AM - 2:00 PM",
+    "sundayClosedString": "Sunday: Closed",
+    "contactString": "Contact",
+    "addressString": "Address: Main Street 123, City",
+    "phoneString": "Phone: +001 (470) 234-1526",
+    "emailString": "Email: ",
+    "mapString": "Map"
   },
-
-  "services":{
-    "searchString":"Search your favorite service",
-    "gardeningString":"Gardening",
-    "tagsString":"Tags",
-    "reserveString":"Reserve",
-    "ConstructionString":"Construction",
-    "CleaningString":"Cleaning",
-    "MaintenanceString":"Maintenance"
+  "services": {
+    "searchString": "Search your favorite service",
+    "gardeningString": "Landscaping",
+    "tagsString": "Tags",
+    "reserveString": "Reserve",
+    "ConstructionString": "Construction",
+    "CleaningString": "Cleaning",
+    "MaintenanceString": "Maintenance"
   },
-
-  "projects":{
-    "gardeningString":"Gardening",
-    "constructionString":"Construction",
-    "cleaningString":"Cleaning",
-    "maintenanceString":"Maintenance      ",
-    "example5String":"Example 5",
-    "example6String":"Example 6",
-    "buttonString":"MORE INFORMATION"
+  "projects": {
+    "gardeningString": "Landscaping",
+    "constructionString": "Construction",
+    "cleaningString": "Cleaning",
+    "maintenanceString": "Maintenance",
+    "example5String": "Example 5",
+    "example6String": "Example 6",
+    "buttonString": "MORE INFORMATION"
   },
-
-  "contact":{
-    "contactInformationString":"Contact information",
-    "countryString":"123 Main St, City, Country",
-    "dayOfServiceString":"Monday to Friday: 9:00 AM - 6:00 PM",
-    "ContactString":"Contact",
-    "nameString":"Name",
-    "emailString":"Email",
-    "subjectString":"Subject",
-    "messageString":"Message",
-    "buttonString":"Send"
+  "contact": {
+    "contactInformationString": "Contact Information",
+    "countryString": "123 Main Street, City, Country",
+    "dayOfServiceString": "Monday to Friday: 9:00 AM - 6:00 PM",
+    "ContactString": "Contact",
+    "nameString": "Name",
+    "emailString": "Email",
+    "subjectString": "Subject",
+    "messageString": "Message",
+    "buttonString": "Send"
   },
-
-  "faqs":{
-    "titleString":"Frequently Asked Questions",
-    "buttonShowAllString":"SHOW ALL",
-    "buttonHideAllString":"HIDE ALL"
-    
+  "faqs": {
+    "titleString": "Frequently Asked Questions",
+    "buttonShowAllString": "SHOW ALL",
+    "buttonHideAllString": "HIDE ALL"
   },
-
-  "login":{
-    "titleString":"Login",
-    "emailString":"Email or user",
-    "InsertUserEmailString":"Insert valid user or email",
-    "passwordString":"Password",
-    "insertValidPasswordString":"Insert a valid password",
-    "descriptionWarningString":"Warning: After 3 consecutive failed login attempts, you account will be temporarily locked for three hours. If you must login now, you can also click Forgot login password? below to reset the login password.",
-    "buttonString":"GET INTO",
-    "registrationString":"You do not have an account? Sign up",
-    "forgotPasswordString":"Forgot your password? Get it here",
-
-    "alertLength" : "Password must be at least 6 characters long.",
-    "alertUppercase" : "Password must contain at least one uppercase letter.",
-    "alertNumber" : "Password must contain at least one number.",
-    "alertCharacter" : "Password must contain only one special character.",
-
-    "alertEmail" : "Must be a valid e-mail with a supported domain.",
-
-    "tittleAlert" : "Successful login",
-    "messageAlert" : "Bienvenido"
-    
-  },
-
-  "registration":{
-    "buttons" : {
-      "buttonNextString":"NEXT STEP",
-      "buttonPreviousString":"PREVIOUS STEP",
-      "signUp":"SIGN UP"
+  "login": {
+    "pages": {
+      "sendMail": {
+        "phoneNumberString": "Phone Number",
+        "enterPhoneString": "Enter your phone number",
+        "optionEmailString": "Don't like this option, let's try by email"
+      },
+      "sendPhoneCode": {
+        "phoneNumberString": "Phone Number"
+      }
     },
-    "personalInformation":{
-      "titleString":"Personal Information",
-      "firstNameString":"First Name",
-      "lastNameString":"Last Name",
-      "middleString":"Mother's Maiden Name",
-      "dateString":"Date of Birth",
-      "genderString":"Select your gender",
-      "maleString" : "Male",
-      "femaleString" : "Female",
-      "ladeString":"Lade",
-      "phoneString":"Phone number",
-      "titlePictureString":"Profile Picture",
-      "selectPictureString":"Select profile picture",
-      "selectImageString":"Select Image"
+    "titleString": "Log In",
+    "emailString": "Email or Username",
+    "InsertUserEmailString": "Insert a valid username or email",
+    "passwordString": "Password",
+    "insertValidPasswordString": "Insert a valid password",
+    "descriptionWarningString": "Warning: After 3 consecutive failed login attempts, your account will be temporarily locked for three hours. If you need to log in now, you can also click on 'Forgot your password?' below to reset the login password.",
+    "buttonString": "LOG IN",
+    "registrationString": "Don't have an account? Sign up",
+    "forgotPasswordString": "Forgot your password? Recover it here",
+    "alertLength": "Password must be at least 6 characters long.",
+    "alertUppercase": "Password must contain at least one uppercase letter.",
+    "alertNumber": "Password must contain at least one number.",
+    "alertCharacter": "Password must contain only one special character.",
+    "alertEmail": "Must be a valid email address with a supported domain.",
+    "tittleAlert": "Successful login",
+    "messageAlert": "Welcome"
+  },
+  "registration": {
+    "buttons": {
+      "buttonNextString": "NEXT STEP",
+      "buttonPreviousString": "PREVIOUS STEP",
+      "signUp": "SIGN UP"
     },
-    "LocationDetails":{
-      "titleString":"Location details",
-      "postalString":"Postal Code",
-      "buttonString":"VALIDATE",
-      "cityString":"City",
-      "streetString":"Street",
-      "neighborhoodString":"Neighborhood",
-      "placeholderNeighboorhood" : "Enter your Neighborhood",
-      "houseString":"House number",
-      "placeholderNumHouse" : "Enter your house number"
+    "personalInformation": {
+      "titleString": "Personal Information",
+      "firstNameString": "First Name",
+      "lastNameString": "Last Name",
+      "middleString": "Middle Name",
+      "dateString": "Date of Birth",
+      "genderString": "Select your gender",
+      "maleString": "Male",
+      "femaleString": "Female",
+      "ladeString": "Lade",
+      "phoneString": "Phone Number",
+      "titlePictureString": "Profile Picture",
+      "selectPictureString": "Select your profile picture",
+      "selectImageString": "Select Image"
     },
-    "userdata":{
-      "titleString":"User Data",
-      "userString":"Username",
-      "userNameString":"Ex.UserName38",
-      "emailString":"Email",
-      "userEmailString":"useremaildomain.com",
-      "passwordString":"Password",
-      "helloString":"Hello12#",
-      "confirmPasswordString":"Confirm Password",
-      "descriptionString":"I accept the Terms and Conditions for signing up to this page.",
-      "veryWeakPasswordString" : "very weak password",
-      "weakPasswordString" : "Weak password",
-      "goodPassword" : "Good password",
-      "excellentPassword" : "Excellent password"
+    "LocationDetails": {
+      "titleString": "Location Details",
+      "postalString": "Postal Code",
+      "buttonString": "VALIDATE",
+      "cityString": "City",
+      "streetString": "Street",
+      "neighborhoodString": "Neighborhood",
+      "placeholderNeighboorhood": "Enter your neighborhood",
+      "houseString": "House Number",
+      "placeholderNumHouse": "Enter your house number"
     },
-    "alerts" : {
-      "postalCode" : "Invalid postal code",
-      "serviceOnly" : "Service is only offered in Atlanta",
-      "imageFile" : "Please select an image file.",
-      "sizeFile" : "File size must be up to 4 megabytes.",
-      "validImage" : "Please select a valid image file.",
-      "firstName" : "Invalid first name",
-      "lastName" : "Invalid last name",
-      "maidenName" : "Invalid Mother's Maiden Name",
-      "dateBirth" : "Invalid date of birth",
-      "lade" : "Lade is required",
-      "number" : "Invalid phone number",
-      "validatingPhone" : "Error validating phone number",
-      "city" : "City is required",
-      "neighborhood" : "Neighborhood is required",
-      "invalidChars" : "Only letters, numbers, spaces, apostrophes, and '#' are allowed",
-      "street" : "Street is required",
-      "houseNumber" : "Invalid house number",
-      "userName" : "Invalid username",
-      "email" : "Must be a valid e-mail with a supported domain.",
-      "alertLength" : "Password must be at least 6 characters long.",
-      "alertUppercase" : "Password must contain at least one uppercase letter.",
-      "alertNumber" : "Password must contain at least one number.",
-      "alertCharacter" : "Password must contain only one special character.",
-      "dontMatch" : "Passwords do not match.",
-      "tittleAlertError" : "Something went wrong while registering your gardening account! 🌿🚨",
-      "tittleAlertSuccess" : "uccessful gardening account registration! 🌟🌻"
+    "userdata": {
+      "titleString": "User Data",
+      "userString": "Username",
+      "userNameString": "E.g. User38",
+      "emailString": "Email",
+      "userEmailString": "userdomain.com",
+      "passwordString": "Password",
+      "helloString": "Hello12#",
+      "confirmPasswordString": "Confirm Password",
+      "descriptionString": "I accept the Terms and Conditions to register on this page.",
+      "weakPasswordString": "Weak Password",
+      "goodPassword": "Good Password",
+      "excellentPassword": "Excellent Password"
+    },
+    "alerts": {
+      "postalCode": "Invalid postal code",
+      "serviceOnly": "Service only offered in Atlanta",
+      "imageFile": "Please select an image file.",
+      "sizeFile": "File size must be up to 4 megabytes.",
+      "validImage": "Please select a valid image file.",
+      "firstName": "Invalid first name",
+      "lastName": "Invalid last name",
+      "maidenName": "Invalid middle name",
+      "dateBirth": "Invalid date of birth",
+      "lade": "Lade is mandatory",
+      "number": "Invalid phone number",
+      "validatingPhone": "Error validating phone number",
+      "city": "City is mandatory",
+      "neighborhood": "Neighborhood is mandatory",
+      "invalidChars": "Only letters, numbers, spaces, apostrophes, and '#' are allowed.",
+      "street": "Street is mandatory",
+      "houseNumber": "Invalid house number",
+      "userName": "Invalid username",
+      "email": "Must be a valid email address with a supported domain.",
+      "alertLength": "Password must be at least 6 characters long.",
+      "alertUppercase": "Password must contain at least one uppercase letter.",
+      "alertNumber": "Password must contain at least one number.",
+      "alertCharacter": "Password must contain only one special character.",
+      "dontMatch": "Passwords do not match.",
+      "tittleAlertError": "Something went wrong while registering your gardening account! 🌿🚨",
+      "tittleAlertSuccess": "Successful gardening account registration! 🌟🌻"
     }
   },
-  
-  "passwordRecovery":{
-    "email" : {
-      "emailString":"Email",
-      "registeredString":"Registered mail",
-      "enterEmailString":"Enter the email associated with the account",
-      "buttonString":"CONFIRM",
-      "alertEmail" : "Must be a valid e-mail with a supported domain.",
-      "messageEmail" : "This email has not been registered"
+  "passwordRecovery": {
+    "email": {
+      "emailString": "Email",
+      "optionString": "Don't like this option, let's try by phone",
+      "registeredString": "Registered Email",
+      "enterEmailString": "Enter the email associated with the account",
+      "buttonString": "CONFIRM",
+      "alertEmail": "Must be a valid email address with a supported domain.",
+      "messageEmail": "This email has not been registered"
     },
-    "otp" : {
-      "tittleString" : "Verify Your Account",
-      "messageMail" : "We sent a verification code to: ",
-      "checkMessage" : "Please check your email and paste the code below.",
-      "resendString" : "Resend in:",
-      "dontReceive" : "Didn't receive the code?",
-      "resend" : "Resend",
-      "alertInvalidCode" : "Invalid code",
-      "resendingMessage" : "Code resending",
-      "notResendingMessage" : "Code not resending"
+    "otp": {
+      "tittleString": "Verify Your Account",
+      "messageMail": "We sent a verification code to:",
+      "checkMessage": "Please check your email and paste the code below.",
+      "resendString": "Resending in:",
+      "dontReceive": "Didn't receive the code?",
+      "resend": "Resend",
+      "alertInvalidCode": "Invalid code",
+      "resendingMessage": "Code resent",
+      "notResendingMessage": "Code not resent"
     },
-    "confirm" : {
-      "tittleString" : "Change password",
-      "passwordTittleString" : "New password",
-      "passwordLabel" : "Insert new password valid",
-      "weakPasswordString" : "Weak password",
-      "goodPassword" : "Good password",
-      "excellentPassword" : "Excellent password",
-
-      "confirmPasswordTittle" : "Confirm your password",
-      "confirmPasswordLabel" : "Valid your password",
-      "buttonString" : "Confirm",
-
-      
-      "alertLength" : "Password must be at least 6 characters long.",
-      "alertUppercase" : "Password must contain at least one uppercase letter.",
-      "alertNumber" : "Password must contain at least one number.",
-      "alertCharacter" : "Password must contain only one special character.",
-      "alertDontMatch" : "Passwords do not match.",
-      "alertDontChange" : "Error al cambiar contraseña",
-      "alertChange" : "Contraseña cambiada con exito"
+    "confirm": {
+      "tittleString": "Change password",
+      "passwordTittleString": "New password",
+      "passwordLabel": "Enter a valid new password",
+      "weakPasswordString": "Weak Password",
+      "goodPassword": "Good Password",
+      "excellentPassword": "Excellent Password",
+      "confirmPasswordTittle": "Confirm your password",
+      "confirmPasswordLabel": "Validate your password",
+      "buttonString": "Confirm",
+      "alertLength": "Password must be at least 6 characters long.",
+      "alertUppercase": "Password must contain at least one uppercase letter.",
+      "alertNumber": "Password must contain at least one number.",
+      "alertCharacter": "Password must contain only one special character.",
+      "alertDontMatch": "Passwords do not match.",
+      "alertDontChange": "Error changing password",
+      "alertChange": "Password changed successfully"
     }
   },
-  "servicesCard" : {
-    "tagsString" : "Tags",
-    "btnString" : "Reserve"
+  "servicesCard": {
+    "tagsString": "Tags",
+    "btnString": "Reserve"
   },
-
-
-
   "profile": {
     "components": {
       "cardServiceUser": {
@@ -239,6 +231,19 @@
         "payServicesString": "Please pay for the service",
         "payServiceString": "Pay service",
         "informationString": "Information"
+      },
+      "calendarCard": {
+        "cancelString": "Cancel",
+        "rescheduleString": "Reschedule"
+      },
+      "updateUser": {
+        "updateString": "Update account data",
+        "nameString": "Name",
+        "lastNameString": "Last Name",
+        "motherNameString": "Mother's Last Name",
+        "birthDateString": "Date of Birth",
+        "phoneString": "Phone",
+        "nameUserString": "Username"
       }
     },
     "pages": {
@@ -259,63 +264,79 @@
         "assignedEmployeesString": "Assigned Employees",
         "paymentFormString": "Payment Form",
         "cardNameString": "Card Name",
-        "cardNumberString": "Card Number",
         "expirationMonthString": "Expiration Month",
         "expirationYearString": "Expiration Year",
         "buttonClose": "Close",
         "buttonPay": "Pay",
         "shareOpinionString": "Share your opinion",
         "leaveCommentString": "Leave your comment here",
-        "yourRatingString": "Your rating:",
-        "payBtn" : "Pay",
+        "yourRatingString": "Your Rating:",
         "script": {
-          "expirationMonthString": "The expiration month is required",
-          "expirationRequiredString": "The expiration year is required",
-          "cardNumberString": "The card number must be 16 numeric digits",
-          "theCodeString": "The CVV code is required and must be 3 or 4 digits"
+          "expirationMonthString": "Expiration month is required",
+          "expirationRequiredString": "Expiration year is required",
+          "cardNumberString": "Card number must be 16 numeric digits",
+          "theCodeString": "CVV code is required and must have 3 or 4 digits",
+          "paymentPercentageString": "Payment Percentage",
+          "sendString": "Send"
         }
       },
       "myServices": {
-        "servicesString": "My Services",
-        "cancellationString":" Confirmar Cancelación",
-        "serviceString":"¿Está seguro de que desea cancelar el servicio?",
-        "yesString":"Sí, estoy seguro",
-        "cancelServiceString":"Error al cancelar el servicio intente mas tarde"
+        "servicesString": "My Services"
       },
-      "ProfilePage":{
-        "helloString":"Hola",
-        "welcomeString":"Bienvenido",
-        "seeServiceString":"Ver Servicio",
-        "changeString":"Cambiar Contraseña",
-        "accountDataString":"Datos de la cuenta",
-        "nameString":"Nombre Completo",
-        "emailString":"Correo Electronico",
-        "numberString":"Numero de Telefono",
-        "userString":"Nombre de Usuario",
-        "dateString":"Cambiar Datos",
-        "closeString":"Cerrar Sesion"
+      "editProfile": {
+        "editProfileString": "Edit Profile",
+        "selectProfileString": "Select profile picture",
+        "selectedImageString": "Selected Image",
+        "goBackString": "Go Back",
+        "saveChangesString": "Save Changes"
+      },
+      "ProfilePage" : {
+        "helloString" : "Hello",
+        "welcomeString" : "Welcome",
+        "seeServiceString" : "See services",
+        "changeString" : "Change password",
+        "closeString" : "Logout",
+        "accountDataString" : "Account Data",
+        "nameString" : "Name",
+        "emailString" : "Email",
+        "numberString" : "Phone number",
+        "userString" : "User",
+        "dateString" : "Change user data"
       }
     }
   },
-    "service": {
-      "pages": {
-        "scheduleService": {
-          "descriptionString": "Please briefly describe how you would like the service to be done, provide a photograph of the place, and select a date for the quote",
-          "describeServiceString": "Briefly describe how you want your service",
-          "selectPhotoString": "Select a photo of the area to work on",
-          "dragImageString": "Drag and drop an image here",
-          "guoteString": "Quote",
-          "closeString": "Close",
-          "script": {
-            "description": "The description is required",
-            "imageRequired": "The image is required",
-            "busy": "Oops, it seems we are busy",
-            "busyMessage": "Unfortunately, we cannot visit you today as we are very busy, please select another date. 🌱☘️",
-            "error": "We are very sorry, it seems that something has happened.",
-            "success": "Your service was successfully scheduled"
-          }
+  "service": {
+    "pages": {
+      "scheduleService": {
+        "descriptionString": "Please briefly describe how you want the service to be done, provide a photograph of the area, and select a date for the quote",
+        "describeServiceString": "Briefly describe how you want your service",
+        "selectPhotoString": "Select a photo of the area to work on",
+        "dragImageString": "Drag and drop an image here",
+        "scheduleString": "Schedule",
+        "closeString": "Close",
+        "script": {
+          "description": "Description is required",
+          "imageRequired": "Image is required",
+          "busy": "Oops, it seems we're busy",
+          "busyMessage": "Unfortunately, we can't visit you today as we're quite busy, please select another date. 🌱☘️",
+          "error": "Sorry, something seems to have gone wrong.",
+          "success": "Your service was successfully scheduled"
         }
       }
     }
-  
+  },
+  "accesibility": {
+    "pages": {
+      "navegacionPage": {
+        "goBackString": "Go Back",
+        "startString": "Home",
+        "loginString": "Log In",
+        "profileString": "Profile",
+        "servicesString": "Services",
+        "projectsString": "Projects",
+        "contactString": "Contact",
+        "frequentQuestionsString": "Frequent Questions"
+      }
+    }
+  }
 }

@@ -73,21 +73,20 @@ export const useUserStore = defineStore('user', () => {
 
     const refreshToken = async () =>{
         try {
-            const {data} = await api.get ('/user/refresh');
+            // const {data} = await api.get ('/user/refresh');
+            const {data} = await api({
+                method : 'GET',
+                url : '/user/refresh',
+                headers: {
+                    'Authorization' : 'Bearer ' + token.value,
+                    'rol' : 'client'
+                },
+            })
             token.value = data.token;
             expireIn.value = data.expiresIn;
             name.value = data.name
             email.value = data.email
             rol.value = data.rol
-
-            // const resp = await api({
-            //     method: 'GET',
-            //     url : '/user/protected',
-            //     headers: {
-            //         'Authorization' : 'Bearer ' + token.value,
-            //     },
-            // })
-            // localStorage.setItem('rol', resp.data.tipo)
             localStorage.setItem('token', token.value,);
             setTime();
         } catch (error) {

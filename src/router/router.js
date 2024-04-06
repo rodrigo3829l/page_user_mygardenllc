@@ -166,14 +166,14 @@ const routes = [
                 name: 'profile-infomyservices',
                 component: () => import ( /* webpackChunkName: "EditProfile" */ '@/modules/profile/pages/InfoMyService.vue'),
             },
-            {
-                path: 'pay',
-                name: 'profile-pay',
-                meta: {
-                    title: 'Pay service',
-                },
-                component: () => import ( /* webpackChunkName: "PayPage" */ '@/modules/profile/pages/PayPage.vue'),
-            },
+            // {
+            //     path: 'pay',
+            //     name: 'profile-pay',
+            //     meta: {
+            //         title: 'Pay service',
+            //     },
+            //     component: () => import ( /* webpackChunkName: "PayPage" */ '@/modules/profile/pages/PayPage.vue'),
+            // },
             {
                 path: 'profilepage',
                 name: 'profile-profile',

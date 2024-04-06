@@ -70,12 +70,12 @@ export default {
   <v-card
     class="mx-auto"
     max-width="344"
-    title="Regiular client"
-    :subtitle="userName"
+    :title="userName"
+    :subtitle="service"
     :prepend-avatar="userAvatar"
     :append-avatar="userAvatar"
   >
-    <v-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</v-card-text>
+    <v-card-text>{{ commentText }}</v-card-text>
     <v-rating 
       :model-value="rating" 
       :half-increments="true" 
@@ -92,6 +92,7 @@ export default {
     userAvatar: String,
     userName: String,
     commentText: String,
+    service: String,
     rating: Number, // Valor entre 0 y 5 para la calificación
   },
 };

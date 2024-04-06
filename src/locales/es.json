@@ -43,7 +43,6 @@
       "emailString":"Correo electrónico: ",
       "mapString":"Mapa"
     },
-
     "services":{
       "searchString":"Busca tu servicio favorito",
       "gardeningString":"Jardinería",
@@ -53,7 +52,6 @@
       "CleaningString":"Limpieza",
       "MaintenanceString":"Mantenimiento"
     },
-
     "projects":{
       "gardeningString":"Jardinería",
       "constructionString":"Construcción",
@@ -63,7 +61,6 @@
       "example6String":"Ejemplo 6",
       "buttonString":"MÁS INFORMACIÓN"
     },
-
     "contact":{
       "contactInformationString":"Información de contacto",
       "countryString":"123 Calle Principal, Ciudad, País",
@@ -75,14 +72,11 @@
       "messageString":"Mensaje",
       "buttonString":"Enviar"
     },
-
     "faqs":{
       "titleString":"Preguntas Frecuentes",
       "buttonShowAllString":"MOSTRAR TODO",
       "buttonHideAllString":"OCULTAR TODO"
-      
     },
-
     "login":{
       "pages":{
         "sendMail":{
@@ -92,7 +86,6 @@
         },
         "sendPhoneCode":{
           "phoneNumberString":"Numero de Telefono"
-
         }
       },
       "titleString":"Iniciar sesión",
@@ -104,25 +97,19 @@
       "buttonString":"INGRESAR",
       "registrationString":"¿No tienes una cuenta? Regístrate",
       "forgotPasswordString":"¿Olvidaste tu contraseña? Recupérala aquí",
-
       "alertLength" : "La contraseña debe tener al menos 6 caracteres de longitud.",
       "alertUppercase" : "La contraseña debe contener al menos una letra mayúscula.",
       "alertNumber" : "La contraseña debe contener al menos un número.",
       "alertCharacter" : "La contraseña debe contener solo un carácter especial.",
-
       "alertEmail" : "Debe ser un correo electrónico válido con un dominio admitido.",
-
       "tittleAlert" : "Inicio de sesión exitoso",
       "messageAlert" : "Bienvenido" 
-
     },
-
     "registration":{
       "buttons" : {
         "buttonNextString":"SIGUIENTE PASO",
         "buttonPreviousString":"PASO ANTERIOR",
         "signUp":"REGISTRARME"
-
       },
       "personalInformation":{
         "titleString":"Información Personal",
@@ -138,7 +125,6 @@
         "titlePictureString":"Foto de Perfil",
         "selectPictureString":"Selecciona tu foto de perfil",
         "selectImageString":"Seleccionar Imagen"
-        
       },
       "LocationDetails":{
         "titleString":"Detalles de Ubicación",
@@ -176,16 +162,13 @@
         "maidenName" : "Apellido materno invalido",
         "dateBirth" : "Fecha de nacimiento inválida",
         "lade" : "La Lada es obligatoria",
-
         "number" : "Número de teléfono inválido",
         "validatingPhone" : "Error al validar el número de teléfono",
         "city" : "La ciudad es obligatoria",
         "neighborhood" : "El vecindadio es obligatorio",
         "invalidChars" : "Solo se permiten letras, números, espacios, apóstrofes y '#'",
-
         "street" : "La calle es obligatoria",
         "houseNumber" : "Número de casa inválido",
-
         "userName" : "Nombre de usuario inválido",
         "email" : "Debe ser un correo electrónico válido con un dominio admitido.",
         "alertLength" : "La contraseña debe tener al menos 6 caracteres de longitud.",
@@ -197,7 +180,6 @@
         "tittleAlertSuccess" : "¡Registro exitoso de cuenta de jardinería! 🌟🌻"
       }
     },
-    
     "passwordRecovery":{
       "email" : {
         "emailString":"Correo electrónico",
@@ -242,7 +224,6 @@
       "tagsString" : "Etiquetas",
       "btnString" : "Reservar"
     },
-
     "profile":{
       "components":{
         "cardServiceUser":{
@@ -252,8 +233,8 @@
           "informationString": "Informacion"
         },
         "calendarCard":{
-        "cancelString":"Cancelar",
-        "rescheduleString":"Reagendar"
+          "cancelString":"Cancelar",
+          "rescheduleString":"Reagendar"
         },
         "updateUser":{
           "updateString":"Actualizar datos de la cuenta",
@@ -263,10 +244,7 @@
           "birthDateString":"Fecha de Nacimiento",
           "phoneString":"Telefono",
           "nameUserString":"Nombre de Usuario"
-
         }
-       
-    
       },
       "pages":{
         "infoMyService": {
@@ -301,19 +279,31 @@
             "paymentPercentageString":"Porcentaje de Pago",
             "sendString":"Enviar"
           }
-
         },
         "myServices":{
           "servicesString":"Mis Servicios"
         },
         "editProfile":{
-         "editProfileString":"Editar Perfil",
-         "selectProfileString":"Seleccionar foto de perfil",
-         "selectedImageString":"Imagen seleccionada",
-         "goBackString":"Regresa",
-         "saveChangesString":"Guardar Cambios"
+          "editProfileString":"Editar Perfil",
+          "selectProfileString":"Seleccionar foto de perfil",
+          "selectedImageString":"Imagen seleccionada",
+          "goBackString":"Regresa",
+          "saveChangesString":"Guardar Cambios"
+        },
+        "ProfilePage": {
+          "helloString": "Hola",
+          "welcomeString": "Bienvenido",
+          "seeServiceString": "Ver servicios",
+          "changeString": "Cambiar contraseña",
+          "closeString": "Cerrar sesión",
+          "accountDataString": "Datos de la cuenta",
+          "nameString": "Nombre",
+          "emailString": "Correo electrónico",
+          "numberString": "Número de teléfono",
+          "userString": "Usuario",
+          "dateString": "Cambia tus datos"
         }
-          
+        
       }
     },
     "service":{
@@ -334,10 +324,8 @@
             "success" : "Se agendo correctamente tu servicio"
           }
         }
-
       }
-    }
-  },
+    },
   "accesibility":{
     "pages":{
       "navegacionPage":{
@@ -348,9 +336,8 @@
         "servicesString": "Servicios",
         "projectsString": "Proyectos",
         "contactString": "Contacto",
-        "frequentQuestionsString": "Preguntas Frecuentes",
+        "frequentQuestionsString": "Preguntas Frecuentes"
       }
     }
   }
-
 }
