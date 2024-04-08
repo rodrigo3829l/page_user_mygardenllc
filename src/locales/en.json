@@ -281,7 +281,10 @@
         }
       },
       "myServices": {
-        "servicesString": "My Services"
+        "servicesString": "My Services",
+        "cancellationString" : "Are you sure you want to cancel your service?",
+        "serviceString" : "Keep in mind that this action is irreversible",
+        "yesString" : "Yes, I'm sure"
       },
       "editProfile": {
         "editProfileString": "Edit Profile",
@@ -314,6 +317,7 @@
         "dragImageString": "Drag and drop an image here",
         "scheduleString": "Schedule",
         "closeString": "Close",
+        
         "script": {
           "description": "Description is required",
           "imageRequired": "Image is required",

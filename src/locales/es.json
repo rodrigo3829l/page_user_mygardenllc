@@ -281,7 +281,10 @@
           }
         },
         "myServices":{
-          "servicesString":"Mis Servicios"
+          "servicesString":"Mis Servicios",
+          "cancellationString" : "Estas seguro de querer cancelar el servicio?",
+          "serviceString" : "Ten en cuenta que esta accion es irreversible",
+          "yesString" : "Si, estoy seguro"
         },
         "editProfile":{
           "editProfileString":"Editar Perfil",

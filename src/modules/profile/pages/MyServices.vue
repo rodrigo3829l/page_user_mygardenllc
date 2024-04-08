@@ -41,7 +41,9 @@
     width="auto"
     persistent
   >
-    <CalendarCard @updateData="updateData"></CalendarCard>
+    <CalendarCard
+    :date="idService.date"
+    @updateData="updateData"></CalendarCard>
   </v-dialog>
 
 
@@ -150,7 +152,7 @@ export default {
         const datos = {
           newDate : date
         }
-        const {data} = await api.put(`/schedule/rescheduleservice/${this.idService}`, datos)
+        const {data} = await api.put(`/schedule/rescheduleservice/${this.idService.id}`, datos)
 
         if(!data.success){
           toast.warning(data.msg)

@@ -3,7 +3,7 @@
       <v-date-picker
         width="400"
         color="green-darken-3"
-        v-model="date"
+        v-model="copyDate"
         :allowed-dates="allowedDates"
         :min="minDate"
       ></v-date-picker>
@@ -19,9 +19,15 @@
 import { api } from '@/axios/axios.js';
 
 export default {
+    props: {
+        date: {
+            type: String,
+            default: ''
+        }
+    },
     data() {
         return {
-            date: new Date(),
+            copyDate: new Date(this.date),
             minDate: new Date(),
             unavailableDates: [],
         };
@@ -45,7 +51,7 @@ export default {
             this.$emit('updateData', '', 'reschedule');
         },
         reagendar(){
-            this.$emit('updateData', this.date, 'confirmreschedule');
+            this.$emit('updateData', this.copyDate, 'confirmreschedule');
         }
         
     },

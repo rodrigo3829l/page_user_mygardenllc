@@ -22,6 +22,7 @@
                 :error-messages="email.errorMessage.value"
                 :label="$t('login.InsertUserEmailString')"
                 variant="underlined"
+                class="email"
                 prepend-inner-icon="mdi-account"
                 color="green-darken-3"
                 outlined
@@ -159,7 +160,7 @@ export default {
     const submit = handleSubmit(async (values) => {
       dialog.value = true;
       try {
-        const res = await userStore.login(values.email, values.password);
+        const res = await userStore.login(values.email, values.password, 'client');
         console.log(res);
 
         dialog.value = false;

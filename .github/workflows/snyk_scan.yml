@@ -1,0 +1,30 @@
+name: Snyk Security Scan
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions: write-all
+
+jobs:
+  snyk_scan:
+    name: Snyk Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+      
+    - name: Install Snyk CLI
+      run: npm install -g snyk
+      
+    - name: Run Snyk security scan
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      run: |
+        snyk monitor --all-projects --org=6ce58cdd-2e65-4c0c-bbe5-705980cee5fe

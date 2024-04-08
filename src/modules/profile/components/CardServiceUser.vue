@@ -133,7 +133,11 @@ export default {
   },
   methods: {
     reschedule() {
-      this.$emit('updateData', this.service._id, 'reschedule');
+      this.$emit('updateData', {
+        id : this.service._id,
+        date :this.service.dates.scheduledTime
+      }
+      , 'reschedule');
       // Lógica para reprogramar el servicio
     },
     cancel() {
