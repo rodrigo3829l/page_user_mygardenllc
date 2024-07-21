@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <NavBar></NavBar>
-      <AccessibilityButtons></AccessibilityButtons>
+      <!-- <AccessibilityButtons></AccessibilityButtons> -->
       <router-view></router-view>
       <FooterComponent></FooterComponent>
       <v-snackbar 

@@ -1,4 +1,4 @@
-
+<!-- 
 <template>
   <v-carousel cycle height="500" hide-delimiter-background show-arrows="hover"> 
     <v-carousel-item v-for="(image, i) in images" :key="i" :src="image" cover>
@@ -174,4 +174,54 @@
   font-size: 23px;
 }
 </style>
+ -->
 
+
+ <template>
+  <v-container>
+    <v-form @submit.prevent="submitComment">
+      <v-text-field
+        label="Ingrese su comentario"
+        v-model="comment"
+        required
+      ></v-text-field>
+      <v-btn type="submit" color="primary">Enviar</v-btn>
+    </v-form>
+    <v-snackbar v-model="snackbar" :timeout="3000">
+      {{ snackbarMessage }}
+      <v-btn color="red" text @click="snackbar = false">Cerrar</v-btn>
+    </v-snackbar>
+  </v-container>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      comment: '',
+      snackbar: false,
+      snackbarMessage: ''
+    };
+  },
+  methods: {
+    async submitComment() {
+      try {
+        const response = await axios.post('http://127.0.0.1:5000/predict/comment', {
+          comment: this.comment
+        });
+        this.snackbarMessage = `Predicción: ${response.data.prediction}`;
+      } catch (error) {
+        this.snackbarMessage = 'Error al realizar la predicción';
+      } finally {
+        this.snackbar = true;
+      }
+    }
+  }
+};
+</script>
+
+<style>
+/* Agrega estilos personalizados si es necesario */
+</style>

@@ -21,7 +21,7 @@ const routes = [
                 meta: {
                     title: 'Home',
                 },
-                component: () =>  import( /* webpackChunkName: "HomeUser" */ '@/modules/homeModules/pages/HomeUser.vue'),
+                component: () =>  import( /* webpackChunkName: "HomeUser" */ '@/modules/homeModules/pages/HomeUserCopy.vue'),
             },
             {
                 path: 'contact',
@@ -60,16 +60,16 @@ const routes = [
                 },
                 component: () =>  import( /* webpackChunkName: "ProjectDetacados" */ '@/modules/passProjects/pages/ProjectDestacados.vue'),
             },
+            // {
+            //     path: '/categorie/:category',
+            //     name: 'categorie-view',
+            //     meta: {
+            //         title: 'categorie-vie',
+            //     },
+            //     component: () =>  import( /* webpackChunkName: "ProjectDetacados" */ '@/modules/passProjects/pages/projectCategorie.vue'),
+            // },
             {
-                path: '/categorie/:category',
-                name: 'categorie-view',
-                meta: {
-                    title: 'categorie-vie',
-                },
-                component: () =>  import( /* webpackChunkName: "ProjectDetacados" */ '@/modules/passProjects/pages/projectCategorie.vue'),
-            },
-            {
-                path: 'info',
+                path: 'info/:id',
                 name: 'proyects-info',
                 meta: {
                     title: 'Project information',
@@ -159,7 +159,7 @@ const routes = [
             {
                 path: 'myservices',
                 name: 'profile-myservices',
-                component: () => import ( /* webpackChunkName: "EditProfile" */ '@/modules/profile/pages/MyServices.vue'),
+                component: () => import ( /* webpackChunkName: "EditProfile" */ '@/modules/profile/pages/MyServicesCopy.vue'),
             },
             {
                 path: 'infomyservices/:id',
@@ -202,7 +202,7 @@ const routes = [
                 meta: {
                     title: 'Services',
                 },
-                component: () => import ( /* webpackChunkName: "ServicesWindow" */ '@/modules/services/pages/ServicesWindow.vue'),
+                component: () => import ( /* webpackChunkName: "ServicesWindow" */ '@/modules/services/pages/ServicesWindowCopy.vue'),
             },
             {
                 path: 'schedule/:id',
@@ -211,7 +211,7 @@ const routes = [
                     title: 'Services information',
                     requireAuth: true
                 },
-                component: () => import ( /* webpackChunkName: "ScheduleService" */ '@/modules/services/pages/ScheduleService.vue'),
+                component: () => import ( /* webpackChunkName: "ScheduleService" */ '@/modules/services/pages/ScheduleServiceCopy.vue'),
                 
             },
             {
@@ -318,7 +318,16 @@ const routes = [
             title: 'accesibility',
         },
         component: () => import ( /* webpackChunkName: "accesibility" */ '@/modules/accesibility/pages/navegationPage.vue'),
-    }
+    },
+    {
+        path: '/recomendations',
+        name: 'recomendations',
+        meta: {
+            requireAuth: true
+        },
+        component: () => import ( /* webpackChunkName: "ScheduleService" */ '@/modules/recomendations/pages/RecomendationsView.vue'),
+        
+    },
 ]
 
 const router = createRouter({

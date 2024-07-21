@@ -30,7 +30,7 @@
           class="white--text align-end"
           :alt="'Service Image'"
         >
-          <v-card-title class="text-h4 text-center">{{ serviceName }}</v-card-title>
+          <v-card-title class="text-h4 text-center">{{ serviceName.name }}</v-card-title>
         </v-img>
       </v-col>
       <v-col cols="12" md="6">
@@ -71,7 +71,7 @@
           </thead>
           <tbody>
             <tr v-for="product in productList" :key="product.name">
-              <td>{{ product.product }}</td>
+              <td>{{ product.product.product }}</td>
               <td>{{ product.quantity }}</td>
               <td>{{ product.total }}</td>
             </tr>
@@ -97,7 +97,7 @@
             <v-list>
               <h2>{{ $t('profile.pages.infoMyService.assignedEmployeesString') }}</h2>
               <v-list-item v-for="(employee, index) in employeeList" :key="index">
-                <v-list-item-title>{{ employee }}</v-list-item-title>
+                <v-list-item-title>{{ employee.name }} {{ employee.apellidoP }} {{ employee.apellidoM }}</v-list-item-title>
               </v-list-item>
             </v-list>
           </v-col>
@@ -106,7 +106,7 @@
     </v-row>
 
     <v-row v-if="pending !== 0" justify="center">
-      <v-btn color="green" dark class="mt-8 mb-6" @click="openPaymentDialog">{{ $t('profile.pages.infoMyService.payBtn') }}</v-btn>
+      <v-btn color="green" dark class="mt-8 mb-6" @click="openPaymentDialog">{{ $t('profile.pages.infoMyService.buttonPay') }}</v-btn>
     </v-row>
 
     <CommentCard v-if="showComment" :comment = "commentUser"></CommentCard>
@@ -124,7 +124,7 @@
 
           <v-text-field
             v-model="cardNumber"
-            :label="$t('profile.pages.infoMyService.cardNumberString')"
+            :label="$t('profile.pages.infoMyService.cardNameString')"
             :error-messages="this.errors.cardNumber"
             :counter="16"
             type="number"
@@ -147,7 +147,7 @@
                 v-model="expYear"
                 :items="years"
                 :error-messages="this.errors.expYear"
-                :label="$t('profile.pages.infoMyService.paymentPercentageString')"
+                :label="$t('profile.pages.infoMyService.expirationYearString')"
                 required
               ></v-select>
             </v-col>
@@ -165,7 +165,7 @@
           <v-select
             v-model="paymentPercentage"
             :items="['50%', '100%']"
-            :label="$t('profile.pages.infoMyService.expirationYearString')"
+            :label="$t('profile.pages.infoMyService.paymentPercentageString')"
             v-if="porcentage < 50"
             required
           ></v-select>
@@ -220,6 +220,10 @@
             {{ $t('profile.pages.infoMyService.sendString') }}
             <v-icon right>mdi-send</v-icon>
           </v-btn>
+          <v-btn color="deep-purple accent-4" dark @click="commentDialog = !commentDialog">
+            Later
+            <v-icon right>mdi-send</v-icon>
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
@@ -245,6 +249,7 @@ import { defineAsyncComponent } from 'vue';
 import { api } from '@/axios/axios.js'
 import { useUserStore } from '@/store/store'
 import { toast } from 'vue3-toastify';
+import axios from 'axios';
 const userStore = useUserStore()
 export default {
   data() {
@@ -282,43 +287,69 @@ export default {
       loaded : false,
       commentDialog : false,
       showComment : false,
-      commentUser : []
+      commentUser : [],
     }
   },
   methods: {
     async submitComment(){
+
+      this.overlay = true
       try {
+
+        const {data : translate} = await axios.get(`https://api.mymemory.translated.net/get?q=${this.comment}?&langpair=es-ES|en-GB`)
+        const translation = translate.responseData.translatedText;
+        const {data : prediccion} = await axios.post('http://127.0.0.1:5000/predict/comment', {
+          comment: translation
+        });
+        
+        let pred
+        const category = prediccion.prediction
+        
+        if(category === 1){
+          pred = "Gracias por el buen comentario, trabajamos por ofrecer el mejor servicio"
+        }else if(category == 0){
+          pred = "Sentimos si algo estuvo mal, lo tomaremos en cuenta para la proxima, gracias"
+        }else{
+          pred = "Mucchas gracias por opinar sobre el servicio"
+        }
         const datos = {
           comment: this.comment,
           rating : this.rating,
-          scheduleservice : this.$route.params.id
+          scheduleservice : this.$route.params.id,
+          category
         }
         console.log(datos)
         const {data} = await api.post('/comment/add', datos)
         console.log(data)
-        toast.success('Mensage registrado con exito, gracias.')
+        if(data.success){
+          toast.success(pred)
+        }else{
+          toast.success(data.msg)
+        }
         this.commentDialog = false
       } catch (error) {
         console.log(error)
+      }finally{
+        this.overlay = false
       }
     },  
     async getService() {
       try {
         const { data } = await api.get(`/schedule/scheduleservice/${this.$route.params.id}`)
         console.log(data)
-        this.serviceName = data.newService.service
-        this.pending = data.newService.pending
-        this.serviceDescription = data.newService.description
-        this.status = data.newService.status
-        this.servicePrice = data.newService.quote
-        if (data.newService.status !== 'quoting') {
-          this.productList = data.newService.products
-          this.laborCost = data.newService.additionalCosts.labor
-          this.machineryCost = data.newService.additionalCosts.machinery
-          this.employeeList = data.newService.employeds
-          this.porcentage = data.newService.pay.porcentage
+        this.serviceName = data.scheduledService.service
+        this.pending = data.scheduledService.pending
+        this.serviceDescription = data.scheduledService.description
+        this.status = data.scheduledService.status
+        this.servicePrice = data.scheduledService.quote
+        if (data.scheduledService.status !== 'quoting') {
+          this.productList = data.scheduledService.products
+          this.laborCost = data.scheduledService.additionalCosts.labor
+          this.machineryCost = data.scheduledService.additionalCosts.machinery
+          this.employeeList = data.scheduledService.employeds
+          this.porcentage = data.scheduledService.pay.porcentage
         }
-        if(data.newService.status === 'finish') {
+        if(data.scheduledService.status === 'finish') {
           const {data} = await api.get(`/comment/getCommentByScheduledId/${this.$route.params.id}`)
           console.log(data)
           this.commentUser = data.comment

@@ -1,97 +1,104 @@
 <template>
-  <v-breadcrumbs :items="bread">
-      <template v-slot:divider>
-        <v-icon icon="mdi-chevron-right"></v-icon>
-      </template>
-    </v-breadcrumbs>
-  <v-container>
+<v-container fluid style="background-color: #f0f0f0;">
+    <v-container>
+        <!-- Primera fila -->
+        <v-row class="py-4">
+            <!-- Columna para el título -->
+            <v-col cols="12" sm="6" md="6" class="text-left">
+                <h2>Featured Projects</h2>
+            </v-col>
+
+            <!-- Columna para el selector de servicios -->
+            <v-col cols="12" sm="6" md="6">
+                <v-select v-model="selectedService" :items="services" item-title="tipo" item-value="_id" variant="underlined" label="All Services" clearable>
+                    <template #prepend-item>
+                        <v-list-item @click="selectedService = 'all'" value="all">
+                            <v-list-item-title>All</v-list-item-title>
+                        </v-list-item>
+                    </template>
+                </v-select>
+            </v-col>
+        </v-row>
+    </v-container>
+</v-container>
+
+<v-container>
+    <!-- Segunda fila con todos los cards -->
     <v-row>
-      <v-col
-        cols="12"
-        md="4" 
-        v-for="(item, index) in items"
-        :key="index"
-      >
-        <v-hover v-slot:default="{ hover }">
-          <router-link
-            :to="{ name: 'categorie-view', params: { category: item._id } }"
-          >
-            <v-card
-              class="mx-auto on-hover"
-              :elevation="hover ? 12 : 2"
-              flat
-              tile
-            >
-              <v-img
-                :src="imageUrl"
-                class="white--text image-effect"
-                height="300px"
-                cover
-              >
-                <v-card-title class="fill-height d-flex align-center justify-center text-center title-effect" style="color: white;">
-                  {{ item.tipo }}
-                </v-card-title>
-              </v-img>
-            </v-card>
-          </router-link>
-        </v-hover>
-      </v-col>
+        <v-col cols="12">
+            <v-row>
+                <v-col v-for="(project, index) in paginatedProjects" :key="index" cols="12" sm="6" md="4">
+                  <ProjectCard :project="project">
+                  </ProjectCard>
+                </v-col>
+            </v-row>
+
+            <!-- Paginación -->
+            <v-pagination v-if="totalPages > 1" v-model="currentPage" :length="totalPages" :total-visible="7"></v-pagination>
+        </v-col>
     </v-row>
-  </v-container>
+</v-container>
 </template>
 
 <script>
-import { api } from '@/axios/axios';
+import {
+    api
+} from '@/axios/axios.js';
+import {
+    defineAsyncComponent
+} from 'vue';
 export default {
-  data() {
-    return {
-      bread: [
-        {
-          title: 'Home',
-          disabled: false,
-          href: '/home/homeuser',
+    components: {
+      ProjectCard: defineAsyncComponent(() => import('@/modules/passProjects/components/projectPass.vue'))
+    },
+    data() {
+        return {
+            services: [],
+            projects: [],
+            selectedService: 'all',
+            currentPage: 1,
+            projectsPerPage: 6, // Máximo de proyectos por página
+        };
+    },
+    computed: {
+        filteredProjects() {
+            if (this.selectedService === 'all') {
+                return this.projects;
+            }
+            return this.projects.filter(project =>
+                project.service.tipoDeServicio._id === this.selectedService
+            );
         },
-        {
-          title: 'projects',
-          disabled: false,
-          href: '/proyects/destacados',
+        totalPages() {
+            return Math.ceil(this.filteredProjects.length / this.projectsPerPage);
         },
-      ],
-      imageUrl: "https://res.cloudinary.com/dui4i9f4e/image/upload/v1697990498/logos/p3xyl9xetmmg6vlamwkt.jpg",
-      items: [],
-    };
-  },
-  methods : {
-    async getTypes (){
-      try {
-        const {data} = await api.get("/typeservice/get")
-        console.log(data)
-        this.items = data.tipesServices
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  },
-  mounted(){
-    this.getTypes()
-  }
-}
+        paginatedProjects() {
+            const start = (this.currentPage - 1) * this.projectsPerPage;
+            const end = start + this.projectsPerPage;
+            return this.filteredProjects.slice(start, end);
+        },
+    },
+    methods: {
+        async fetchServices() {
+            try {
+                const response = await api.get('/typeservice/get');
+                this.services = response.data.tipesServices;
+            } catch (error) {
+                console.error('Error fetching services:', error);
+            }
+        },
+        async fetchProjects() {
+            try {
+                const response = await api.get('/feature/get');
+                this.projects = response.data.projects;
+            } catch (error) {
+                console.error('Error fetching projects:', error);
+            }
+        },
+    },
+    mounted() {
+        this.fetchServices();
+        this.fetchProjects();
+    },
+};
 </script>
-
-<style scoped>
-.on-hover:hover .v-card {
-  opacity: 1;
-  transition: opacity 0.4s ease-in-out;
-}
-
-.image-effect {
-  transition: opacity 0.4s ease-in-out;
-  opacity: 0.6;
-}
-.on-hover:hover .image-effect {
-  opacity: 1;
-}
-.title-effect {
-  font-size: 1.5em;
-}
-</style>

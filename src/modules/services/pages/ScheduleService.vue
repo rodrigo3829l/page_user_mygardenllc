@@ -11,7 +11,8 @@
         <!-- <h2>Ejemplo de servicio</h2> -->
       </v-card-title>
       <v-card-text>
-        <p>{{ service.description }}</p><br>
+        <p>{{ service.descriptio }}</p><br>
+        <p>{{ service.Clificacion }}</p><br>
         <v-divider></v-divider>
         <br>
         <label>{{ $t('service.pages.scheduleService.descriptionString') }}</label>

@@ -115,6 +115,7 @@ export default {
         if(data.success === true){
           toast.success('Revise su entrada de mensajes')
           localStorage.setItem('tokenData', data.token);
+          localStorage.setItem('data', this.FormData.phone.slice(-3));
           this.$router.push({ name: 'login-optconfirm' });
         }
       } catch (error) {

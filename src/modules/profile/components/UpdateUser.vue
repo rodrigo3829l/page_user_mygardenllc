@@ -114,7 +114,8 @@
             method : 'PUT',
             url : '/user/update',
             headers : {
-              'Authorization' : 'Bearer ' + userStore.token
+              'Authorization' : 'Bearer ' + userStore.token,
+              'rol' : 'client'
             },
             data : datos,
           })

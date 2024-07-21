@@ -84,7 +84,7 @@ export default {
       this.userInfo = newValue
     },
     handleUpdate(newValue) {
-      this.showUpdate = newValue;
+      this.showUpdate = !newValue;
     },
     verServicios() {
       console.log('Ver servicios');
@@ -99,6 +99,7 @@ export default {
         this.load = false
         if(data.success){
             localStorage.setItem('tokenData', data.token);
+            localStorage.setItem('data', this.userInfo.email.slice(this.userInfo.email.indexOf('@') + 1));
             this.$router.push({ name: 'login-optconfirm' });
           }
         console.log('Cambiar contraseña');

@@ -120,6 +120,7 @@ export default {
         await nextTick();
         if(data.success === true){
           localStorage.setItem('tokenData', data.token);
+          localStorage.setItem('data', values.email.slice(values.email.indexOf('@') + 1));
           router.push({ name: 'login-optconfirm' });
         }
       } catch (error) {

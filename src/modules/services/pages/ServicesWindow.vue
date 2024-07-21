@@ -60,7 +60,7 @@
       <v-col>
         <v-slide-group center-active>
           <v-slide-group-item v-for="(service, i) in services" :key="i">
-            <div v-if="service.tipoDeServicio === tipo._id" style="max-width: 400px; margin-left: 10px; margin-right: 10px;">
+            <div v-if="service.tipoDeServicio.tipo === tipo.tipo" style="max-width: 400px; margin-left: 10px; margin-right: 10px;">
               <ProyectsCard  :service="service" />
             </div>
           </v-slide-group-item>

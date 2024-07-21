@@ -41,6 +41,7 @@
   </v-container>
 </template>
 <script>
+import { api } from '@/axios/axios.js';
 export default {
   data() {
     return {
@@ -59,19 +60,6 @@ export default {
       ],
       panel: [],
       faqs: [
-        { question: '¿Cuáles son los servicios de diseño de jardines que ofrecen?', answer: 'Ofrecemos servicios de diseño de jardines personalizados, incluyendo planificación, selección de plantas, paisajismo y creación de áreas temáticas.' },
-        { question: '¿Cuáldes son los servicios de diseño de jardines que ofrecen?', answer: 'Ofrecemos servicios de diseño de jardines personalizados, incluyendo planificación, selección de plantas, paisajismo y creación de áreas temáticas.' },
-        { question: '¿Cuáles son los servicios dwe diseño de jardines ques ofrecen?', answer: 'Ofrecemos servicios de diseño de jardines personalizados, incluyendo planificación, selección de plantas, paisajismo y creación de áreas temáticas.' },
-        { question: '¿Cuáles son los servicios de dwiseño de jardines que ofrecen?', answer: 'Ofrecemos servicios de diseño de jardines personalizados, incluyendo planificación, selección de plantas, paisajismo y creación de áreas temáticas.' },
-        { question: '¿Cuáles son los servicios de disweño de jardines que ofrecen?', answer: 'Ofrecemos servicios de diseño de jardines personalizados, incluyendo planificación, selección de plantas, paisajismo y creación de áreas temáticas.' },
-        { question: '¿Cuáles son los servicios de diseñwo de jardines que ofrecen?', answer: 'Ofrecemos servicios de diseño de jardines personalizados, incluyendo planificación, selección de plantas, paisajismo y creación de áreas temáticas.' },
-        { question: '¿Cuáles son los servicios de diseño dwe jardines que ofrecen?', answer: 'Ofrecemos servicios de diseño de jardines personalizados, incluyendo planificación, selección de plantas, paisajismo y creación de áreas temáticas.' },
-        { question: '¿Cuáles son los servicios de diseño de jwardines que ofrecen?', answer: 'Ofrecemos servicios de diseño de jardines personalizados, incluyendo planificación, selección de plantas, paisajismo y creación de áreas temáticas.' },
-        { question: '¿Cuáles son los servicios de diseño de jarwdines que ofrecen?', answer: 'Ofrecemos servicios de diseño de jardines personalizados, incluyendo planificación, selección de plantas, paisajismo y creación de áreas temáticas.' },
-        { question: '¿Cuáles son los servicios de diseño de jardiwnes que ofrecen?', answer: 'Ofrecemos servicios de diseño de jardines personalizados, incluyendo planificación, selección de plantas, paisajismo y creación de áreas temáticas.' },
-        { question: '¿Cuáles son los servicios de diseño de jardinews que ofrecen?', answer: 'Ofrecemos servicios de diseño de jardines personalizados, incluyendo planificación, selección de plantas, paisajismo y creación de áreas temáticas.' },
-        { question: '¿Cuáles son los servicios de diseño de jardines wque ofrecen?', answer: 'Ofrecemos servicios de diseño de jardines personalizados, incluyendo planificación, selección de plantas, paisajismo y creación de áreas temáticas.' },
-        // Agrega más preguntas y respuestas aquí
       ],
     };
   },
@@ -84,6 +72,18 @@ export default {
       this.allShow = false
       this.panel = [];
     },
+    async getQuestions(){
+      try {
+        const {data} = await api.get('/answer/get')
+        this.faqs = data.asnwers
+        console.log(data)
+      } catch (error) {
+        console.log(error)
+      }
+    },
   },
+  mounted (){
+    this.getQuestions()
+  }
 };
 </script>

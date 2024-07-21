@@ -1,46 +1,64 @@
 <template>
-    <v-card
-      class="mx-auto"
-      max-width="400"
-    >
-      <v-img
-        class="align-end text-white"
-        height="200"
-        :src="proyecto.img"
-        cover
+  <div>
+    <!-- <v-overlay
+        :model-value="overlay"
+        class="align-center justify-center"
       >
-        <v-card-title>{{ proyecto.nombre }}</v-card-title>
-      </v-img>
+        <v-progress-circular
+          color="primary"
+          size="64"
+          indeterminate
+        ></v-progress-circular>
+      </v-overlay> -->
+  </div>
+    <v-container>
+      <v-card>
+        <div style="position: relative;">
+          <v-carousel 
+            :show-arrows="false" 
+            hide-delimiter-background 
+            :continuous="true" 
+            style="height: 200px;"
+          >
+            <v-carousel-item v-for="(image, index) in project.images" :key="index">
+              <v-img :src="image.secure_url"></v-img>
+            </v-carousel-item>
+          </v-carousel>
+          <v-chip 
+            class="ma-2" 
+            color="orange"
+            text-color="white"
+            variant="tonal"
+            style="position: absolute; top: 10px; right: 10px;"
+          >
+            {{ project.service.name }}
+          </v-chip>
+        </div>
+        <v-card-title>{{ project.description }}</v-card-title>
+        <v-card-subtitle>{{ project.scheduleService.description }}</v-card-subtitle>
+        <v-card-actions class="justify-end">
+          <v-btn type="text" append-icon="mdi-arrow-right" color="green-darken-3" @click="showMoreInfo">
+            More info
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+
+    </v-container>
+</template>
+
+<script>
+export default {
   
-      <v-card-subtitle class="pt-4">
-        <v-rating
-          :model-value="proyecto.rating"
-          color="yellow darken-3"
-          half-increments
-          readonly
-        ></v-rating>
-      </v-card-subtitle>
-  
-      <v-card-text>
-        <div>{{ proyecto.descripcion }}</div>
-      </v-card-text>
-  
-      <v-card-actions>
-        <v-btn color="green darken-3">
-          More information
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </template>
-  
-  <script>
-  export default {
-    props: {
-      proyecto: {
-        type: Object,
-        required: true,
-      },
+  props: {
+    project: {
+      type: Object,
+      required: true,
     },
+  },
+  methods: {
+    showMoreInfo() {
+      this.$router.push({ name: 'proyects-info', params: { id: this.project._id } });
+    }
   }
-  </script>
-  
+}
+</script>

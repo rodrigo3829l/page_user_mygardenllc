@@ -11,7 +11,7 @@
           <v-card-text>
             <v-form class="text-center mx-auto">
               <div class="text-body-2">
-                {{ $t('passwordRecovery.otp.messageMail') }}..@gmail.com <br>
+                {{ $t('passwordRecovery.otp.messageMail') }}...{{ dataLocal }} <br>
 
                 {{ $t('passwordRecovery.otp.checkMessage') }}
               </div>
@@ -65,6 +65,7 @@ export default {
     resending: false,
     countdown: 60, // 5 minutes in seconds
     intervalId: null,
+    dataLocal : ''
   }),
 
   setup() {
@@ -73,6 +74,7 @@ export default {
   },
 
   mounted() {
+    this.dataLocal = localStorage.getItem('data')
     this.intervalId = setInterval(() => {
       if (this.countdown > 0) {
         this.countdown -= 1;

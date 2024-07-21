@@ -1,109 +1,124 @@
-<!-- <template>
-  <div class="container mt-4">
-    <h1 class="text-center mt-4">{{ proyecto.name }}</h1>
-    <div class="row mt-4">
-      <div class="col-md-6">
-        <img :src="proyecto.image" alt="Imagen del proyecto" class="img-fluid project-image" />
-      </div>
-      <div class="col-md-6">
-        <h2>Descripción</h2>
-        <p>{{ proyecto.description }}</p>
-        <h2>Calificación</h2>
-        <div class="star-ratings">
-          <span v-for="star in 5" :key="star" :class="{ 'filled-star': star <= proyecto.rating }">★</span>
-        </div>
-      </div>
-    </div>
-    
-    <h2>Comentarios</h2>
-    <ComentsUserCard
-      v-for="comment in Comentarios"
-      :key="comment.userName"
-      :userAvatar="comment.userAvatar"
-      :userName="comment.userName"
-      :commentText="comment.commentText"
-      :rating="comment.rating"
-    />
+<template>
+  <div v-if="overlay">
+    <v-overlay :model-value="overlay" class="align-center justify-center">
+      <v-progress-circular color="primary" size="64" indeterminate></v-progress-circular>
+    </v-overlay>
   </div>
+
+  <v-container v-else>
+    <v-row>
+      <!-- Primera columna -->
+      <v-col cols="12" md="8">
+        <v-row>
+          <!-- Carrusel de imágenes -->
+          <v-col cols="12">
+            <v-carousel 
+              :show-arrows="false" 
+              hide-delimiter-background 
+              :continuous="true" 
+              style="height: 300px;"
+            >
+              <v-carousel-item v-for="(image, index) in project.images" :key="index">
+                <v-img :src="image.secure_url"></v-img>
+              </v-carousel-item>
+            </v-carousel>
+          </v-col>
+          <!-- Título y descripción -->
+          <v-col cols="12">
+            <h2 class="title">{{ project.scheduleService.description }}</h2>
+            <p class="description">{{ project.description }}</p>
+          </v-col>
+        </v-row>
+      </v-col>
+
+      <!-- Segunda columna -->
+      <v-col cols="12" md="4">
+        <v-card class="mb-4">
+          <v-card-title>
+            <strong>{{ project.service.name }}</strong>
+          </v-card-title>
+          <v-card-subtitle class="service-description">{{ project.service.description }}</v-card-subtitle>
+          <v-card-text>
+            <div class="rating-container">
+              <v-rating half-increments v-model="project.service.Calificacion.total" color="yellow-darken-3" readonly></v-rating>
+              <span class="rating-number">({{ project.service.Calificacion.total }})/{{ project.service.Calificacion.totales }}</span>
+            </div>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-text>
+            <strong>Costo del proyecto:</strong>
+            <p>${{ project.scheduleService.quote }}</p>
+          </v-card-text>
+          <v-card-text>
+            <strong>Tipo de servicio:</strong>
+            <p>{{ project.service.tipoDeServicio.tipo }}</p>
+          </v-card-text>
+        </v-card>
+
+        <v-card>
+          <v-card-title>
+            Comentarios
+          </v-card-title>
+          <v-card-text>
+            <CommentCard v-if="comment" :comment="comment"></CommentCard>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import { defineAsyncComponent } from 'vue';
+import { api } from '@/axios/axios.js';
+import { toast } from 'vue3-toastify';
 
 export default {
-  data(){
-    return {
-      proyecto: {
-        name: 'Ejemplo de proyecto',
-        image: 'https://res.cloudinary.com/dui4i9f4e/image/upload/v1697990498/logos/p3xyl9xetmmg6vlamwkt.jpg',
-        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi saepe voluptates, odit reprehenderit laboriosam ab libero officiis consequatur veniam dolor autem amet ut sint quaerat quidem ullam distinctio explicabo aperiam?',
-        rating: 5,
-      },
-      Comentarios : [
-        {
-          userAvatar: 'https://cdn-icons-png.flaticon.com/128/1077/1077063.png',
-          userName: 'Rodrigo Del Angel Gerardo',
-          commentText: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iure doloremque omnis, consequuntur voluptate laborum aspernatur excepturi velit aliquid suscipit! Maxime laudantium molestiae',
-          rating: 4, 
-        },
-        {
-          userAvatar: 'https://cdn-icons-png.flaticon.com/128/1077/1077063.png',
-          userName: 'Avelina Hernandez Hernandez',
-          commentText: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iure doloremque omnis, consequuntur voluptate laborum aspernatur excepturi velit aliquid suscipit! Maxime laudantium molestiae',
-          rating: 5, 
-        },
-        {
-          userAvatar: 'https://cdn-icons-png.flaticon.com/128/1077/1077063.png',
-          userName: 'Juan perez Hernandez Hernandez',
-          commentText: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iure doloremque omnis, consequuntur voluptate laborum aspernatur excepturi velit aliquid suscipit! Maxime laudantium molestiae',
-          rating: 3, 
-        },
-        {
-          userAvatar: 'https://cdn-icons-png.flaticon.com/128/1077/1077063.png',
-          userName: 'Josue Hernandez Guzman',
-          commentText: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iure doloremque omnis, consequuntur voluptate laborum aspernatur excepturi velit aliquid suscipit! Maxime laudantium molestiae',
-          rating: 4, 
-        }
-      ],
-    }
-  },
   components: {
-    ComentsUserCard: defineAsyncComponent(() =>
-      import('@/modules/shared/components/ComentsUserCard')
-    ),
+    CommentCard: defineAsyncComponent(() => import(/* webpackChunkName: "Navbar" */ '@/modules/profile/components/CommentCard.vue'))
   },
+  data() {
+    return {
+      overlay: false,
+      project: null,
+      comment: null
+    };
+  },
+  async created() {
+    this.overlay = true;
+    try {
+      const { id } = this.$route.params;
+      const { data } = await api.get(`/feature/get/${id}`);
+      this.project = data.project;
+
+      const { data: commentData } = await api.get(`/comment/getCommentByScheduledId/${this.project.scheduleService._id}`);
+      this.comment = commentData.comment;
+      this.overlay = false;
+    } catch (error) {
+      toast.error('Error fetching project or comment data');
+      this.overlay = false;
+    }
+  }
 };
 </script>
 
 <style scoped>
-.star-ratings {
-  font-size: 24px;
-  margin-top: 5px;
+.title {
+  font-size: 1.5rem;
 }
-
-.filled-star {
-  color: #f39c12; /* Color de la estrella rellena */
+.description {
+  font-size: 1.2rem;
 }
-
-.project-image {
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  max-height: auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.service-description {
+  font-size: 1.1rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
-</style> -->
-
-
-<template>
-  hola
-</template>
-
-<script>
-export default {
-
+.rating-container {
+  display: flex;
+  align-items: center;
 }
-</script>
-
-<style>
-
+.rating-number {
+  margin-left: 8px;
+}
 </style>
