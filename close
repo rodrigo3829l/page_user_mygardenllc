@@ -1,0 +1,149 @@
+[33mcommit 51048311b16035ef3a16d35fc68adb0c877b24be[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Mon Apr 8 12:45:40 2024 -0600
+
+    Pruebas snyk y sonar
+
+[33mcommit 1e8f1d759c945ff20118be5bd999d37b3baba431[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Sun Apr 7 13:59:14 2024 -0600
+
+    Correcciones
+
+[33mcommit 16b5d6864f296a8581bf19bc7501c370b705dc72[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Sat Apr 6 15:31:49 2024 -0600
+
+    Correcciones de vulnerabilidades
+
+[33mcommit fb2b23f334d95b742c66821c92fb82d025279275[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Sat Apr 6 15:26:52 2024 -0600
+
+    Correcciones de vulnerabilidades
+
+[33mcommit 961104e7d6a07bc9a20c059ddae6a4e26dcbe476[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Fri Apr 5 22:20:57 2024 -0600
+
+    Correcciones de traduccion
+
+[33mcommit ce4228281647d67ef1312b54951eca1211337581[m
+Author: AvelinaHdez <20210667@uthh.edu.mx>
+Date:   Fri Apr 5 10:17:58 2024 -0600
+
+    traduccion
+
+[33mcommit 5cca4036b11f93da9a65e853abc89abafa35f706[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Sun Mar 17 21:51:50 2024 -0600
+
+    Enrutamiento a departamentos
+
+[33mcommit 709f6e55db875b68d9ad5e09bd50c8b05d8fd67d[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Mon Mar 4 08:29:48 2024 -0600
+
+    Implementacion de password seguro
+
+[33mcommit c6bc1a860ea1b8b546a6b85ed7ef145036a66f8c[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Sun Mar 3 17:17:40 2024 -0600
+
+    Correcciones de alertas
+
+[33mcommit e58228992f7be321cc6cbe6948f5c05eb0d670eb[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Sun Mar 3 10:52:30 2024 -0600
+
+    Correcciones de traduccion
+
+[33mcommit 4557f82f634ca0cb365a74190f078eea3d59ff5c[m
+Author: AvelinaHdez <20210667@uthh.edu.mx>
+Date:   Sun Mar 3 07:24:41 2024 -0600
+
+    Traducciones de la pagina
+
+[33mcommit f3f0370370a805e01c736fd368567e010822e87c[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Sat Mar 2 17:30:27 2024 -0600
+
+    Agregar un proceso mas
+
+[33mcommit 6f738ed394abaed136a1eea896a3d8e03036a03f[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Wed Feb 21 09:16:20 2024 -0600
+
+    Correcciones de traduccion
+
+[33mcommit 647484b4ed6168e827293b81d81fbf033e64ab71[m
+Author: AvelinaHdez <20210667@uthh.edu.mx>
+Date:   Mon Feb 19 08:40:12 2024 -0600
+
+    Traduccion de la pagina
+
+[33mcommit d1273a5ade0c0c3b596cd228d329720af7393392[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Sun Feb 18 13:05:26 2024 -0600
+
+    Correcciones de seguridad
+
+[33mcommit dbf7baf0edad3cac8ab9c91882a4f8f4e2fd7baf[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Fri Feb 16 06:02:39 2024 -0600
+
+    Correcciones de seguridad
+
+[33mcommit de585125d35276d41a770f9647dbceb62ff4c83c[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Fri Feb 9 16:25:42 2024 -0600
+
+    Actualizacion de validaciones, telefono e intentos
+
+[33mcommit ee6b2caff31301f5f419d650a76716a8c5aedd4b[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Mon Jan 29 13:29:01 2024 -0600
+
+    Correcciones conexion a bd
+
+[33mcommit 90fb4ef65f5c447b6966e560956d3176dffc4e59[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Mon Jan 29 11:08:59 2024 -0600
+
+    Correcciones
+
+[33mcommit 1a521f3054b787af023d8ce477ee21e1ced7df51[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Mon Jan 22 22:17:34 2024 -0600
+
+    Implementacion de recuperacion de contraseña con la api
+
+[33mcommit c4e5a041036581034877d6dc765187911958c53e[m
+Author: AvelinaHdez <20210667@uthh.edu.mx>
+Date:   Thu Jan 18 04:52:57 2024 -0600
+
+    Seccion recuperacion de contraseña diseño
+
+[33mcommit faf0be30d069070eee0220621f3a3c7b189f0ec6[m
+Author: AvelinaHdez <20210667@uthh.edu.mx>
+Date:   Thu Jan 18 04:51:14 2024 -0600
+
+    Seccion de logeo diseño
+
+[33mcommit 3c0ea1ae7ba631dc5f9552032d31e9735002b482[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Thu Jan 18 04:28:15 2024 -0600
+
+    Seccion de recuperar contraseña
+
+[33mcommit 1f6532e7bbd616ccd3731cda12dbade7910b5f30[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Thu Jan 18 04:23:12 2024 -0600
+
+    first commit
+
+[33mcommit cd80e00ea6badddd591128b00b6aafc8ff97c80a[m
+Author: Rodrigo Del Angel Gerardo <20210658@uthh.edu.mx>
+Date:   Thu Dec 7 21:59:06 2023 -0600
+
+    init

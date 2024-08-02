@@ -1,51 +1,9 @@
 <template>
-  <v-navigation-drawer
-      v-model="drawer"
-      prominent
-    >
-    <v-list-item
-        prepend-avatar="https://randomuser.me/api/portraits/men/78.jpg"
-        title="John Leider"
-        subtitle="ejemaplo de correo"
-      ></v-list-item>
-
-      <v-divider></v-divider>
-      <v-list-item
-        v-for="(link, index) in links"
-        :key="index"
-        :prepend-icon="link.icon"
-        :title="link.name"
-        @click="$router.push({ name: link.to })"
-        :value="link.to"
-      ></v-list-item>
-
-      <v-list-item v-if="!userStore.token" prepend-icon="mdi-login" :title="$t('navbar.loginString')"></v-list-item>
-
-      <div v-if="userStore.token">
-        <v-list-item prepend-icon="mdi-account" @click="$router.push({ name: 'profile-profile' })" :title="$t('navbar.yourAccountString')"></v-list-item>
-        <v-list-item prepend-icon="mdi-cogs" @click="$router.push({ name: 'profile-myservices' })" :title="$t('navbar.yourServices')"></v-list-item>
-      </div>
-
-      <v-list-item v-if="theme.global.name.value === 'dark'" prepend-icon="mdi-white-balance-sunny" title="Light" @click="toggleTheme"></v-list-item>
-      <v-list-item v-if="theme.global.name.value === 'light'" prepend-icon="mdi-weather-night" title="Dark" @click="toggleTheme"></v-list-item>
-      <v-list-item v-if="this.$i18n.locale === 'en'" prepend-icon="mdi-translate" title="Español" @click="changeLanguage('es')"></v-list-item>
-      <v-list-item v-if="this.$i18n.locale === 'es'" prepend-icon="mdi-translate" title="Inglish" @click="changeLanguage('en')"></v-list-item>
-
-      <template v-slot:append v-if="userStore.token"> 
-        <div class="pa-2">
-          <v-btn block @click="logout">
-            {{ $t('navbar.logoutString') }}
-          </v-btn>
-        </div>
-      </template>
-    </v-navigation-drawer>
   <nav class="navbar navbar-expand-lg navbar-light bg-green-darken-3 navbar-transition" clipped-left>
     <v-container fluid>
-      <!-- Uso de v-row para dividir en cuatro columnas -->
       <v-row align="center" justify="space-between">
-
         <!-- Primera Columna: Logo -->
-        <v-col cols="1">
+        <v-col cols="auto" class="ml-2">
           <router-link to="/" class="navbar-brand">
             <img
               src="https://res.cloudinary.com/dui4i9f4e/image/upload/v1709677547/logos/jb7aaqsuesjivzmiz5mg.png"
@@ -56,21 +14,14 @@
         </v-col>
 
         <!-- Segunda Columna: Nombre de la Empresa y Subtítulo -->
-        <v-col
-          cols="2"
-          class="d-flex flex-column justify-center"
-        >
+        <v-col cols="auto" class="d-flex flex-column ml-2 mr-auto">
           <span class="company-name">My Garden LLC</span>
-          <span class="subtitle">Landscaping services and more.</span>
+          <span class="subtitle d-none d-sm-block">Landscaping services and more.</span>
         </v-col>
 
         <!-- Tercera Columna: Enlaces de Navegación -->
-        <v-col
-          v-if="width > pixels"
-          cols="7"
-          class="d-flex justify-center"
-        >
-          <div class="collapse navbar-collapse" id="navbarNav">
+        <v-col class="d-none d-md-flex justify-center" cols="auto">
+          <div class="navbar-collapse">
             <ul class="navbar-nav">
               <router-link
                 v-for="link in links"
@@ -93,7 +44,7 @@
         </v-col>
 
         <!-- Cuarta Columna: Idioma, Tema y Menú del Usuario -->
-        <v-col cols="2" class="d-flex justify-end align-center">
+        <v-col cols="auto" class="d-none d-md-flex justify-end align-center">
           <!-- Icono para cambiar idioma -->
           <v-btn icon variant="text" @click="changeLanguage('en')" v-if="this.$i18n.locale === 'es'" class="mx-1">
             <v-img src="https://flagcdn.com/16x12/us.webp" alt="USA" width="16" height="12"></v-img>
@@ -139,8 +90,26 @@
           </v-menu>
         </v-col>
 
+        <!-- Icono de menú para pantallas pequeñas -->
+        <v-col cols="auto" class="d-md-none mr-2">
+          <v-btn icon variant="text" @click="drawer = !drawer">
+            <v-icon>mdi-menu</v-icon>
+          </v-btn>
+        </v-col>
       </v-row>
     </v-container>
+
+    <!-- Drawer para navegación en pantallas pequeñas -->
+    <v-navigation-drawer v-model="drawer" temporary right>
+      <v-list>
+        <v-list-item v-for="link in links" :key="link.to" @click="navigate(link.to)">
+          <v-list-item-title>{{ link.name }}</v-list-item-title>
+        </v-list-item>
+        <v-list-item v-if="userStore.token === null" @click="navigate('login-login')">
+          <v-list-item-title>Login</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
   </nav>
 </template>
 
@@ -162,25 +131,30 @@ export default {
       theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
     };
 
+    const navigate = (route) => {
+      this.$router.push({ name: route });
+      this.drawer = false;
+    };
+
     return {
       theme,
       toggleTheme,
       width,
       userStore,
+      navigate,
     };
   },
 
   data() {
     return {
       links : [
-          { name: i18n.global.t('navbar.homeString'), to: 'home-home', icon: 'mdi-home' },
-          { name: i18n.global.t('navbar.servicesString'), to: 'services-services', icon: 'mdi-hammer-screwdriver' },
-          { name: i18n.global.t('navbar.projectsString'), to: 'proyects-view', icon: 'mdi-briefcase' },
-          { name: i18n.global.t('navbar.contactString'), to: 'home-contact', icon: 'mdi-email' },
-          { name: i18n.global.t('navbar.faqsString'), to: 'home-answers', icon: 'mdi-help-circle' },
+          { name: 'Home', to: 'home-home', icon: 'mdi-home' },
+          { name: 'Services', to: 'services-services', icon: 'mdi-hammer-screwdriver' },
+          { name: 'Projects', to: 'proyects-view', icon: 'mdi-briefcase' },
+          { name: 'Contact', to: 'home-contact', icon: 'mdi-email' },
+          { name: 'FAQS', to: 'home-answers', icon: 'mdi-help-circle' },
         ],
       drawer: false,
-      pixels: 750, // Responsividad para ajustar los iconos y elementos
     };
   },
   
@@ -206,6 +180,7 @@ export default {
 <style scoped>
 .logo {
   width: 120px;
+  margin-left: 8px;
 }
 
 .company-name {
@@ -244,5 +219,13 @@ export default {
 
 .justify-end {
   justify-content: flex-end;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
 }
 </style>

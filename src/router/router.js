@@ -293,6 +293,15 @@ const routes = [
     },
 
     {
+        path: '/pay',
+        name: 'pay',
+        meta: {
+            title: 'resendemail',
+        },
+        component: () => import ( /* webpackChunkName: "bina datos" */ '@/modules/shared/components/PayExample.vue'),
+    },
+
+    {
         path: '/notverified',
         name: 'notverified',
         meta: {

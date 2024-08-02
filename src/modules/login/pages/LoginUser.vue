@@ -174,7 +174,7 @@ export default {
           }, 2000);
         }
       } catch (error) {
-        console.error(error);
+        console.log(error);
         router.push({ name: 'serverError' });
       }
     });

@@ -15,6 +15,7 @@
             placeholder="Search service"
             variant="underlined"
             clearable
+            @click:clear="handleClear"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -27,12 +28,6 @@
         <v-col cols="12" sm="4" md="3">
           <v-list dense>
             <v-list-item-title>Categories</v-list-item-title>
-            <!-- <v-list-item
-              @click="filterByCategory({ _id: 'all' })"
-              class="clickable"
-            >
-              All
-            </v-list-item> -->
             <v-list-item
               @click="filterByCategory({ _id: 'all', tipo: 'all' })"
               class="clickable"
@@ -54,15 +49,29 @@
         <!-- Cards de Servicios -->
         <v-col cols="12" sm="8" md="9">
           <v-row>
-            <v-col
-              v-for="(service, i) in paginatedServices"
-              :key="i"
-              cols="12"
-              sm="6"
-              md="6"
-            >
-              <ProyectsCard :service="service" />
-            </v-col>
+            <template v-if="loading">
+              <v-col cols="12" sm="6" md="6" v-for="n in 2" :key="n">
+                <SkeletonServices />
+              </v-col>
+            </template>
+            <template v-else-if="paginatedServices.length === 0">
+              <v-col cols="12" class="text-center">
+                <v-alert color="green-darken-3" type="info" dismissible>
+                  No service found
+                </v-alert>
+              </v-col>
+            </template>
+            <template v-else>
+              <v-col
+                v-for="(service, i) in paginatedServices"
+                :key="i"
+                cols="12"
+                sm="6"
+                md="6"
+              >
+                <ProyectsCard :service="service" />
+              </v-col>
+            </template>
           </v-row>
 
           <!-- Componente de Paginación -->
@@ -86,6 +95,7 @@ export default {
   name: 'ServicesPage',
   components: {
     ProyectsCard: defineAsyncComponent(() => import('@/modules/shared/components/ProyectsCard.vue')),
+    SkeletonServices: defineAsyncComponent(() => import('@/modules/services/components/SkeletonServices.vue'))
   },
   data() {
     return {
@@ -95,6 +105,7 @@ export default {
       currentCategory: 'all',
       currentPage: 1,
       servicesPerPage: 2, // Cantidad de servicios por página
+      loading: false // Estado de carga
     };
   },
   computed: {
@@ -126,8 +137,10 @@ export default {
   },
   methods: {
     async fetchServices() {
+      this.loading = true; // Comienza a cargar
       const { data } = await api.get('/services/get');
       this.services = data.services;
+      this.loading = false; // Finaliza la carga
     },
     async fetchCategories() {
       const { data } = await api.get('/typeservice/get');
@@ -136,8 +149,21 @@ export default {
     filterByCategory(category) {
       this.currentCategory = category.tipo === 'all' ? 'all' : category.tipo;
       this.currentPage = 1; // Reinicia la página al cambiar de categoría
+      this.fetchServices(); // Vuelve a cargar los servicios al cambiar de categoría
     },
-
+    handleSearch() {
+      this.currentPage = 1; // Reinicia la página al buscar
+      this.fetchServices(); // Vuelve a cargar los servicios al buscar
+    },
+    handleClear() {
+      this.currentCategory = 'all'; // Restablece la categoría a "all"
+      this.fetchServices(); // Vuelve a cargar los servicios
+    }
+  },
+  watch: {
+    search() {
+      this.handleSearch();
+    }
   },
   created() {
     this.fetchServices();
@@ -166,5 +192,9 @@ export default {
 
 .v-list-item {
   padding: 8px;
+}
+
+.text-center {
+  text-align: center;
 }
 </style>
