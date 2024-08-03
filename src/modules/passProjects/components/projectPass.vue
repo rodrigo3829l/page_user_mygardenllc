@@ -19,6 +19,7 @@
             hide-delimiter-background 
             :continuous="true" 
             style="height: 200px;"
+            cycle interval="2500"
           >
             <v-carousel-item v-for="(image, index) in project.images" :key="index">
               <v-img :src="image.secure_url"></v-img>

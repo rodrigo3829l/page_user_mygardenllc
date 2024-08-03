@@ -97,19 +97,26 @@
     <CommentCard v-if="showComment" :comment="commentUser"></CommentCard>
 
     <v-dialog v-model="paymentDialog" max-width="600" persistent>
-        <v-card>
+        <!-- <v-card>
             <v-card-title class="headline">{{ $t('profile.pages.infoMyService.paymentFormString') }}</v-card-title>
             <v-card-text>
                 <v-select v-model="paymentPercentage" :items="['50%', '100%']" :label="$t('profile.pages.infoMyService.paymentPercentageString')" required></v-select>
 
-                <!-- Contenedor del botón de PayPal -->
                 <div id="paypal-button-container" ref="paypal"></div>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="closePaymentDialog">{{ $t('profile.pages.infoMyService.buttonClose') }}</v-btn>
             </v-card-actions>
-        </v-card>
+        </v-card> -->
+        <PaymentCard
+        :monto="servicePrice"
+        :pendingAmount="pending"
+        :token="userStore.token"
+        :serviceId="$route.params.id"
+        @close="closePaymentDialog"
+        @payment-success="handlePaymentSuccess"
+      />
     </v-dialog>
 
     <v-dialog v-model="commentDialog" persistent>
@@ -301,6 +308,10 @@ export default {
         closePaymentDialog() {
             this.paymentDialog = false;
         },
+        handlePaymentSuccess() {
+      this.paymentDialog = false;
+      this.getService(); // Recargar la información del servicio
+    },
         loadPayPalScript() {
             const script = document.createElement('script');
             script.src = "https://www.paypal.com/sdk/js?client-id=AfOuWCGm02PBc-nT5eA3DrWwE4_YT-kqE7G0Vd_RTKIlHpDWpiE3Qui9UMxUkRxPdUkMaGJj8m_4Eg1X";
@@ -326,14 +337,14 @@ export default {
                         const order = await actions.order.capture();
                         console.log(order);
 
-                        const paymentDetails = {
-                            user: userStore.token,
-                            mount: amount,
-                            scheduleService: this.$route.params.id,
-                            type: '65d9c9eda4ee265c1c861501',
-                            paypalOrderId: order.id,
-                            paypalPayerId: order.payer.payer_id
-                        };
+                        // const paymentDetails = {
+                        //     user: userStore.token,
+                        //     mount: amount,
+                        //     scheduleService: this.$route.params.id,
+                        //     type: '65d9c9eda4ee265c1c861501',
+                        //     paypalOrderId: order.id,
+                        //     paypalPayerId: order.payer.payer_id
+                        // };
 
                         // try {
                         //   const { data } = await api.post('/pays/pay', paymentDetails);
@@ -361,7 +372,8 @@ export default {
         // this.loadPayPalScript()
     },
     components: {
-        CommentCard: defineAsyncComponent(() => import( /* webpackChunkName: "Navbar" */ '@/modules/profile/components/CommentCard.vue'))
+        CommentCard: defineAsyncComponent(() => import( /* webpackChunkName: "Navbar" */ '@/modules/profile/components/CommentCard.vue')),
+        PaymentCard: defineAsyncComponent(() => import( /* webpackChunkName: "Navbar" */ '@/modules/profile/components/PayComponent.vue'))
     }
 }
 </script>

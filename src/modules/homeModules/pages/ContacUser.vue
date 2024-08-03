@@ -19,12 +19,14 @@
           <v-card-text>
             <v-form>
               <v-text-field
+                v-model="form.name"
                 variant="underlined"
                 color="green-darken-3"
                 label="Name"
                 required
               ></v-text-field>
               <v-text-field
+                v-model="form.email"
                 variant="underlined"
                 color="green-darken-3"
                 label="Email"
@@ -32,12 +34,14 @@
                 required
               ></v-text-field>
               <v-text-field
+                v-model="form.subject"
                 variant="underlined"
                 color="green-darken-3"
                 label="Subject"
                 required
               ></v-text-field>
               <v-textarea
+                v-model="form.message"
                 variant="outlined"
                 color="green-darken-3"
                 label="Message"
@@ -79,23 +83,43 @@
       </v-col>
     </v-row>
   </v-container>
+
 </template>
 
 <script>
+import { api } from '@/axios/axios.js';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+
 export default {
   data() {
     return {
       loading: false,
+      form: {
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      }
     };
   },
-
   methods: {
-    handleSubmit() {
+    async handleSubmit() {
       this.loading = true;
-      setTimeout(() => {
+      try {
+        const response = await api.post('/user/contact', this.form);
+        if (response.data.success) {
+          toast.success(response.data.msg, { position: "top-right" });
+          this.form = { name: '', email: '', subject: '', message: '' }; // Limpiar el formulario
+        } else {
+          toast.error(response.data.msg, { position: "top-right" });
+        }
+      } catch (error) {
+        toast.error('Error al enviar el mensaje', { position: "top-right" });
+      } finally {
         this.loading = false;
-      }, 3000);
-    },
+      }
+    }
   },
 };
 </script>

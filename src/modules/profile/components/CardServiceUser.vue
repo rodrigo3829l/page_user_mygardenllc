@@ -133,8 +133,8 @@ export default {
         });
       }
 
-      // Botón para pagar si el status es quoted
-      if (this.service.status === 'quoted') {
+      // Botón para pagar si el status es quoted o si hay un monto pendiente
+      if (this.service.status === 'quoted' || this.service.pending != 0) {
         buttons.push({
           text: 'Pay',
           color: 'yellow-darken-4',
@@ -159,7 +159,7 @@ export default {
       this.$router.push({ name: 'profile-infomyservices', params: { id: this.service._id } });
     },
     pay() {
-      console.log("Payment process initiated.");
+      this.$emit('payService', this.service);
     },
   },
 };

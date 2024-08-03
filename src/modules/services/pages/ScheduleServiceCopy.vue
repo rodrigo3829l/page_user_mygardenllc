@@ -2,69 +2,65 @@
 <v-container>
     <!-- Primera fila -->
     <v-row dense>
-        <!-- Columna para la imagen del servicio -->
-        <v-col cols="12" md="6" class="d-flex ">
-            <v-img :src="service.img.secure_url" alt="Service Image" height="350" contain></v-img>
-        </v-col>
-
-        <!-- Columna para la información del servicio -->
+        <!-- Columna para la imagen y la información del servicio -->
         <v-col cols="12" md="6">
-            <!-- Título del servicio -->
-            <v-row dense>
-                <v-col>
-                    <h1>{{ service.name }}</h1>
-                </v-col>
-            </v-row>
-
-            <!-- Calificación del servicio -->
-            <v-row dense>
-                <v-col>
-                    <v-rating :model-value="service.Calificacion.total" color="amber" density="compact" half-increments readonly></v-rating>
-                    {{ service.Calificacion.total }} ({{ service.Calificacion.totales }} reviews)
-                </v-col>
-            </v-row>
-
-            <!-- Descripción del servicio -->
-            <v-row dense>
-                <v-col>
-                    <p>{{ service.description }}</p>
-                </v-col>
-            </v-row>
-
-            <!-- Formulario para agendar dentro de un v-card -->
-            <v-row dense>
-                <v-col>
-                    <v-card>
-                        <v-card-title>
-                            Schedule Cleaning
-                        </v-card-title>
-                        <v-card-text>
-                            <v-form ref="scheduleForm">
-                                <v-text-field v-model="scheduleDescription" label="Description" clearable></v-text-field>
-
-                                <v-file-input v-model="scheduleImage" label="Select Image" clearable></v-file-input>
-
-                                <v-text-field v-model="scheduleDate" label="Select Date" :active="calendar" :focus="calendar" id="calendar"></v-text-field>
-                                <v-menu v-model="calendar" :close-on-content-click="calendar" activator="#calendar" transition="scale-transition">
-                                    <v-list-item>
-                                        <v-date-picker v-if="calendar" v-model="scheduleDate" :allowed-dates="allowedDates" :min="minDate" width="400" color="green-darken-3">
-                                        </v-date-picker>
-                                    </v-list-item>
-                                    <!-- <v-list-item>
-                                        <v-btn @click="showCalendar"  color="red">Close</v-btn>
-                                    </v-list-item> -->
-                                </v-menu>
-                                <v-btn color="green-darken-3" @click="quote" block>
-                                    Schedule
-                                </v-btn>
-                            </v-form>
-                        </v-card-text>
-                    </v-card>
-                </v-col>
-            </v-row>
+            <v-img :src="service.img.secure_url" alt="Service Image" height="350" contain></v-img>
+            <h1 class="mt-2">{{ service.name }}</h1>
+            <v-rating :model-value="service.Calificacion.total" color="amber" density="compact" half-increments readonly></v-rating>
+            <p>{{ service.Calificacion.total }} ({{ service.Calificacion.totales }} reviews)</p>
+            <p>{{ service.description }}</p>
         </v-col>
+
+        <!-- Columna para el formulario de agendar servicio -->
+        <v-col cols="12" md="6">
+            <v-card>
+              <v-card-title>
+                Schedule Cleaning
+              </v-card-title>
+              <v-card-text>
+                <v-form ref="scheduleForm">
+                  <v-textarea v-model="scheduleDescription" variant="underlined" color="green-darken-3" label="Description" clearable dense hide-details class="my-1" />
+          
+                  <v-row dense>
+                    <v-col cols="8" class="d-flex align-center">
+                      <v-file-input v-model="scheduleImage" variant="underlined" color="green-darken-3" label="Select Image" clearable @change="handleImageUpload"></v-file-input>
+                    </v-col>
+          
+                    <v-col cols="4" class="d-flex align-center justify-center">
+                      <v-row v-if="!scheduleImagePreview" class="image-preview" justify="center" align="center">
+                        <div class="image-placeholder">Selected Image</div>
+                      </v-row>
+          
+                      <v-img v-else :src="scheduleImagePreview" alt="Selected Image" max-width="150" height="100" class="my-3"></v-img>
+                    </v-col>
+                  </v-row>
+          
+                  <v-text-field v-model="scheduleDate" variant="underlined" color="green-darken-3" label="Select Date" type="date" id="calendar"></v-text-field>
+          
+                  <div v-if="unavailableDates.length" class="mt-4 mb-4 text-center">
+                    <h3>Unavailable Dates</h3>
+                    <v-row dense justify="center">
+                      <v-col v-for="(days, month) in unavailableDatesGrouped" :key="month" cols="4">
+                        <v-sheet class="pa-2 text-center" elevation="1">
+                          <h4>{{ month }}</h4>
+                          <p>{{ days.join(', ') }}</p>
+                        </v-sheet>
+                      </v-col>
+                    </v-row>
+                  </div>
+          
+                  <v-btn color="green-darken-3" @click="quote" block>
+                    Schedule
+                  </v-btn>
+                </v-form>
+              </v-card-text>
+            </v-card>
+          </v-col>
+          
+
     </v-row>
 
+    <!-- Segunda fila: Customer Reviews -->
     <v-row>
         <h1>Customer Reviews</h1>
         <v-col cols="12">
@@ -101,15 +97,9 @@
         <v-sheet elevation="12" max-width="600" rounded="lg" width="100%" class="pa-4 text-center mx-auto">
             <div>
                 <v-icon class="mb-5" :color="color" :icon="icon" size="112"></v-icon>
-
                 <h2 class="text-h5 mb-6">{{ tittle }}</h2>
-
-                <p class="mb-4 text-medium-emphasis text-body-2">
-                    {{ message }}
-                </p>
-
+                <p class="mb-4 text-medium-emphasis text-body-2">{{ message }}</p>
                 <v-divider class="mb-4"></v-divider>
-
                 <div class="text-end">
                     <v-btn class="text-none" color="success" rounded variant="flat" width="90" @click="closeScheduleDialog">
                         {{ $t('service.pages.scheduleService.closeString') }}
@@ -120,13 +110,15 @@
     </v-dialog>
 
 </v-container>
-yarn
+<v-overlay :model-value="overlay" class="align-center justify-center">
+    <v-progress-circular color="primary" indeterminate size="64"></v-progress-circular>
+</v-overlay>
 </template>
 
 <script>
-import { useUserStore } from '@/store/store';
-
-const userStore = useUserStore();
+import {
+    useUserStore
+} from '@/store/store';
 import {
     api
 } from '@/axios/axios.js';
@@ -138,18 +130,19 @@ import {
     SwiperSlide
 } from 'swiper/vue';
 import {
-    Navigation,
     Pagination
 } from 'swiper/modules';
 import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination'
+import 'swiper/css/pagination';
+
+const userStore = useUserStore();
+
 export default {
     components: {
         Swiper,
         SwiperSlide,
-        ComentsUserCard: defineAsyncComponent(() => import( /* webpackChunkName: "Navbar" */ '@/modules/shared/components/ComentsUserCard.vue')),
-        ComentsUserSkeleton: defineAsyncComponent(() => import( /* webpackChunkName: "Navbar" */ '@/modules/shared/components/CommentsUserSkeleton.vue')),
+        ComentsUserCard: defineAsyncComponent(() => import('@/modules/shared/components/ComentsUserCard.vue')),
+        ComentsUserSkeleton: defineAsyncComponent(() => import('@/modules/shared/components/CommentsUserSkeleton.vue')),
     },
     data() {
         return {
@@ -158,28 +151,10 @@ export default {
             calendar: false,
             loaded: false,
             minDate: new Date(),
-            modules: [Navigation, Pagination],
-            navigationOptions: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
+            modules: [Pagination],
             paginationOptions: {
                 el: '.swiper-pagination',
                 clickable: true,
-            },
-            breakpoints: {
-                320: {
-                    slidesPerView: 1,
-                    spaceBetween: 10,
-                },
-                640: {
-                    slidesPerView: 2,
-                    spaceBetween: 15,
-                },
-                1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 20,
-                },
             },
             overlay: false,
             scheduleDialog: false,
@@ -200,7 +175,14 @@ export default {
             },
             scheduleDescription: '',
             scheduleImage: null,
+            scheduleImagePreview: null,
             scheduleDate: null,
+            load: false,
+            errors: {
+                image: ''
+            },
+            unavailableDates: [],
+            unavailableDatesGrouped: {},
         };
     },
     methods: {
@@ -227,13 +209,11 @@ export default {
                     user: this.userStore.token,
                     service: this.service._id,
                     description: this.scheduleDescription,
-                    img: {
-                        public_id: "aksdbaskdjas",
-                        secure_url: "https://res.cloudinary.com/dui4i9f4e/image/upload/v1697990498/logos/p3xyl9xetmmg6vlamwkt.jpg"
-                    },
+                    img: this.scheduleImagePreview,
                     typeReserve: "online",
                     scheduledTime: date
                 }
+                console.log(datos);
                 const {
                     data
                 } = await api.post('/schedule/schedule', datos)
@@ -261,18 +241,34 @@ export default {
                 this.overlay = false
             }
         },
+        handleImageUpload(event) {
+            const file = event.target.files[0];
+
+            // Check if a file is selected
+            this.errors.image = (!file) ? this.$t('registration.alerts.imageFile') : '';
+
+            // Check the file size (in bytes)
+            const maxSize = 4 * 1024 * 1024; // 4 megabytes
+            this.errors.image = (file.size > maxSize) ? this.$t('registration.alerts.sizeFile') : '';
+
+            // Read the image as a Blob object
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                this.scheduleImagePreview = e.target.result;
+            };
+
+            // Check if the file type is an image
+            if (file.type.startsWith('image/')) {
+                reader.readAsDataURL(file);
+            } else {
+                this.errors.image = this.$t('registration.alerts.validImage');
+            }
+        },
         openScheduleDialog() {
             this.scheduleDialog = true
         },
         closeScheduleDialog() {
             this.scheduleDialog = false
-        },
-        showCalendar() {
-            this.calendar = !this.calendar
-            console.log('vlick')
-            if (this.scheduleDate) {
-                this.scheduleDate = new Date(this.scheduleDate).toISOString().split('T')[0]
-            }
         },
         allowedDates(val) {
             return !this.unavailableDates.includes(this.$vuetify.date.toISO(val))
@@ -283,9 +279,22 @@ export default {
                     data
                 } = await api.get('/dates/get')
                 this.unavailableDates = data.dates.map(item => item.date.split('T')[0])
+                this.groupUnavailableDates();
             } catch (error) {
                 console.log(error)
             }
+        },
+        groupUnavailableDates() {
+            const grouped = this.unavailableDates.reduce((acc, date) => {
+                const [year, month, day] = date.split('-');
+                const monthName = new Date(year, month - 1).toLocaleString('default', {
+                    month: 'long'
+                });
+                if (!acc[monthName]) acc[monthName] = [];
+                acc[monthName].push(parseInt(day));
+                return acc;
+            }, {});
+            this.unavailableDatesGrouped = grouped;
         },
         async fetchService() {
             try {
@@ -299,6 +308,7 @@ export default {
                 console.log(error)
             } finally {
                 this.overlay = false
+                this.load = true
             }
         },
         async fetchComments() {
@@ -326,16 +336,37 @@ export default {
 </script>
 
 <style scoped>
-v-card {
+.v-card {
     padding: 10px;
 }
 
-swiper-button-prev,
+.swiper-button-prev,
 .swiper-button-next {
     color: #2E7D32;
 }
 
 .swiper-pagination {
     color: #2E7D32;
+}
+
+.image-preview {
+    width: 80%;
+    height: 100px;
+    background-color: #f0f0f0;
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    margin : 10px
+}
+.image-placeholder {
+    font-size: 14px;
+    color: #666;
+    position: absolute;
+    z-index: 1;
+    user-select: none;
+    text-align: center;
+    width: 80%;
+    padding: 60px 0;
 }
 </style>

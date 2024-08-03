@@ -32,7 +32,7 @@
             color="green-darken-3"
             :label="$t('profile.pages.ProfilePage.nameString')"
             variant="underlined"
-            v-model="userInfo.fullName"
+            v-model="userInfo.name"
           ></v-text-field>
           <v-text-field
             disabled
@@ -129,7 +129,7 @@ export default {
           },
         })
         console.log(data)
-        this.userInfo = data
+        this.userInfo = data.user
       } catch (error) {
         console.log(error)
       }
