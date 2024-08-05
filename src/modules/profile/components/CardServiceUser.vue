@@ -125,7 +125,7 @@ export default {
       }
 
       // Botón para cancelar si el status no es finish
-      if (this.service.status !== 'finish') {
+      if (this.service.status !== 'finish' && this.service.status !== 'canceled') {
         buttons.push({
           text: 'Cancel',
           color: 'error',

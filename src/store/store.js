@@ -8,6 +8,7 @@ export const useUserStore = defineStore('user', () => {
     const name = ref (null);
     const email = ref (null);
     const rol = ref (null);
+    const image = ref (null);
 
     const login = async (email, pass, dpto) => {
         const datos = {
@@ -22,18 +23,11 @@ export const useUserStore = defineStore('user', () => {
             token.value = data.token;
             expireIn.value = data.expiresIn
             rol.value = data.rol
+            image.value = data.image
             localStorage.setItem('token', token.value)
             localStorage.setItem('rol', rol.value)
 
             setTime();
-            // const resp = await api({
-            //     method: 'GET',
-            //     url : '/user/protected',
-            //     headers: {
-            //         'Authorization' : 'Bearer ' + token.value,
-            //     },
-            // })
-            // localStorage.setItem('rol', resp.data.tipo)
             return({exito : 'inicio se sesion exitoso'})
         } catch (error) {
             console.log("Error deesde el store")
@@ -62,6 +56,7 @@ export const useUserStore = defineStore('user', () => {
         name.value = null
         email.value = null
         rol.value = null
+        image.value = null
         localStorage.clear();
         // localStorage.removeItem('rol');
         // localStorage.removeItem('token');
@@ -88,6 +83,7 @@ export const useUserStore = defineStore('user', () => {
             name.value = data.name
             email.value = data.email
             rol.value = data.rol
+            image.value = data.image
             localStorage.setItem('token', token.value,);
             setTime();
         } catch (error) {
@@ -111,6 +107,7 @@ export const useUserStore = defineStore('user', () => {
         initializeStore,
         name,
         email,
-        rol
+        rol,
+        image
     }
   })

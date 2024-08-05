@@ -30,9 +30,25 @@
     <v-row>
         <v-col cols="12">
             <v-row>
-                <v-col v-for="(service, index) in paginatedServices" :key="index" cols="12" sm="6" md="4">
-                    <ServicesCard @updateData="updateData" @payService="payService" :service="service" />
-                </v-col>
+                <template v-if="overlay">
+                    <v-col v-for="n in 6" :key="n" cols="12" sm="6" md="4">
+                        <SkeletonServices/>
+                    </v-col>
+                </template>
+                <template v-else>
+                    <template v-if="paginatedServices.length">
+                        <v-col v-for="(service, index) in paginatedServices" :key="index" cols="12" sm="6" md="4">
+                            <ServicesCard @updateData="updateData" @payService="payService" :service="service" />
+                        </v-col>
+                    </template>
+                    <template v-else>
+                        <v-col cols="12" class="text-center">
+                            <v-alert color="green-darken-3" type="info" dismissible>
+                                🌻 No services found. Try adjusting your search or filter criteria. 🌿
+                            </v-alert>
+                        </v-col>
+                    </template>
+                </template>
             </v-row>
 
             <!-- Paginación -->
@@ -46,27 +62,24 @@
 </v-dialog>
 <v-dialog v-model="cancelDialog" width="auto" persistent>
     <v-card>
-        <v-card-title>
-            {{ $t('profile.pages.myServices.cancellationString') }}
-        </v-card-title>
-        <v-card-text>
-            {{ $t('profile.pages.myServices.serviceString') }}
-        </v-card-text>
+        <v-card-title>{{ $t('profile.pages.myServices.cancellationString') }}</v-card-title>
+        <v-card-text>{{ $t('profile.pages.myServices.serviceString') }}</v-card-text>
         <v-card-actions class="justify-end">
             <v-btn color="primary" @click="closeCancel">No</v-btn>
             <v-btn color="error" @click="confirmCancel">{{ $t('profile.pages.myServices.yesString') }}</v-btn>
         </v-card-actions>
     </v-card>
 </v-dialog>
-<v-overlay :model-value="overlay" class="align-center justify-center">
+<!-- <v-overlay :model-value="overlay" class="align-center justify-center">
     <v-progress-circular color="primary" indeterminate size="64"></v-progress-circular>
-</v-overlay>
+</v-overlay> -->
 
 <v-dialog v-model="paymentDialog" width="auto" persistent>
     <PaymentCard :monto="selectedService.quote" :pendingAmount="selectedService.pending" :serviceId="selectedService._id" @close="closePaymentDialog" @payment-success="handlePaymentSuccess"></PaymentCard>
 </v-dialog>
 </template>
 
+  
 <script>
 import {
     toast
@@ -80,13 +93,16 @@ import {
 import {
     api
 } from '@/axios/axios.js';
+
 const userStore = useUserStore();
+
 export default {
     name: 'ServicesPage',
     components: {
         ServicesCard: defineAsyncComponent(() => import('../components/CardServiceUser.vue')),
+        SkeletonServices: defineAsyncComponent(() => import('../components/SkeletonServices.vue')),
         CalendarCard: defineAsyncComponent(() => import('../components/CalendarCard.vue')),
-        PaymentCard: defineAsyncComponent(() => import('@/modules/profile/components/PayComponent.vue')), // Importa el componente de pago
+        PaymentCard: defineAsyncComponent(() => import('@/modules/profile/components/PayComponent.vue')),
     },
     data() {
         return {
@@ -101,7 +117,6 @@ export default {
             selectedService: {},
             rescheduleDialog: false,
             selectedStatus: '',
-            // statuses: ['all', 'development', 'quoted', 'canceled', 'finish', 'quoting'],
             statuses: [{
                     text: 'all',
                     value: 'all'
@@ -146,7 +161,7 @@ export default {
                 },
             ],
             currentPage: 1,
-            servicesPerPage: 6, // Máximo de servicios por página
+            servicesPerPage: 6,
         };
     },
     computed: {
@@ -203,18 +218,17 @@ export default {
         },
         updateData(id, action) {
             if (action === 'cancel') {
-                this.cancelDialog = true
-                this.idService = id
+                this.cancelDialog = true;
+                this.idService = id;
             } else if (action === 'reschedule') {
-                this.rescheduleDialog = !this.rescheduleDialog
-                this.idService = id
+                this.rescheduleDialog = !this.rescheduleDialog;
+                this.idService = id;
             } else {
-                this.reschedule(id)
+                this.reschedule(id);
             }
-
         },
         async fetchServices() {
-            const userStore = useUserStore();
+            this.overlay = true;
             const {
                 data
             } = await api({
@@ -226,58 +240,59 @@ export default {
                 },
             });
             this.services = data.services;
+            this.overlay = false;
         },
         filterByCategory() {
             this.currentPage = 1;
         },
         async confirmCancel() {
             try {
-                this.cancelDialog = false
-                this.overlay = true
+                this.cancelDialog = false;
+                this.overlay = true;
                 const {
                     data
-                } = await api.put(`/schedule/cancel/${this.idService}`)
+                } = await api.put(`/schedule/cancel/${this.idService}`);
                 if (!data.success) {
-                    toast.warning(data.msg)
+                    toast.warning(data.msg);
                 } else {
-                    this.fetchServices()
-                    toast.success(data.msg)
+                    this.fetchServices();
+                    toast.success(data.msg);
                 }
-                this.idService = ''
-                this.overlay = false
+                this.idService = '';
+                this.overlay = false;
             } catch (error) {
-                this.overlay = false
-                toast.error(this.$t('profile.pages.myServices.cancelServiceString'))
-                console.log(error)
+                this.overlay = false;
+                toast.error(this.$t('profile.pages.myServices.cancelServiceString'));
+                console.log(error);
             }
         },
         async reschedule(date) {
             try {
-                this.rescheduleDialog = false
-                this.overlay = true
+                this.rescheduleDialog = false;
+                this.overlay = true;
                 const datos = {
-                    newDate: date
-                }
+                    newDate: date,
+                };
                 const {
                     data
-                } = await api.put(`/schedule/rescheduleservice/${this.idService.id}`, datos)
+                } = await api.put(`/schedule/rescheduleservice/${this.idService.id}`, datos);
                 console.log(data);
                 if (!data.success) {
-                    toast.warning(data.msg)
+                    toast.warning(data.msg);
                 } else {
-                    this.fetchServices()
-                    toast.success(data.msg)
+                    this.fetchServices();
+                    toast.success(data.msg);
                 }
-                this.idService = ''
-                this.overlay = false
+                this.idService = '';
+                this.overlay = false;
             } catch (error) {
-                this.overlay = false
-                console.log(error)
+                this.overlay = false;
+                console.log(error);
             }
         },
         closeCancel() {
-            this.cancelDialog = false,
-                this.idService = ''
+            this.cancelDialog = false;
+            this.idService = '';
         },
     },
     created() {
@@ -286,6 +301,7 @@ export default {
 };
 </script>
 
+  
 <style scoped>
 .text-left {
     text-align: left;

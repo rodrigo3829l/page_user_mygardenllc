@@ -551,6 +551,7 @@ export default {
                     userName: this.formData.userName,
                     email: this.formData.email,
                     password: this.formData.password,
+                    img: this.formData.imagen
                 };
 
                 console.log("Datos:", datos);
