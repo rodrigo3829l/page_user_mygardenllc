@@ -18,12 +18,12 @@
 
                 <v-card-text>
                     <v-list>
-                        <v-list-item-group>
+                       
                             <v-list-item v-for="(item, index) in card.benefits" :key="index">
                                 <v-icon small class="mr-1">mdi-check</v-icon> <!-- Ícono de check -->
                                 {{ item }}
                             </v-list-item>
-                        </v-list-item-group>
+                        
                     </v-list>
                 </v-card-text>
             </v-card>

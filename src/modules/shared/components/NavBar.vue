@@ -26,7 +26,7 @@
                             Login
                         </router-link>
                         <router-link v-if="userStore.token !== null" :to="{ name: 'recomendations' }" class="nav-link is-active">
-                                Recomendations
+                            Recomendations
                         </router-link>
                     </ul>
                 </div>
@@ -176,6 +176,53 @@
     </v-navigation-drawer>
 
 </nav>
+<v-dialog v-model="surveyDialog" max-width="600px">
+    <v-card>
+        <v-card-title class="text-h5 font-weight-bold">Customer Satisfaction Survey</v-card-title>
+
+        <!-- Subtítulo ajustado -->
+        <v-card-text>
+            We noticed you recently completed a service. Please answer the following survey to help us improve.
+        </v-card-text>
+
+        <!-- Preguntas de la encuesta -->
+        <v-card-item>
+            <p>How easy was it to use our website to find and book a service?</p>
+            <v-radio-group v-model="survey.q1" row>
+                <v-radio label="1 - Very Difficult" value="1"></v-radio>
+                <v-radio label="2 - Somewhat Difficult" value="2"></v-radio>
+                <v-radio label="3 - Regular" value="3"></v-radio>
+                <v-radio label="4 - Somewhat Easy" value="4"></v-radio>
+                <v-radio label="5 - Very Easy" value="5"></v-radio>
+            </v-radio-group>
+
+            <p>Was it easy to see your service information and the personalized prices?</p>
+            <v-radio-group v-model="survey.q2" row>
+                <v-radio label="1 - Very Difficult" value="1"></v-radio>
+                <v-radio label="2 - Somewhat Difficult" value="2"></v-radio>
+                <v-radio label="3 - Regular" value="3"></v-radio>
+                <v-radio label="4 - Somewhat Easy" value="4"></v-radio>
+                <v-radio label="5 - Very Easy" value="5"></v-radio>
+            </v-radio-group>
+
+            <p>How satisfied are you with the notifications and updates about your services?</p>
+            <v-radio-group v-model="survey.q3" row>
+                <v-radio label="1 - Very Dissatisfied" value="1"></v-radio>
+                <v-radio label="2 - Dissatisfied" value="2"></v-radio>
+                <v-radio label="3 - Regular" value="3"></v-radio>
+                <v-radio label="4 - Satisfied" value="4"></v-radio>
+                <v-radio label="5 - Very Satisfied" value="5"></v-radio>
+            </v-radio-group>
+        </v-card-item>
+
+        <!-- Acciones con los botones alineados -->
+        <v-card-actions>
+            <v-btn text @click="closeSurvey" color="red darken-1">Close</v-btn>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-3" @click="submitSurvey">Submit</v-btn>
+        </v-card-actions>
+    </v-card>
+</v-dialog>
 </template>
 
 <script>
@@ -191,8 +238,14 @@ import {
 import {
     useTheme
 } from 'vuetify';
-
+import {
+    api
+} from '@/axios/axios';
+import {
+    toast
+} from 'vue3-toastify';
 const userStore = useUserStore();
+import axios from 'axios';
 
 export default {
     setup() {
@@ -211,6 +264,7 @@ export default {
             });
             this.drawer = false;
         };
+        // const userStore = useUserStore();
 
         return {
             theme,
@@ -250,11 +304,31 @@ export default {
                     icon: 'mdi-help-circle'
                 },
             ],
+            surveyDialog: false, // Controla la visualización de la encuesta
             drawer: true,
+            urveyDialog: false, // Controla la visualización de la encuesta
+            survey: {
+                q1: null, // Pregunta 1
+                q2: null, // Pregunta 2
+                q3: null // Pregunta 3
+            },
+            surveyInterval: null, // Intervalo para controlar la ejecución periódica
         };
     },
+    mounted() {
+        // Iniciar el intervalo de verificación cada 20 segundos
+        this.startSurveyInterval();
+        // this.surveyInterval = setInterval(this.checkSurveyEligibility, 20000); // 20 segundos
+    },
+    beforeUnmount() {
+        // Limpiar el intervalo cuando el componente se desmonte
+        clearInterval(this.surveyInterval);
 
+    },
     methods: {
+        startSurveyInterval() {
+            this.surveyInterval = setInterval(this.checkSurveyEligibility, 20000);
+        },
         profile() {
             this.$router.push({
                 name: 'profile-profile'
@@ -273,6 +347,140 @@ export default {
             this.$i18n.locale = lang;
             setLanguage(lang);
         },
+        async checkSurveyEligibility() {
+            const token = localStorage.getItem('token');
+            const role = 'client';
+
+            if (!token) {
+                console.log("no hay token")
+                return
+            } // Si no hay token, no se muestra la encuesta
+
+            try {
+                // Verificar si el usuario tiene algún servicio finalizado
+                const {
+                    data: serviceData
+                } = await api({
+                    method: 'GET',
+                    url: '/schedule/userservicesbystatus/finish',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        rol: role
+                    }
+                });
+
+                if (!serviceData.success || serviceData.services.length === 0 || serviceData.services.some(service => service.pending !== 0)) {
+                    console.log("nno mostrar")
+                    return; // No mostrar la encuesta si no hay servicios o si algún servicio tiene pagos pendientes
+                }
+
+                // Verificar si el usuario ya ha contestado una encuesta
+                const {
+                    data: satisfactionData
+                } = await api({
+                    method: 'GET',
+                    url: '/satisfaction/user',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        rol: role
+                    }
+                });
+
+                if (!satisfactionData.success) {
+                    console.log("si mostrar")
+                    // Mostrar la encuesta si el usuario no la ha contestado
+                    this.surveyDialog = true;
+                }
+                console.log("hola")
+            } catch (error) {
+                console.error('Error checking survey eligibility:', error);
+            }
+        },
+        async submitSurvey() {
+            const token = localStorage.getItem('token');
+            const role = 'client';
+            try {
+                const datos = {
+                    question1: this.survey.q1,
+                    question2: this.survey.q2,
+                    question3: this.survey.q3
+                };
+
+                // Realizar la petición POST al servidor Flask para obtener el nivel de satisfacción
+                const response = await axios.post('https://sentiments-and-recomendatios.onrender.com/predict/satisfaction', datos);
+
+                // Imprimir la respuesta del servidor en la consola
+                console.log('Respuesta del servidor:', response.data);
+
+                // Obtener el nivel de satisfacción predicho
+                const satisfactionLevel = response.data.satisfaction_level;
+                let message = '';
+
+                // Asignar mensaje personalizado según el nivel de satisfacción
+                switch (satisfactionLevel) {
+                    case 1:
+                        message = 'Lamentamos no haber cumplido tus expectativas, trabajaremos para mejorar.';
+                        break;
+                    case 2:
+                        message = 'Sentimos que no hayas quedado satisfecho, haremos mejoras.';
+                        break;
+                    case 3:
+                        message = 'Gracias por tu feedback, continuaremos mejorando.';
+                        break;
+                    case 4:
+                        message = 'Nos alegra que hayas quedado satisfecho, seguiremos mejorando.';
+                        break;
+                    case 5:
+                        message = '¡Gracias por tu confianza! Nos complace haber superado tus expectativas.';
+                        break;
+                    default:
+                        message = 'Respuesta no reconocida';
+                        break;
+                }
+
+                // Mostrar el mensaje personalizado
+                console.log('Mensaje personalizado:', message);
+
+                // Cerrar el diálogo de la encuesta
+                this.surveyDialog = false;
+
+                // Añadir el nivel de satisfacción a los datos antes de enviar al API de satisfacción
+                datos.satisfactionLevel = satisfactionLevel;
+
+                // Realizar la petición POST al API para guardar la satisfacción
+                const {
+                    data
+                } = await api({
+                    method: 'POST',
+                    url: '/satisfaction/save',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        rol: role
+                    },
+                    data: datos
+                });
+
+                if (!data.success) {
+                    toast.error(data.msg);
+                } else {
+                    // Mostrar el mensaje personalizado con una notificación
+                    toast.success(message);
+                }
+
+                // Limpiar el intervalo después de enviar la encuesta
+                clearInterval(this.surveyInterval);
+
+                // Reiniciar el intervalo para la encuesta
+                this.startSurveyInterval();
+            } catch (error) {
+                console.error('Error al enviar la encuesta:', error);
+            }
+        },
+
+        closeSurvey() {
+            this.surveyDialog = false; // Solo cierra el modal
+            this.startSurveyInterval();
+        }
     },
 };
 </script>
