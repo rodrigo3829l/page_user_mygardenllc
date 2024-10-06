@@ -151,6 +151,7 @@ export default {
             rol: userStore.rol
           }
         });
+        console.log(data)
         this.userInfo = data.user;
       } catch (error) {
         console.log(error);

@@ -239,6 +239,7 @@ export default {
                     rol: 'client',
                 },
             });
+            console.log(data)
             this.services = data.services;
             this.overlay = false;
         },

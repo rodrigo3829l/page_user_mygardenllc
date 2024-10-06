@@ -318,6 +318,7 @@ export default {
     mounted() {
         // Iniciar el intervalo de verificación cada 20 segundos
         this.startSurveyInterval();
+        this.requestNotificationPermission();
         // this.surveyInterval = setInterval(this.checkSurveyEligibility, 20000); // 20 segundos
     },
     beforeUnmount() {
@@ -326,6 +327,49 @@ export default {
 
     },
     methods: {
+        requestNotificationPermission() {
+            if (!("Notification" in window)) {
+                console.log("Este navegador no soporta notificaciones.");
+                return;
+            }
+
+            // Verificar el estado del permiso
+            if (Notification.permission === "granted") {
+                console.log("El permiso de notificación ya ha sido concedido.");
+                // this.showNotification("¡Gracias por habilitar las notificaciones!");
+
+            } else if (Notification.permission !== "denied") {
+                // Si no ha sido denegado, solicitar el permiso
+                Notification.requestPermission().then((permission) => {
+                    if (permission === "granted") {
+                        this.showNotification("¡Gracias por habilitar las notificaciones!");
+                    } else {
+                        console.log("Permiso de notificación rechazado.");
+                        // Si el usuario rechaza, intentamos solicitarlo nuevamente después de 5 minutos
+                        setTimeout(this.requestNotificationPermission, 3000); // 5 minutos
+                    }
+                });
+            } else {
+                // Si el permiso fue denegado previamente, solicitarlo de nuevo periódicamente
+                console.log("Permiso de notificación previamente denegado.");
+                setTimeout(this.requestNotificationPermission, 3000); // 5 minutos
+            }
+        },
+        // Método para mostrar notificación
+        showNotification(message) {
+            if (Notification.permission === "granted") {
+                new Notification("Notificación importante", {
+                body: message,
+                icon: "https://res.cloudinary.com/dui4i9f4e/image/upload/v1709677547/logos/jb7aaqsuesjivzmiz5mg.png",
+                requireInteraction: true, // Para mantener la notificación en pantalla
+                silent: false // Asegúrate de que no esté en modo silencioso
+                });
+            } else {
+                console.log("No se pueden mostrar notificaciones, el permiso no ha sido concedido.");
+            }
+        },
+
+
         startSurveyInterval() {
             this.surveyInterval = setInterval(this.checkSurveyEligibility, 20000);
         },

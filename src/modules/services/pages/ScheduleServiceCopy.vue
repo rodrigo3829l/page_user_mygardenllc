@@ -203,7 +203,7 @@ export default {
                     this.icon = 'mdi-alert-octagon-outline'
                     this.color = 'gred-darken-4'
                     this.openScheduleDialog()
-                    return
+                    return  
                 }
                 const datos = {
                     user: this.userStore.token,
@@ -278,6 +278,7 @@ export default {
                 const {
                     data
                 } = await api.get('/dates/get')
+                console.log(data)
                 this.unavailableDates = data.dates.map(item => item.date.split('T')[0])
                 this.groupUnavailableDates();
             } catch (error) {
