@@ -51,10 +51,19 @@
                 <!-- Menú del usuario -->
                 <v-menu v-if="userStore.token" min-width="200px" rounded>
                     <template v-slot:activator="{ props }">
-                        <v-btn icon v-bind="props">
+                        <v-badge v-if="unreadCount > 0" :content="unreadCount" overlap color="red">
+                            <v-btn icon v-bind="props">
+                                <v-avatar color="light-blue-darken-4" size="large">
+                                    <v-img :src="userStore.image || 'https://cdn.vuetifyjs.com/images/john.jpg'" />
+                                </v-avatar>
+
+                            </v-btn>
+                        </v-badge>
+                        <v-btn v-else icon v-bind="props">
                             <v-avatar color="light-blue-darken-4" size="large">
                                 <v-img :src="userStore.image || 'https://cdn.vuetifyjs.com/images/john.jpg'" />
                             </v-avatar>
+
                         </v-btn>
                     </template>
                     <v-card>
@@ -72,6 +81,11 @@
                                 <v-divider class="my-3"></v-divider>
                                 <v-btn rounded variant="text" @click="services">Your Services</v-btn>
                                 <v-divider class="my-3"></v-divider>
+                                <v-badge v-if="unreadCount > 0" :content="unreadCount" overlap color="red">
+                                    <v-btn rounded variant="text" @click="notifications">Notifications</v-btn>
+                                </v-badge>
+                                <v-btn v-else rounded variant="text" @click="notifications">Notifications</v-btn>
+                                <v-divider class="my-3"></v-divider>
                                 <v-btn rounded variant="text" @click="logout" color="red">Logout</v-btn>
                             </div>
                         </v-card-text>
@@ -81,7 +95,12 @@
 
             <!-- Icono de menú para pantallas pequeñas -->
             <v-col cols="auto" class="d-md-none mr-2">
-                <v-btn icon variant="text" @click="drawer = !drawer">
+                <v-badge v-if="unreadCount > 0" :content="unreadCount" overlap color="red">
+                    <v-btn icon variant="text" @click="drawer = !drawer">
+                        <v-icon>mdi-menu</v-icon>
+                    </v-btn>
+                </v-badge>
+                <v-btn v-else icon variant="text" @click="drawer = !drawer">
                     <v-icon>mdi-menu</v-icon>
                 </v-btn>
             </v-col>
@@ -128,6 +147,20 @@
             </v-list-item>
 
             <v-list-item @click="$router.push({ name: 'profile-myservices' })" :title="$t('navbar.yourServices')">
+                <template v-slot:prepend>
+                    <v-icon color="green-darken-3">mdi-cogs</v-icon>
+                </template>
+            </v-list-item>
+
+            <v-badge v-if="unreadCount > 0" :content="unreadCount" overlap color="red">
+                <v-list-item @click="$router.push({ name: 'notifications' })" title="Notifications">
+                    <template v-slot:prepend>
+                        <v-icon color="green-darken-3">mdi-cogs</v-icon>
+                    </template>
+                </v-list-item>
+            </v-badge>
+
+            <v-list-item v-else @click="$router.push({ name: 'notifications' })" title="Notifications">
                 <template v-slot:prepend>
                     <v-icon color="green-darken-3">mdi-cogs</v-icon>
                 </template>
@@ -313,6 +346,7 @@ export default {
                 q3: null // Pregunta 3
             },
             surveyInterval: null, // Intervalo para controlar la ejecución periódica
+            unreadCount: 0,
         };
     },
     mounted() {
@@ -320,22 +354,51 @@ export default {
         this.startSurveyInterval();
         this.requestNotificationPermission();
         // this.surveyInterval = setInterval(this.checkSurveyEligibility, 20000); // 20 segundos
+        this.fetchUnreadNotifications();
     },
     beforeUnmount() {
         // Limpiar el intervalo cuando el componente se desmonte
         clearInterval(this.surveyInterval);
+        
 
     },
     methods: {
+        async fetchUnreadNotifications() {
+            try {
+                const token = localStorage.getItem('token')
+                const {
+                    data
+                } = await api({
+                    method: 'GET',
+                    url: '/notifications/notifications',
+                    headers: {
+                        Authorization: 'Bearer ' + token,
+                        rol: 'client',
+                    },
+                });
+                // console.log(data)
+                if (data.success) {
+                    // Filtrar notificaciones no leídas
+                    const unreadNotifications = data.notifications.filter(notification => !notification.read);
+                    this.unreadCount = unreadNotifications.length; // Guardar el conteo de no leídas
+                }
+            } catch (error) {
+                console.error('Error fetching unread notifications:', error);
+            } finally {
+                // Volver a llamar a esta función después de 1 segundo
+                setTimeout(this.fetchUnreadNotifications, 1000);
+            }
+        },
+        
         requestNotificationPermission() {
             if (!("Notification" in window)) {
-                console.log("Este navegador no soporta notificaciones.");
+                // console.log("Este navegador no soporta notificaciones.");
                 return;
             }
 
             // Verificar el estado del permiso
             if (Notification.permission === "granted") {
-                console.log("El permiso de notificación ya ha sido concedido.");
+                // console.log("El permiso de notificación ya ha sido concedido.");
                 // this.showNotification("¡Gracias por habilitar las notificaciones!");
 
             } else if (Notification.permission !== "denied") {
@@ -344,14 +407,14 @@ export default {
                     if (permission === "granted") {
                         this.showNotification("¡Gracias por habilitar las notificaciones!");
                     } else {
-                        console.log("Permiso de notificación rechazado.");
+                        // console.log("Permiso de notificación rechazado.");
                         // Si el usuario rechaza, intentamos solicitarlo nuevamente después de 5 minutos
                         setTimeout(this.requestNotificationPermission, 3000); // 5 minutos
                     }
                 });
             } else {
                 // Si el permiso fue denegado previamente, solicitarlo de nuevo periódicamente
-                console.log("Permiso de notificación previamente denegado.");
+                // console.log("Permiso de notificación previamente denegado.");
                 setTimeout(this.requestNotificationPermission, 3000); // 5 minutos
             }
         },
@@ -359,16 +422,15 @@ export default {
         showNotification(message) {
             if (Notification.permission === "granted") {
                 new Notification("Notificación importante", {
-                body: message,
-                icon: "https://res.cloudinary.com/dui4i9f4e/image/upload/v1709677547/logos/jb7aaqsuesjivzmiz5mg.png",
-                requireInteraction: true, // Para mantener la notificación en pantalla
-                silent: false // Asegúrate de que no esté en modo silencioso
+                    body: message,
+                    icon: "https://res.cloudinary.com/dui4i9f4e/image/upload/v1709677547/logos/jb7aaqsuesjivzmiz5mg.png",
+                    requireInteraction: true, // Para mantener la notificación en pantalla
+                    silent: false // Asegúrate de que no esté en modo silencioso
                 });
             } else {
-                console.log("No se pueden mostrar notificaciones, el permiso no ha sido concedido.");
+                // console.log("No se pueden mostrar notificaciones, el permiso no ha sido concedido.");
             }
         },
-
 
         startSurveyInterval() {
             this.surveyInterval = setInterval(this.checkSurveyEligibility, 20000);
@@ -381,6 +443,11 @@ export default {
         services() {
             this.$router.push({
                 name: 'profile-myservices'
+            });
+        },
+        notifications() {
+            this.$router.push({
+                name: 'notifications'
             });
         },
         logout() {
@@ -396,7 +463,7 @@ export default {
             const role = 'client';
 
             if (!token) {
-                console.log("no hay token")
+                // console.log("no hay token")
                 return
             } // Si no hay token, no se muestra la encuesta
 
@@ -414,7 +481,7 @@ export default {
                 });
 
                 if (!serviceData.success || serviceData.services.length === 0 || serviceData.services.some(service => service.pending !== 0)) {
-                    console.log("nno mostrar")
+                    // console.log("nno mostrar")
                     return; // No mostrar la encuesta si no hay servicios o si algún servicio tiene pagos pendientes
                 }
 
@@ -431,11 +498,11 @@ export default {
                 });
 
                 if (!satisfactionData.success) {
-                    console.log("si mostrar")
+                    // console.log("si mostrar")
                     // Mostrar la encuesta si el usuario no la ha contestado
                     this.surveyDialog = true;
                 }
-                console.log("hola")
+                // console.log("hola")
             } catch (error) {
                 console.error('Error checking survey eligibility:', error);
             }
@@ -454,7 +521,7 @@ export default {
                 const response = await axios.post('https://sentiments-and-recomendatios.onrender.com/predict/satisfaction', datos);
 
                 // Imprimir la respuesta del servidor en la consola
-                console.log('Respuesta del servidor:', response.data);
+                // console.log('Respuesta del servidor:', response.data);
 
                 // Obtener el nivel de satisfacción predicho
                 const satisfactionLevel = response.data.satisfaction_level;
@@ -483,7 +550,7 @@ export default {
                 }
 
                 // Mostrar el mensaje personalizado
-                console.log('Mensaje personalizado:', message);
+                // console.log('Mensaje personalizado:', message);
 
                 // Cerrar el diálogo de la encuesta
                 this.surveyDialog = false;

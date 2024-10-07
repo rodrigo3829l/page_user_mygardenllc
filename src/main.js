@@ -5,9 +5,7 @@ import { createPinia } from 'pinia';
 import { loadFonts } from './plugins/webfontloader';
 import { createI18n } from 'vue-i18n';
 import router from './router/router.js';
-
-
-import { useUserStore } from './store/store.js'
+import { useUserStore } from './store/store.js';
 
 import Vue3Toastify from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
@@ -16,15 +14,21 @@ import 'vue3-toastify/dist/index.css';
 import es from './locales/es.json';
 import en from './locales/en.json';
 
+
+
 loadFonts();
 const pinia = createPinia();
+
 export const i18n = createI18n({
   locale: 'en', // idioma inicial
   fallbackLocale: 'es', // idioma de reserva
   messages: { es, en }
 });
 
-createApp(App)
+const app = createApp(App);
+
+
+app
   .use(pinia)
   .use(router)
   .use(vuetify)
@@ -34,5 +38,5 @@ createApp(App)
   .use(i18n) // Agregar vue-i18n como plugin
   .mount('#app');
 
-const userStore = useUserStore()
-userStore.initializeStore()
+const userStore = useUserStore();
+userStore.initializeStore();

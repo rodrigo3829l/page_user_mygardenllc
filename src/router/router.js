@@ -337,6 +337,15 @@ const routes = [
         component: () => import ( /* webpackChunkName: "ScheduleService" */ '@/modules/recomendations/pages/RecomendationsView.vue'),
         
     },
+    {
+        path: '/notifications',
+        name: 'notifications',
+        meta: {
+            requireAuth: true
+        },
+        component: () => import ( /* webpackChunkName: "ScheduleService" */ '@/modules/notifications/pages/NotificationsView.vue'),
+        
+    },
 ]
 
 const router = createRouter({
