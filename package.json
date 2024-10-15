@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "follow-redirects": "^1.15.6",
     "pinia": "^2.1.7",
+    "postcss": "^8.4.31",
     "register-service-worker": "^1.7.2",
     "roboto-fontface": "*",
     "socket.io-client": "^4.8.0",
@@ -48,6 +49,7 @@
     "eslint-plugin-vue": "^8.0.3",
     "jest": "^27.0.5",
     "vite": "^3.0.8",
+    "vite-plugin-pwa": "^0.20.5",
     "vite-plugin-vuetify": "^1.0.0-alpha.12",
     "vue-cli-plugin-vuetify": "~2.5.8"
   },
