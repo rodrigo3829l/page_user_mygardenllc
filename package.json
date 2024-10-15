@@ -15,7 +15,7 @@
     "axios": "^1.7.4",
     "core-js": "^3.8.3",
     "cors": "^2.8.5",
-    "follow-redirects": "^1.15.6",
+    "follow-redirects": "^1.15.9",
     "pinia": "^2.1.7",
     "postcss": "^8.4.31",
     "register-service-worker": "^1.7.2",
@@ -30,8 +30,7 @@
     "vue3-toastify": "^0.2.1",
     "vuetify": "^3.0.0-beta.0",
     "vuex": "^4.1.0",
-    "webfontloader": "^1.0.0",
-    "zxcvbn": "^4.4.2"
+    "webfontloader": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
