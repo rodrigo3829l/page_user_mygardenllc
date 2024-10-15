@@ -15,7 +15,7 @@
     "axios": "^1.7.4",
     "core-js": "^3.8.3",
     "cors": "^2.8.5",
-    "follow-redirects": "^1.15.9",
+    "follow-redirects": "^1.15.6",
     "pinia": "^2.1.7",
     "postcss": "^8.4.31",
     "register-service-worker": "^1.7.2",
