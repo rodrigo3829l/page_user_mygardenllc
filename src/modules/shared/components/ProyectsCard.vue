@@ -57,7 +57,7 @@ export default {
         },
     },
     mounted () {
-        console.log(this.service)
+        // console.log(this.service)
     }
 };
 </script>

@@ -399,7 +399,7 @@ export default {
             // Verificar el estado del permiso
             if (Notification.permission === "granted") {
                 // console.log("El permiso de notificación ya ha sido concedido.");
-                // this.showNotification("¡Gracias por habilitar las notificaciones!");
+                this.showNotification("¡Gracias por habilitar las notificaciones!");
 
             } else if (Notification.permission !== "denied") {
                 // Si no ha sido denegado, solicitar el permiso

@@ -5,7 +5,7 @@ const routes = [
     {
         path: '/',
         meta: {
-            title: 'No se',
+            title: 'Redirect Home',
         },
         redirect: {name: 'home-home'}
     },
@@ -13,7 +13,7 @@ const routes = [
         path: '/home',
         name: 'home',
         
-        component: () => import ( /* webpackChunkName: "HomeLayout" */ '@/modules/homeModules/layouts/HomeLayout.vue'),
+        component: () => import ('@/modules/homeModules/layouts/HomeLayout.vue'),
         children: [
             {
                 path: 'homeuser',
