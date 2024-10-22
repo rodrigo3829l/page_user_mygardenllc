@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - dev/ave
   workflow_dispatch:
 
 permissions: write-all
@@ -13,26 +14,33 @@ jobs:
   snyk_scan:
     name: Snyk Security Scan
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
+        token: ${{ secrets.MY_GH_TOKEN }}
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20'
-
-    - name: Install dependencies
-      run: yarn install
-      
     - name: Install Snyk CLI
       run: npm install -g snyk
-      
+
     - name: Run Snyk security scan
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       run: |
+        set +e
         snyk monitor --all-projects --org=6ce58cdd-2e65-4c0c-bbe5-705980cee5fe
+        snyk test --all-projects --org=6ce58cdd-2e65-4c0c-bbe5-705980cee5fe
+        TEST_RESULT=$?
+        set -e
+        echo "Test result: $TEST_RESULT"
+        if [ $TEST_RESULT -ne 0 ]; then
+          echo "Vulnerabilities found. Reverting to previous version..."
+          git config --global user.email "20210658@uthh.edu.mx"
+          git config --global user.name "rodrigo3829l"
+          git reset --hard HEAD^
+          git push https://github.com/rodrigo3829l/page_admin_mygardenllc.git --force
+        else
+          echo "No vulnerabilities found."
+        fi

@@ -206,7 +206,7 @@ import {
     api
 } from '@/axios/axios';
 import axios from 'axios';
-import zxcvbn from 'zxcvbn';
+// import zxcvbn from 'zxcvbn';
 
 export default {
     data() {
@@ -281,36 +281,44 @@ export default {
     methods: {
 
         checkStrength() {
+            let score = 0;
 
-            const passwordResult = zxcvbn(this.formData.password);
-            console.log(passwordResult.score)
-            // Asigna la puntuación de la contraseña a la variable passwordStrength según el puntaje obtenido.
-            switch (passwordResult.score) {
+            // Evaluar la contraseña usando criterios básicos
+            if (this.formData.password.length >= 8) score++; // Longitud mínima de 8 caracteres
+            if (/[A-Z]/.test(this.formData.password)) score++; // Contiene al menos una letra mayúscula
+            if (/[0-9]/.test(this.formData.password)) score++; // Contiene al menos un número
+            if (/[\W_]/.test(this.formData.password)) score++; // Contiene un carácter especial
+
+            console.log(score);
+
+            // Asignar la puntuación y color según el puntaje obtenido
+            switch (score) {
                 case 0:
                     this.formData.passwordStrength = 0;
-                    this.formData.color = 'red-darken-4'
+                    this.formData.color = 'red-darken-4';
                     break;
                 case 1:
                     this.formData.passwordStrength = 25;
-                    this.formData.color = 'red-darken-4'
+                    this.formData.color = 'red-darken-4';
                     break;
                 case 2:
                     this.formData.passwordStrength = 50;
-                    this.formData.color = 'orange-darken-4'
+                    this.formData.color = 'orange-darken-4';
                     break;
                 case 3:
                     this.formData.passwordStrength = 75;
-                    this.formData.color = 'deep-orange-darken-4'
+                    this.formData.color = 'deep-orange-darken-4';
                     break;
                 case 4:
                     this.formData.passwordStrength = 100;
-                    this.formData.color = 'green-darken-4'
+                    this.formData.color = 'green-darken-4';
                     break;
                 default:
-                    // En caso de que la puntuación no esté dentro del rango esperado, mantén el valor anterior.
+                    // Mantén el valor anterior si no hay coincidencias.
                     break;
             }
         },
+
         // falta este de validar
         async validatePostalCode() {
             this.loadBtn = true;

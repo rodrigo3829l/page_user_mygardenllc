@@ -1,5 +1,5 @@
 import axios from "axios";
-import zxcvbn from 'zxcvbn';
+// import zxcvbn from 'zxcvbn';
 import {i18n} from '@/main.js'
 // Esta sirve para muchos datos como el nombre, apellido etc
 export const nameValidate = value =>{
@@ -37,37 +37,60 @@ export const phoneValidate = async (number, value) =>{
     }
 }
 
-export const checkStrengthValid = value => {
-    const passwordResult = zxcvbn(value);
-    let passwordStrength, color;
+// export const checkStrengthValid = value => {
+//     const passwordResult = zxcvbn(value);
+//     let passwordStrength, color;
 
-    switch (passwordResult.score) {
-        case 0:
-            passwordStrength = 0;
-            color = 'red-darken-4';
-            break;
-        case 1:
-            passwordStrength = 25;
-            color = 'red-darken-4';
-            break;
-        case 2:
-            passwordStrength = 50;
-            color = 'orange-darken-4';
-            break;
-        case 3:
-            passwordStrength = 75;
-            color = 'deep-orange-darken-4';
-            break;
-        case 4:
-            passwordStrength = 100;
-            color = 'green-darken-4';
-            break;
-        default:
-            break;
+//     switch (passwordResult.score) {
+//         case 0:
+//             passwordStrength = 0;
+//             color = 'red-darken-4';
+//             break;
+//         case 1:
+//             passwordStrength = 25;
+//             color = 'red-darken-4';
+//             break;
+//         case 2:
+//             passwordStrength = 50;
+//             color = 'orange-darken-4';
+//             break;
+//         case 3:
+//             passwordStrength = 75;
+//             color = 'deep-orange-darken-4';
+//             break;
+//         case 4:
+//             passwordStrength = 100;
+//             color = 'green-darken-4';
+//             break;
+//         default:
+//             break;
+//     }
+
+//     return { passwordStrength, color };
+// }
+export const checkStrengthValid = (value) => {
+    let passwordStrength = 0;
+    let color = 'red-darken-4';
+
+    // Evaluamos varios criterios para dar una puntuación a la contraseña
+    if (value.length >= 8) passwordStrength += 25;
+    if (/[A-Z]/.test(value)) passwordStrength += 25;
+    if (/[0-9]/.test(value)) passwordStrength += 25;
+    if (/[\W_]/.test(value)) passwordStrength += 25;  // Caracteres especiales
+
+    // Asignamos colores basados en la puntuación
+    if (passwordStrength <= 25) {
+        color = 'red-darken-4';  // Contraseña débil
+    } else if (passwordStrength <= 50) {
+        color = 'orange-darken-4';  // Contraseña media
+    } else if (passwordStrength <= 75) {
+        color = 'deep-orange-darken-4';  // Contraseña fuerte
+    } else {
+        color = 'green-darken-4';  // Contraseña muy fuerte
     }
 
     return { passwordStrength, color };
-}
+};
 
 // export const validatePostalCode = async value =>{
 //     if (value.length !== 5 || !/^\d+$/.test(value)) {

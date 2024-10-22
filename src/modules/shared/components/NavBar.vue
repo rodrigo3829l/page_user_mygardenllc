@@ -155,14 +155,14 @@
             <v-badge v-if="unreadCount > 0" :content="unreadCount" overlap color="red">
                 <v-list-item @click="$router.push({ name: 'notifications' })" title="Notifications">
                     <template v-slot:prepend>
-                        <v-icon color="green-darken-3">mdi-cogs</v-icon>
+                        <v-icon color="green-darken-3">mdi-bell</v-icon>
                     </template>
                 </v-list-item>
             </v-badge>
 
             <v-list-item v-else @click="$router.push({ name: 'notifications' })" title="Notifications">
                 <template v-slot:prepend>
-                    <v-icon color="green-darken-3">mdi-cogs</v-icon>
+                    <v-icon color="green-darken-3">mdi-bell</v-icon>
                 </template>
             </v-list-item>
 
@@ -376,8 +376,9 @@ export default {
                         rol: 'client',
                     },
                 });
-                // console.log(data)
+                // console.log(data.notifications[0])
                 if (data.success) {
+                    // this.sho wNotificationService(data.notifications[0])
                     // Filtrar notificaciones no leídas
                     const unreadNotifications = data.notifications.filter(notification => !notification.read);
                     this.unreadCount = unreadNotifications.length; // Guardar el conteo de no leídas
@@ -389,17 +390,16 @@ export default {
                 setTimeout(this.fetchUnreadNotifications, 1000);
             }
         },
-        
+        // Metodo para pedir permisos de la notification
         requestNotificationPermission() {
             if (!("Notification" in window)) {
-                // console.log("Este navegador no soporta notificaciones.");
+                console.log("Este navegador no soporta notificaciones.");
                 return;
             }
 
             // Verificar el estado del permiso
             if (Notification.permission === "granted") {
-                // console.log("El permiso de notificación ya ha sido concedido.");
-                this.showNotification("¡Gracias por habilitar las notificaciones!");
+                console.log("El permiso de notificación ya ha sido concedido.");
 
             } else if (Notification.permission !== "denied") {
                 // Si no ha sido denegado, solicitar el permiso
@@ -407,15 +407,15 @@ export default {
                     if (permission === "granted") {
                         this.showNotification("¡Gracias por habilitar las notificaciones!");
                     } else {
-                        // console.log("Permiso de notificación rechazado.");
+                        console.log("Permiso de notificación rechazado.");
                         // Si el usuario rechaza, intentamos solicitarlo nuevamente después de 5 minutos
                         setTimeout(this.requestNotificationPermission, 3000); // 5 minutos
                     }
                 });
             } else {
                 // Si el permiso fue denegado previamente, solicitarlo de nuevo periódicamente
-                // console.log("Permiso de notificación previamente denegado.");
-                setTimeout(this.requestNotificationPermission, 3000); // 5 minutos
+                console.log("Permiso de notificación previamente denegado.");
+                setTimeout(this.requestNotificationPermission, 30000);
             }
         },
         // Método para mostrar notificación
@@ -428,9 +428,22 @@ export default {
                     silent: false // Asegúrate de que no esté en modo silencioso
                 });
             } else {
-                // console.log("No se pueden mostrar notificaciones, el permiso no ha sido concedido.");
+                console.log("No se pueden mostrar notificaciones, el permiso no ha sido concedido.");
             }
         },
+        // showNotificationService(notification) {
+        //     // console.log("Notificacion de los servicios")
+        //     if (Notification.permission === "granted") {
+        //         new Notification(notification.tittle, {
+        //             body: notification.message                    ,
+        //             icon: "https://res.cloudinary.com/dui4i9f4e/image/upload/v1709677547/logos/jb7aaqsuesjivzmiz5mg.png",
+        //             requireInteraction: true, // Para mantener la notificación en pantalla
+        //             silent: false // Asegúrate de que no esté en modo silencioso
+        //         });
+        //     } else {
+        //         // console.log("No se pueden mostrar notificaciones, el permiso no ha sido concedido.");
+        //     }
+        // },
 
         startSurveyInterval() {
             this.surveyInterval = setInterval(this.checkSurveyEligibility, 20000);
