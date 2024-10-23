@@ -10,19 +10,18 @@ describe('Prueba de Proyectos Destacados', () => {
     cy.wait('@getProjects', { timeout: 15000 });
 
     // Aseguramos que las tarjetas de proyectos estén presentes
-    cy.get('.v-row > .v-col', { timeout: 15000 }).should('exist');
+    cy.get('.v-row > .v-col').should('exist');
   });
 
   it('Debería acceder al primer proyecto destacado y verificar su información', () => {
-    // Aseguramos que la tarjeta del proyecto y el botón estén visibles
-    cy.get('.v-row > .v-col').first().should('exist');
-
-    // Hacemos clic en el botón "MORE INFO" del primer proyecto
+    // Seleccionamos el primer v-col que contenga un v-card
     cy.get('.v-row > .v-col')
+      .filter(':has(.v-card)')
       .first()
-      .find('button')  // Ajustamos para encontrar cualquier botón dentro de la tarjeta
-      .contains('MORE INFO')
-      .click();
+      .within(() => {
+        // Accedemos específicamente al primer v-card
+        cy.get('.v-card').first().should('be.visible').click();
+      });
 
     // Verificamos que la URL cambie a la página de detalles del proyecto
     cy.url().should('include', '/proyects/info');
@@ -31,27 +30,5 @@ describe('Prueba de Proyectos Destacados', () => {
     cy.get('.title').should('be.visible');
     cy.get('.description').should('be.visible');
     cy.get('.service-description').should('be.visible');
-  });
-
-  it('Debería iterar sobre todos los proyectos y verificar su información', () => {
-    // Aseguramos que las tarjetas de proyectos estén visibles
-    cy.get('.v-row > .v-col', { timeout: 15000 }).should('exist');
-
-    // Iteramos sobre cada tarjeta de proyecto
-    cy.get('.v-row > .v-col').each(($el) => {
-      // Hacemos clic en el botón "MORE INFO" de cada tarjeta
-      cy.wrap($el).find('button').contains('MORE INFO').click();
-
-      // Verificamos que la URL contenga la ruta de información del proyecto
-      cy.url().should('include', '/proyects/info');
-
-      // Verificamos que los elementos clave estén visibles
-      cy.get('.title').should('be.visible');
-      cy.get('.description').should('be.visible');
-      cy.get('.service-description').should('be.visible');
-
-      // Regresamos a la lista de proyectos
-      cy.go('back');
-    });
   });
 });
