@@ -355,8 +355,14 @@ export default {
         this.requestNotificationPermission();
         // this.surveyInterval = setInterval(this.checkSurveyEligibility, 20000); // 20 segundos
         this.fetchUnreadNotifications();
+        if (this.drawer) {
+            this.drawer = false;
+        }
     },
     beforeUnmount() {
+        if (this.drawer) {
+            this.drawer = false;
+        }
         // Limpiar el intervalo cuando el componente se desmonte
         clearInterval(this.surveyInterval);
         

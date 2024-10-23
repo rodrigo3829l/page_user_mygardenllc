@@ -5,10 +5,10 @@
         <NavBar></NavBar>
 
          <!-- Mostrar el Splash Screen primero -->
-        <SplashScreen v-if="showSplash" />
+        <!-- <SplashScreen v-if="showSplash" /> -->
 
         <!-- Home se muestra después del Splash -->
-        <router-view v-else></router-view>
+        <router-view></router-view>
 
         <!-- <router-view></router-view> -->
         <FooterComponent></FooterComponent>

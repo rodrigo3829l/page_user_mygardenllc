@@ -46,11 +46,11 @@
               <v-card-text class="text-medium-emphasis text-caption">
                 {{ $t('login.descriptionWarningString') }}
               </v-card-text>
-              <v-row justify="center">
+              <!-- <v-row justify="center">
                 <v-col cols="12" sm="8" md="6" lg="16" align="center">
                   <div class="g-recaptcha" data-sitekey="6Le5gHApAAAAADv0EqDbSKVSgpcBxPFpCz6o4zVt" data-callback="onRecaptchaSuccess"></div>
                 </v-col>
-              </v-row>
+              </v-row> -->
               <v-divider></v-divider>
               <v-btn 
                 color="green-darken-3" 
