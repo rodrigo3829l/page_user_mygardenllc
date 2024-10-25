@@ -4,8 +4,8 @@
         <!-- Barra de navegacion -->
         <NavBar></NavBar>
 
-         <!-- Splash Screen -->
-        <!-- <SplashScreen v-if="showSplash" /> -->
+         <!-- Mostrar el Splash Screen primero -->
+        <SplashScreen v-if="showSplash" />
 
         <!-- Home Screen -->
         <router-view></router-view>
