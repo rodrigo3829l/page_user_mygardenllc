@@ -1,16 +1,18 @@
 module.exports = {
   preset: '@vue/cli-plugin-unit-jest',
+  testEnvironment: 'jsdom',
   transform: {
     '^.+\\.vue$': '@vue/vue3-jest',
-    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
-  },
-  moduleNameMapper: {
-    '^vuetify/(.*)$': 'vuetify/lib/$1',
-    '\\.(css|scss|sass)$': 'identity-obj-proxy',
+    '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': 'babel-jest',
   },
   transformIgnorePatterns: [
-    'node_modules/(?!vuetify|vue-router)', // Asegúrate de transformar estos módulos
+    'node_modules/(?!(vee-validate|vuetify|vue3-toastify|axios|swiper)/)', // No ignorar Swiper
   ],
-  testEnvironment: 'jsdom',
-  setupFilesAfterEnv: ['./tests/setup.js'], // Cargamos setup.js antes de las pruebas
+  moduleNameMapper: {
+    '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
+    '^axios$': '<rootDir>/__mocks__/axios.js',
+    '^swiper/vue$': '<rootDir>/__mocks__/swiper/vue.js', // Asegura que se use el mock
+  },
+  setupFilesAfterEnv: ['<rootDir>/tests/setup.js', '<rootDir>/jest.setup.js'],
+  moduleFileExtensions: ['js', 'json', 'vue', 'mjs'],
 };
