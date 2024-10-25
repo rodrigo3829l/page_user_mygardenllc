@@ -17,13 +17,13 @@
   
           <!-- Friendly Message with emojis -->
           <p class="friendly-message">
-            "We nurture your space with love and care. <br /> Get ready to watch your garden blossom 🌷✨"
+            "We nurture your space with love and care. <br /> Get ready to watch your garden blossom 🌷"
           </p>
   
           <!-- Loading Text and Indeterminate Progress Bar -->
           <v-row class="py-3">
             <v-col>
-              <p class="loading-text">Loading your green paradise... 🌻</p>
+              <p class="loading-text">Loading your green paradise...🌻</p>
               <v-progress-linear
                 color="black"
                 height="8"
