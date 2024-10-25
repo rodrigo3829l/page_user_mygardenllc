@@ -1,7 +1,7 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, createMemoryHistory  } from 'vue-router'
 import { useUserStore } from '@/store/store';
 
-const routes = [
+export const routes = [
     {
         path: '/',
         meta: {
@@ -349,7 +349,8 @@ const routes = [
 ]
 
 const router = createRouter({
-    history: createWebHistory(),
+    // history: createWebHistory(),
+    history: createMemoryHistory(),
     routes,
 })
 
@@ -361,7 +362,7 @@ router.beforeEach( async (to, from, next) =>{
 
     const userStore = useUserStore();
 
-    const auth = userStore.token !== null;
+    const auth = !!userStore.token
     const needAuth = to.meta.requireAuth;
 
     if(needAuth && !auth){
@@ -369,5 +370,6 @@ router.beforeEach( async (to, from, next) =>{
     } else{
         next()
     }
+    await router.isReady(); // Asegúrate de que el router esté listo antes de cada test
 })
 export default router
