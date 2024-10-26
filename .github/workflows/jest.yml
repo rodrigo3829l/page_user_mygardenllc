@@ -7,6 +7,8 @@ on:
       - main
   workflow_dispatch:
 
+permissions: write-all
+
 jobs:
   test:
     name: Run Tests
@@ -17,6 +19,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          token: ${{ secrets.MY_GH_TOKEN }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -26,22 +29,22 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Run unit tests
-        id: run_tests
+      - name: Run tests
         run: |
-          # Ejecuta las pruebas unitarias
-          yarn test:unit || exit_code=$?
-          # Guarda el código de salida en el entorno de GitHub Actions
-          echo "exit_code=$exit_code" >> $GITHUB_ENV
-
-      - name: Handle test results
-        if: env.exit_code != '0'
-        run: |
-          echo "Tests failed. Reverting to previous version..."
-          # Configura la identidad de Git para revertir el commit
-          git config --global user.email "20210658@uthh.edu.mx"
-          git config --global user.name "rodrigo3829l"
-          # Revertimos el commit fallido
-          git reset --hard HEAD^
-          # Forzamos el push para actualizar el estado remoto del repositorio
-          git push https://x-access-token:${{ secrets.MY_GH_TOKEN }}@github.com/rodrigo3829l/db_api_mygarden_llc.git --force
+          set +e
+          # ejecuta las pruebas
+          yarn test:unit
+          # guarda el valor de las pruebas que pude ser 0 o 1
+          TEST_RESULT=$?
+          set -e
+          # si el resultado es diferente de 0
+          if [ $TEST_RESULT -ne 0 ]; then
+            echo "Tests failed. Reverting to previous version..."
+            git config --global user.email "20210658@uthh.edu.mx"
+            git config --global user.name "rodrigo3829l"
+            # regresa al commit anterior
+            git reset --hard HEAD^
+            git push https://github.com/rodrigo3829l/db_api_mygarden_llc.git --force
+          else
+            echo "Tests passed."
+          fi
