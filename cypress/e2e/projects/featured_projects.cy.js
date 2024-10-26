@@ -1,13 +1,13 @@
 describe('Prueba de Proyectos Destacados', () => {
   before(() => {
+    // Interceptamos la solicitud ANTES de visitar la página
+    cy.intercept('GET', '**/feature/get').as('getProjects');
+
     // Visitamos la página de proyectos destacados
     cy.visit('/proyects/destacados');
 
-    // Interceptamos la solicitud para asegurarnos que los proyectos se carguen
-    cy.intercept('GET', '**/feature/get').as('getProjects');
-    
-    // Esperamos que la solicitud se complete
-    cy.wait('@getProjects', { timeout: 15000 });
+    // Esperamos que la solicitud interceptada se ejecute correctamente
+    cy.wait('@getProjects', { timeout: 15000 }).its('response.statusCode').should('eq', 200);
 
     // Aseguramos que las tarjetas de proyectos estén presentes
     cy.get('.v-row > .v-col').should('exist');
