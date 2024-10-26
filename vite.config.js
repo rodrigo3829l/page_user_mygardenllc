@@ -61,8 +61,8 @@ export default defineConfig({
             options: {
               cacheName: 'image-cache',
               expiration: {
-                maxEntries: 60,
-                maxAgeSeconds: 30 * 24 * 60 * 60 // 30 días
+                maxEntries: 80,
+                maxAgeSeconds: 55 * 24 * 60 * 60
               }
             }
           }

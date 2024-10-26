@@ -10,17 +10,17 @@
             <!-- Texto y botón sobre el carousel -->
             <div class="overlay-content">
                 <v-col cols="12" md="12" class="white--text text-content">
-                    <h1>Servicios de jardinería profesional</h1>
+                    <h1>Professional Gardening Services</h1>
                     <p>
-                        Confíe en nosotros para mantener su jardín en las mejores condiciones.
+                        Trust us to keep your garden in the best condition.
                     </p>
-                    <p>Nuestro equipo
-                        cuenta con años de experiencia y garantiza resultados de calidad.</p>
+                    <p>Our team has years of experience and guarantees quality results.</p>
                     <v-btn color="green-darken-3" dark>
-                        Agendar un servicio
+                        Schedule a Service
                     </v-btn>
                 </v-col>
             </div>
+
         </v-col>
     </v-row>
     <About></About>

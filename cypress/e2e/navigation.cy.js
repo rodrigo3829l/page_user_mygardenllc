@@ -1,7 +1,7 @@
 describe('Prueba de navegación completa del sitio', () => {
   beforeEach(() => {
     // Visita la página principal antes de cada prueba
-    cy.visit('http://localhost:5173/');
+    cy.visit('https://mygardenllcservices.com/');
   });
 
   it('Navega desde Home a Contact', () => {
@@ -30,14 +30,14 @@ describe('Prueba de navegación completa del sitio', () => {
   });
 
   it('Regresa al Home desde otra página', () => {
-    cy.visit('http://localhost:5173/services/servicespage');
+    cy.visit('https://mygardenllcservices.com/services/servicespage');
     cy.contains('Home').click();
-    cy.url().should('eq', 'http://localhost:5173/home/homeuser'); // Cambia la URL esperada
+    cy.url().should('eq', 'https://mygardenllcservices.com/home/homeuser'); // Cambia la URL esperada
   });
   
 
   it('Verifica que la página no encontrada funcione correctamente', () => {
-    cy.visit('http://localhost:5173/ruta/no/existente', { failOnStatusCode: false });
+    cy.visit('https://mygardenllcservices.com/ruta/no/existente', { failOnStatusCode: false });
     cy.contains('404').should('be.visible'); // Asegúrate de que la página 404 se muestre
   });
 
