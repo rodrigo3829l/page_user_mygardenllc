@@ -78,6 +78,7 @@ jobs:
           yarn test:unit --coverage || exit_code=$?
           echo "::set-output name=exit_code::$exit_code"
           echo "exit_code=$exit_code" >> $GITHUB_ENV
+          echo "Jest exit code: $exit_code"
           set -e
       - name: Handle Jest Failure
         if: env.exit_code != '0'
@@ -156,6 +157,7 @@ jobs:
           snyk test --all-projects --org=6ce58cdd-2e65-4c0c-bbe5-705980cee5fe || exit_code=$?
           echo "::set-output name=exit_code::$exit_code"
           echo "exit_code=$exit_code" >> $GITHUB_ENV
+          echo "Snyk exit code: $exit_code"
       - name: Handle Snyk Failure
         if: env.exit_code != '0'
         run: |
