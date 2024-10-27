@@ -32,7 +32,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+      - name: Install dependencies
+        run: yarn install
       - name: Run Jest Tests
         run: |
           set +e
@@ -53,6 +54,8 @@ jobs:
     needs: unit-integration-tests
     runs-on: ubuntu-latest
     steps:
+      - name: Install dependencies
+        run: yarn install
       - uses: actions/checkout@v3
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
@@ -64,6 +67,8 @@ jobs:
     needs: sonar-scan
     runs-on: ubuntu-latest
     steps:
+      - name: Install dependencies
+        run: yarn install
       - uses: actions/checkout@v3
       - name: Install Snyk CLI
         run: npm install -g snyk
@@ -87,6 +92,8 @@ jobs:
     needs: snyk-scan
     runs-on: ubuntu-latest
     steps:
+      - name: Install dependencies
+        run: yarn install
       - name: Build project
         run: yarn build
       - name: Install lftp
@@ -112,6 +119,8 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
+      - name: Install dependencies
+        run: yarn install
       - name: Run Cypress Tests
         run: |
           npx cypress run || exit_code=$?
