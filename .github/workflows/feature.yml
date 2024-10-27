@@ -30,23 +30,44 @@ jobs:
   jest-tests:
     needs: lint
     runs-on: ubuntu-latest
+    outputs:
+      jest_exit_code: ${{ steps.set_exit_code.outputs.exit_code }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: yarn install
       - name: Run Jest Tests
+        id: set_exit_code
         run: |
+          set +e
           yarn test:unit || exit_code=$?
-          if [ $exit_code -ne 0 ]; then
-            echo "Jest tests failed. Reverting to previous version..."
-            git config --global user.email "${{ github.ref_name == 'feature/rodrigo' && '20210658@uthh.edu.mx' || '20210667@uthh.edu.mx' }}"
-            git config --global user.name "${{ github.ref_name == 'feature/rodrigo' && 'rodrigo3829l' || 'AvelinaHdez' }}"
-            git reset --hard HEAD^
-            git push origin ${{ github.ref_name }} --force
+          echo "::set-output name=exit_code::$exit_code"
+          set -e
+      - name: Handle Jest Failure
+        if: ${{ steps.set_exit_code.outputs.exit_code != '0' }}
+        run: |
+          echo "Jest tests failed. Reverting to previous version..."
+          git config --global user.email "${{ github.ref_name == 'feature/rodrigo' && '20210658@uthh.edu.mx' || '20210667@uthh.edu.mx' }}"
+          git config --global user.name "${{ github.ref_name == 'feature/rodrigo' && 'rodrigo3829l' || 'AvelinaHdez' }}"
+          git reset --hard HEAD^
+          git push origin ${{ github.ref_name }} --force
 
   sonar-scan:
     needs: jest-tests
+    if: ${{ needs.jest-tests.outputs.jest_exit_code == '0' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.MY_GH_TOKEN }}
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
@@ -55,9 +76,19 @@ jobs:
 
   snyk-scan:
     needs: sonar-scan
+    if: ${{ needs.jest-tests.outputs.jest_exit_code == '0' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: yarn install
       - name: Install Snyk CLI
         run: npm install -g snyk
       - name: Run Snyk Scan
@@ -66,7 +97,7 @@ jobs:
         run: |
           snyk test --all-projects || exit_code=$?
           if [ $exit_code -ne 0 ]; then
-            echo "Jest tests failed. Reverting to previous version..."
+            echo "Snyk scan failed. Reverting to previous version..."
             git config --global user.email "${{ github.ref_name == 'feature/rodrigo' && '20210658@uthh.edu.mx' || '20210667@uthh.edu.mx' }}"
             git config --global user.name "${{ github.ref_name == 'feature/rodrigo' && 'rodrigo3829l' || 'AvelinaHdez' }}"
             git reset --hard HEAD^

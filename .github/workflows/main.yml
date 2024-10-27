@@ -116,7 +116,7 @@ jobs:
           git reset --hard HEAD^
           git push origin main --force
 
-  deploy:
+  deploy-staging:
     needs: snyk-scan
     if: ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' && needs.snyk-scan.outputs.snyk_exit_code == '0' }}
     runs-on: ubuntu-latest
@@ -148,14 +148,16 @@ jobs:
             set ftp:ssl-protect-list true;
             set ftp:ssl-allow yes;
             open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST;
-            mirror -R --only-newer --exclude-glob admin --exclude-glob oldcosas --exclude .htaccess ./dist /public_html;
+            mirror -R --only-newer --exclude .htaccess ./dist /public_html/staging;
             quit
           "
 
-  e2e-tests:
-    needs: deploy
+  e2e-tests-staging:
+    needs: deploy-staging
     if: ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' && needs.snyk-scan.outputs.snyk_exit_code == '0' }}
     runs-on: ubuntu-latest
+    outputs:
+      cypress_exit_code: ${{ steps.set_exit_code.outputs.exit_code }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -172,10 +174,49 @@ jobs:
           npx cypress run || exit_code=$?
           echo "exit_code=$exit_code" >> $GITHUB_ENV
       - name: Handle Cypress Failure
-        if: env.exit_code != '0'
+        id: set_exit_code
         run: |
-          echo "Cypress tests failed. Reverting to previous version..."
-          git config --global user.email "20210658@uthh.edu.mx"
-          git config --global user.name "rodrigo3829l"
-          git reset --hard HEAD^
-          git push origin main --force
+          set +e
+          npx cypress run || exit_code=$?
+          echo "::set-output name=exit_code::$exit_code"
+          set -e
+      - name: Handle Cypress Failure
+        if: ${{ steps.set_exit_code.outputs.exit_code != '0' }}
+        run: |
+          echo "Cypress tests failed. Skipping production deployment."
+
+    deploy:
+    needs: e2e-tests-staging
+    if: ${{ needs.e2e-tests-staging.outputs.cypress_exit_code == '0' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: yarn install
+      - name: Build project
+        run: yarn build
+      - name: Install lftp
+        run: sudo apt-get install lftp
+      - name: Deploy to Hostinger via FTPS (with exclusions)
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          lftp -e "
+            set ssl:verify-certificate no;
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            set ftp:ssl-protect-list true;
+            set ftp:ssl-allow yes;
+            open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST;
+            mirror -R --only-newer --exclude-glob admin --exclude-glob oldcosas --exclude-glob staging --exclude .htaccess ./dist /public_html;
+            quit
+          "
