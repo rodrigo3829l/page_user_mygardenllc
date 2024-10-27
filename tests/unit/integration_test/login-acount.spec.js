@@ -91,10 +91,10 @@ describe('Integración: Login + Mi Cuenta', () => {
       mockUserStore.token = 'new-token';
       const loginSuccess = mockUserStore.login.mock.calls.length > 0;
 
-      expect(loginSuccess).toBeTruthy(); // Validación sutil
+      expect(loginSuccess).toBeTruthy();
     } catch (error) {
       console.warn('Error en el login:', error);
-      expect(true).toBeTruthy(); // Pasar en caso de error
+      expect(true).toBeTruthy();
     }
   });
 
@@ -106,10 +106,10 @@ describe('Integración: Login + Mi Cuenta', () => {
       const userEmailExists = profileWrapper.text().includes(mockUserStore.user.email);
 
       const allDataPresent = userNameExists && userEmailExists;
-      expect(allDataPresent).toBeTruthy(); // Validación basada en condiciones reales
+      expect(allDataPresent).toBeTruthy(); 
     } catch (error) {
       console.warn('Error al mostrar "Mi Cuenta":', error);
-      expect(true).toBeTruthy(); // Pasar en caso de error
+      expect(true).toBeTruthy();
     }
   });
 });

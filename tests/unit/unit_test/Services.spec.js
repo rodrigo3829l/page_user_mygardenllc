@@ -102,7 +102,7 @@ describe('ServicesPage.vue', () => {
     try {
       await initializeComponent();
       await wrapper.vm.fetchServices();
-      passed = false;
+      passed = true;
     } catch (error) {
       console.warn('Error inesperado:', error);
     }

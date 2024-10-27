@@ -13,7 +13,6 @@ jest.mock('vue3-toastify', () => ({
   },
 }));
 
-// Ignorar advertencias y errores no críticos de Vuetify
 const consoleWarn = console.warn;
 beforeAll(() => {
   console.warn = (message, ...args) => {
@@ -91,7 +90,7 @@ describe('ContactUser.vue', () => {
     const element = wrapper.find(selector);
     if (!element.exists()) {
       console.warn(`Elemento no encontrado: ${selector}`);
-      return { trigger: jest.fn() }; // Devuelve un mock para evitar errores
+      return { trigger: jest.fn() };
     }
     return element;
   };

@@ -1,13 +1,11 @@
 import { mount } from '@vue/test-utils';
 import { createPinia, setActivePinia } from 'pinia';
-import { useRouter } from 'vue-router';
 
-// Simulación de un componente básico de Servicios
 const Services = {
   template: '<div><h1>Servicios Disponibles</h1><ul><li v-for="service in filteredServices" :key="service.id">{{ service.name }}</li></ul></div>',
   computed: {
     totalPages() {
-      return Math.ceil(this.filteredServices.length / 2); // Supone 2 servicios por página
+      return Math.ceil(this.filteredServices.length / 2);
     },
     filteredServices() {
       return this.$store?.services || [{ id: 1, name: 'Mock Service 1' }, { id: 2, name: 'Mock Service 2' }];
@@ -45,7 +43,6 @@ jest.mock('axios', () => ({
   post: jest.fn(() => Promise.resolve({ data: {} })),
 }));
 
-// Mock de consola para evitar advertencias
 jest.spyOn(console, 'warn').mockImplementation(() => {});
 jest.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -82,7 +79,7 @@ describe('Integración: Login + Reserva de Servicios', () => {
     }
 
     expect(mockRouter.push).toHaveBeenCalledWith({ name: 'login' });
-    expect(wrapper.text()).toContain('Servicios Disponibles'); // Verifica que el componente se renderizó
+    expect(wrapper.text()).toContain('Servicios Disponibles');
   });
 
   it('Debería redirigir al home si hay sesión iniciada', async () => {

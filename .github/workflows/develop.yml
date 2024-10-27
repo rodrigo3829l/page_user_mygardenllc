@@ -1,0 +1,78 @@
+name: PWA CI/CD Workflow - Develop
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+permissions: write-all
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: yarn install
+      - name: Run ESLint
+        run: yarn lint
+
+  unit-integration-tests:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Jest Tests
+        run: |
+          set +e
+          yarn test:unit --coverage || exit_code=$?
+          echo "exit_code=$exit_code" >> $GITHUB_ENV
+          set -e
+
+      - name: Handle Jest Failure
+        if: env.exit_code != '0'
+        run: |
+          echo "Jest tests failed. Reverting to previous version..."
+          git config --global user.email "20210658@uthh.edu.mx"
+          git config --global user.name "rodrigo3829l"
+          git reset --hard HEAD^
+          git push origin develop --force
+
+  sonar-scan:
+    needs: unit-integration-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  snyk-scan:
+    needs: sonar-scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+      - name: Run Snyk Scan
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          snyk test --all-projects || exit_code=$?
+          if [ $exit_code -ne 0 ]; then
+            echo "Snyk scan failed. Reverting to previous version..."
+            git config --global user.email "20210658@uthh.edu.mx"
+            git config --global user.name "rodrigo3829l"
+            git reset --hard HEAD^
+            git push origin develop --force

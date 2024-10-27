@@ -1,0 +1,72 @@
+name: PWA CI/CD Workflow - Feature Branch
+
+on:
+  push:
+    branches:
+      - 'feature/*'
+  pull_request:
+    branches:
+      - 'feature/*'
+
+permissions: write-all
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: yarn install
+      - name: Run ESLint
+        run: yarn lint
+
+  jest-tests:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Jest Tests
+        run: |
+          yarn test:unit || exit_code=$?
+          if [ $exit_code -ne 0 ]; then
+            echo "Jest tests failed. Reverting to previous version..."
+            git config --global user.email "${{ github.ref_name == 'feature/rodrigo' && '20210658@uthh.edu.mx' || '20210667@uthh.edu.mx' }}"
+            git config --global user.name "${{ github.ref_name == 'feature/rodrigo' && 'rodrigo3829l' || 'AvelinaHdez' }}"
+            git reset --hard HEAD^
+            git push origin ${{ github.ref_name }} --force
+
+  sonar-scan:
+    needs: jest-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  snyk-scan:
+    needs: sonar-scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+      - name: Run Snyk Scan
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          snyk test --all-projects || exit_code=$?
+          if [ $exit_code -ne 0 ]; then
+            echo "Jest tests failed. Reverting to previous version..."
+            git config --global user.email "${{ github.ref_name == 'feature/rodrigo' && '20210658@uthh.edu.mx' || '20210667@uthh.edu.mx' }}"
+            git config --global user.name "${{ github.ref_name == 'feature/rodrigo' && 'rodrigo3829l' || 'AvelinaHdez' }}"
+            git reset --hard HEAD^
+            git push origin ${{ github.ref_name }} --force

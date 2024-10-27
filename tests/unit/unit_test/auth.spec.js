@@ -1,12 +1,10 @@
 import { createRouter, createMemoryHistory } from 'vue-router';
 import { routes } from '@/router/router';
-import { mount } from '@vue/test-utils';
-import { useUserStore } from '@/store/store';
 
 // Mock del store para simular autenticación sin errores visibles
 jest.mock('@/store/store', () => ({
   useUserStore: jest.fn(() => ({
-    token: 'mock-token', // Asume que siempre hay un token válido
+    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
     login: jest.fn().mockResolvedValue(true),
   })),
 }));

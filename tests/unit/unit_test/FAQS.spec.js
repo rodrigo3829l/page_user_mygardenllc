@@ -13,14 +13,14 @@ beforeAll(() => {
       message.includes('Vuetify') ||
       message.includes('mount target selector "#app" returned null')
     ) {
-      return; // Ignorar advertencias relacionadas con Vuetify y el montaje
+      return; 
     }
-    consoleWarn(message, ...args); // Mostrar otras advertencias
+    consoleWarn(message, ...args);
   };
 });
 
 afterAll(() => {
-  console.warn = consoleWarn; // Restaurar comportamiento normal de consola
+  console.warn = consoleWarn; 
 });
 
 // Configuración global de Vuetify e i18n
@@ -56,7 +56,7 @@ describe('FAQs.vue', () => {
           plugins: [vuetify, i18n],
           stubs: {
             'v-btn': {
-              template: '<button><slot /></button>', // Stub más funcional para v-btn
+              template: '<button><slot /></button>', 
             },
             'v-expansion-panels': true,
             'v-expansion-panel': true,
