@@ -32,9 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Verify Jest Installation
-        run: yarn jest --version
-
+      
       - name: Run Jest Tests
         run: |
           set +e
