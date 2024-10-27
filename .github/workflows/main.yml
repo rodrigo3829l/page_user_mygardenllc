@@ -10,10 +10,6 @@ on:
 
 permissions: write-all
 
-env:
-    JEST_EXIT_CODE: 0
-    SNYK_EXIT_CODE: 0
-
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -34,6 +30,8 @@ jobs:
   unit-integration-tests:
     needs: lint
     runs-on: ubuntu-latest
+    outputs:
+      jest_exit_code: ${{ steps.set_exit_code.outputs.exit_code }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -46,13 +44,14 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Run Jest Tests
+        id: set_exit_code
         run: |
           set +e
           yarn test:unit --coverage || exit_code=$?
-          echo "JEST_EXIT_CODE=$exit_code" >> $GITHUB_ENV
+          echo "::set-output name=exit_code::$exit_code"
           set -e
       - name: Handle Jest Failure
-        if: ${{ env.JEST_EXIT_CODE != '0' }}
+        if: ${{ steps.set_exit_code.outputs.exit_code != '0' }}
         run: |
           echo "Jest tests failed. Reverting to previous version..."
           git config --global user.email "20210658@uthh.edu.mx"
@@ -62,7 +61,7 @@ jobs:
 
   sonar-scan:
     needs: unit-integration-tests
-    if: ${{ env.JEST_EXIT_CODE == '0' }}
+    if: ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -83,8 +82,10 @@ jobs:
 
   snyk-scan:
     needs: sonar-scan
-    if: ${{ env.JEST_EXIT_CODE == '0' }}
+    if: ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' }}
     runs-on: ubuntu-latest
+    outputs:
+      snyk_exit_code: ${{ steps.set_exit_code.outputs.exit_code }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -99,14 +100,15 @@ jobs:
       - name: Install Snyk CLI
         run: npm install -g snyk
       - name: Run Snyk Scan
+        id: set_exit_code
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
           snyk monitor --all-projects --org=6ce58cdd-2e65-4c0c-bbe5-705980cee5fe
           snyk test --all-projects --org=6ce58cdd-2e65-4c0c-bbe5-705980cee5fe || exit_code=$?
-          echo "SNYK_EXIT_CODE=$exit_code" >> $GITHUB_ENV
+          echo "::set-output name=exit_code::$exit_code"
       - name: Handle Snyk Failure
-        if: ${{ env.SNYK_EXIT_CODE != '0' }}
+        if: ${{ steps.set_exit_code.outputs.exit_code != '0' }}
         run: |
           echo "Snyk scan failed. Reverting to previous version..."
           git config --global user.email "20210658@uthh.edu.mx"
@@ -116,7 +118,7 @@ jobs:
 
   deploy:
     needs: snyk-scan
-    if: ${{ env.JEST_EXIT_CODE == '0' && env.SNYK_EXIT_CODE == '0' }}
+    if: ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' && needs.snyk-scan.outputs.snyk_exit_code == '0' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -152,7 +154,7 @@ jobs:
 
   e2e-tests:
     needs: deploy
-    if: ${{ env.JEST_EXIT_CODE == '0' && env.SNYK_EXIT_CODE == '0' }}
+    if: ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' && needs.snyk-scan.outputs.snyk_exit_code == '0' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
