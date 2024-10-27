@@ -58,7 +58,7 @@ jobs:
 
   sonar-scan:
     needs: unit-integration-tests
-    if: env.jest_exit_code == '0'
+    if: ${{ env.jest_exit_code == '0' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -79,7 +79,7 @@ jobs:
 
   snyk-scan:
     needs: sonar-scan
-    if: env.jest_exit_code == '0'
+    if: ${{ env.jest_exit_code == '0' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -112,7 +112,7 @@ jobs:
 
   deploy:
     needs: snyk-scan
-    if: env.jest_exit_code == '0' && env.snyk_exit_code == '0'
+    if: ${{ env.jest_exit_code == '0' && env.snyk_exit_code == '0' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -148,7 +148,7 @@ jobs:
 
   e2e-tests:
     needs: deploy
-    if: env.jest_exit_code == '0' && env.snyk_exit_code == '0'
+    if: ${{ env.jest_exit_code == '0' && env.snyk_exit_code == '0' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
