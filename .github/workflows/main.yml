@@ -45,10 +45,10 @@ jobs:
         run: |
           set +e
           yarn test:unit --coverage || exit_code=$?
-          echo "exit_code=$exit_code" >> $GITHUB_ENV
+          echo "jest_exit_code=$exit_code" >> $GITHUB_ENV
           set -e
       - name: Handle Jest Failure
-        if: env.exit_code != '0'
+        if: env.jest_exit_code != '0'
         run: |
           echo "Jest tests failed. Reverting to previous version..."
           git config --global user.email "20210658@uthh.edu.mx"
@@ -58,6 +58,7 @@ jobs:
 
   sonar-scan:
     needs: unit-integration-tests
+    if: env.jest_exit_code == '0'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -78,6 +79,7 @@ jobs:
 
   snyk-scan:
     needs: sonar-scan
+    if: env.jest_exit_code == '0'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -98,9 +100,9 @@ jobs:
         run: |
           snyk monitor --all-projects --org=6ce58cdd-2e65-4c0c-bbe5-705980cee5fe
           snyk test --all-projects --org=6ce58cdd-2e65-4c0c-bbe5-705980cee5fe || exit_code=$?
-          echo "exit_code=$exit_code" >> $GITHUB_ENV
+          echo "snyk_exit_code=$exit_code" >> $GITHUB_ENV
       - name: Handle Snyk Failure
-        if: env.exit_code != '0'
+        if: env.snyk_exit_code != '0'
         run: |
           echo "Snyk scan failed. Reverting to previous version..."
           git config --global user.email "20210658@uthh.edu.mx"
@@ -110,6 +112,7 @@ jobs:
 
   deploy:
     needs: snyk-scan
+    if: env.jest_exit_code == '0' && env.snyk_exit_code == '0'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -145,6 +148,7 @@ jobs:
 
   e2e-tests:
     needs: deploy
+    if: env.jest_exit_code == '0' && env.snyk_exit_code == '0'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -160,9 +164,12 @@ jobs:
       - name: Run Cypress Tests
         run: |
           npx cypress run || exit_code=$?
-          if [ $exit_code -ne 0 ]; then
-            echo "Cypress tests failed. Reverting to previous version..."
-            git config --global user.email "20210658@uthh.edu.mx"
-            git config --global user.name "rodrigo3829l"
-            git reset --hard HEAD^
-            git push origin main --force
+          echo "exit_code=$exit_code" >> $GITHUB_ENV
+      - name: Handle Cypress Failure
+        if: env.exit_code != '0'
+        run: |
+          echo "Cypress tests failed. Reverting to previous version..."
+          git config --global user.email "20210658@uthh.edu.mx"
+          git config --global user.name "rodrigo3829l"
+          git reset --hard HEAD^
+          git push origin main --force
