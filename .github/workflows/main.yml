@@ -185,7 +185,7 @@ jobs:
         run: |
           echo "Cypress tests failed. Skipping production deployment."
 
-    deploy:
+  deploy:
     needs: e2e-tests-staging
     if: ${{ needs.e2e-tests-staging.outputs.cypress_exit_code == '0' }}
     runs-on: ubuntu-latest
