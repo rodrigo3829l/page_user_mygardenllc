@@ -36,7 +36,7 @@ jobs:
       - name: Run Jest Tests
         run: |
           set +e
-          yarn vue-cli-service test:unit --coverage || exit_code=$?
+          yarn test:unit --coverage || exit_code=$?
           echo "exit_code=$exit_code" >> $GITHUB_ENV
           set -e
 
