@@ -11,6 +11,19 @@ on:
 permissions: write-all
 
 jobs:
+  format-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: yarn install
+      - name: Run Prettier
+        run: yarn prettier --check "**/*.js"
+
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -18,6 +31,13 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -37,6 +57,13 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -58,6 +85,11 @@ jobs:
           git config --global user.name "rodrigo3829l"
           git reset --hard HEAD^
           git push origin main --force
+      - name: Upload Jest Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: jest-results
+          path: coverage/
 
   sonar-scan:
     needs: unit-integration-tests
@@ -68,6 +100,13 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -91,6 +130,13 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -125,6 +171,13 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -133,6 +186,12 @@ jobs:
         run: yarn install
       - name: Build project
         run: yarn build
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifact
+          path: dist/
+          retention-days: 7
       - name: Install lftp
         run: sudo apt-get install lftp
       - name: Deploy to Hostinger via FTPS (with exclusions)
@@ -163,6 +222,13 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -184,6 +250,11 @@ jobs:
         if: ${{ steps.set_exit_code.outputs.exit_code != '0' }}
         run: |
           echo "Cypress tests failed. Skipping production deployment."
+      - name: Upload Cypress Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-results
+          path: cypress/reports/
 
   deploy:
     needs: e2e-tests-staging
@@ -202,6 +273,12 @@ jobs:
         run: yarn install
       - name: Build project
         run: yarn build
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifact
+          path: dist/
+          retention-days: 7
       - name: Install lftp
         run: sudo apt-get install lftp
       - name: Deploy to Hostinger via FTPS (with exclusions)

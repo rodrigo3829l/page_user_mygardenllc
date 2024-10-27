@@ -11,6 +11,18 @@ on:
 permissions: write-all
 
 jobs:
+  format-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: yarn install
+      - name: Run Prettier
+        run: yarn prettier --check "**/*.js"
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -18,6 +30,13 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -37,6 +56,13 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -58,6 +84,11 @@ jobs:
           git config --global user.name "${{ github.ref_name == 'feature/rodrigo' && 'rodrigo3829l' || 'AvelinaHdez' }}"
           git reset --hard HEAD^
           git push origin ${{ github.ref_name }} --force
+      - name: Upload Jest Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: jest-results
+          path: coverage/
 
   sonar-scan:
     needs: jest-tests
@@ -68,6 +99,13 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
@@ -83,6 +121,13 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
