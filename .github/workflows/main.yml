@@ -79,25 +79,27 @@ jobs:
           echo "::set-output name=exit_code::$exit_code"
           echo "exit_code=$exit_code"
           set -e
-      - name: Verify Jest Exit Code
-        run: |
-          echo "Verifying Jest Exit Code: ${{ steps.set_exit_code.outputs.exit_code }}"
-      - name: Handle Jest Failure
-        if: ${{ steps.set_exit_code.outputs.exit_code != '0' }}
-        run: |
-          echo "Jest tests failed. Reverting to previous version..."
-          git config --global user.email "20210658@uthh.edu.mx"
-          git config --global user.name "rodrigo3829l"
-          git reset --hard HEAD^
-          git push origin main --force
       - name: Upload Jest Test Results
         uses: actions/upload-artifact@v3
         with:
           name: jest-results
           path: coverage/
 
-  sonar-scan:
+  jest-validation:
     needs: unit-integration-tests
+    runs-on: ubuntu-latest
+    if: ${{ needs.unit-integration-tests.outputs.jest_exit_code != '0' }}
+    steps:
+      - name: Handle Jest Failure
+        run: |
+          echo "Jest tests failed. Reverting to previous version..."
+          git config --global user.email "20210658@uthh.edu.mx"
+          git config --global user.name "rodrigo3829l"
+          git reset --hard HEAD^
+          git push origin main --force
+
+  sonar-scan:
+    needs: [unit-integration-tests, jest-validation]
     if: ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' }}
     runs-on: ubuntu-latest
     steps:
@@ -159,16 +161,14 @@ jobs:
           snyk monitor --all-projects --org=6ce58cdd-2e65-4c0c-bbe5-705980cee5fe
           snyk test --all-projects --org=6ce58cdd-2e65-4c0c-bbe5-705980cee5fe || exit_code=$?
           echo "::set-output name=exit_code::$exit_code"
-          echo "exit_code=$exit_code" >> $GITHUB_ENV
-          echo "Snyk exit code: $exit_code"
+          echo "exit_code=$exit_code"
           set -e
-      - name: Check Snyk Exit Code
-        run: |
-          echo "Snyk exit code from GITHUB_ENV: $exit_code"
-        env:
-          exit_code: ${{ steps.set_exit_code.outputs.exit_code }}
+  snyk-validation:
+    needs: snyk-scan
+    if: ${{ needs.snyk-scan.outputs.snyk_exit_code != '0' }}
+    runs-on: ubuntu-latest
+    steps:
       - name: Handle Snyk Failure
-        if: env.exit_code != '0'
         run: |
           echo "Snyk scan failed. Reverting to previous version..."
           git config --global user.email "20210658@uthh.edu.mx"
@@ -177,7 +177,7 @@ jobs:
           git push origin main --force
 
   deploy-staging:
-    needs: snyk-scan
+    needs: [snyk-scan, snyk-validation]
     if: ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' && needs.snyk-scan.outputs.snyk_exit_code == '0' }}
     runs-on: ubuntu-latest
     steps:
