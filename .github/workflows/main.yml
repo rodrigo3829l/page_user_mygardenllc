@@ -10,6 +10,10 @@ on:
 
 permissions: write-all
 
+env:
+    JEST_EXIT_CODE: 0
+    SNYK_EXIT_CODE: 0
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -45,10 +49,10 @@ jobs:
         run: |
           set +e
           yarn test:unit --coverage || exit_code=$?
-          echo "jest_exit_code=$exit_code" >> $GITHUB_ENV
+          echo "JEST_EXIT_CODE=$exit_code" >> $GITHUB_ENV
           set -e
       - name: Handle Jest Failure
-        if: env.jest_exit_code != '0'
+        if: ${{ env.JEST_EXIT_CODE != '0' }}
         run: |
           echo "Jest tests failed. Reverting to previous version..."
           git config --global user.email "20210658@uthh.edu.mx"
@@ -58,7 +62,7 @@ jobs:
 
   sonar-scan:
     needs: unit-integration-tests
-    if: ${{ env.jest_exit_code == '0' }}
+    if: ${{ env.JEST_EXIT_CODE == '0' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -79,7 +83,7 @@ jobs:
 
   snyk-scan:
     needs: sonar-scan
-    if: ${{ env.jest_exit_code == '0' }}
+    if: ${{ env.JEST_EXIT_CODE == '0' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -100,9 +104,9 @@ jobs:
         run: |
           snyk monitor --all-projects --org=6ce58cdd-2e65-4c0c-bbe5-705980cee5fe
           snyk test --all-projects --org=6ce58cdd-2e65-4c0c-bbe5-705980cee5fe || exit_code=$?
-          echo "snyk_exit_code=$exit_code" >> $GITHUB_ENV
+          echo "SNYK_EXIT_CODE=$exit_code" >> $GITHUB_ENV
       - name: Handle Snyk Failure
-        if: env.snyk_exit_code != '0'
+        if: ${{ env.SNYK_EXIT_CODE != '0' }}
         run: |
           echo "Snyk scan failed. Reverting to previous version..."
           git config --global user.email "20210658@uthh.edu.mx"
@@ -112,7 +116,7 @@ jobs:
 
   deploy:
     needs: snyk-scan
-    if: ${{ env.jest_exit_code == '0' && env.snyk_exit_code == '0' }}
+    if: ${{ env.JEST_EXIT_CODE == '0' && env.SNYK_EXIT_CODE == '0' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -148,7 +152,7 @@ jobs:
 
   e2e-tests:
     needs: deploy
-    if: ${{ env.jest_exit_code == '0' && env.snyk_exit_code == '0' }}
+    if: ${{ env.JEST_EXIT_CODE == '0' && env.SNYK_EXIT_CODE == '0' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
