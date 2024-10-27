@@ -12,7 +12,13 @@
     </v-card-text>
 
     <v-card-actions>
-      <v-rating :model-value="comment.rating" readonly dense half-increments color="yellow"></v-rating>
+      <v-rating
+        :model-value="comment.rating"
+        readonly
+        dense
+        half-increments
+        color="yellow"
+      ></v-rating>
     </v-card-actions>
   </v-card>
 </template>
@@ -22,9 +28,9 @@ export default {
   props: {
     comment: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
 

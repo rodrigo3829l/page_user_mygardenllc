@@ -10,13 +10,13 @@
         <v-card class="elevation-12">
           <v-toolbar color="green-darken-3" dark>
             <v-toolbar-title class="white--text text-center">
-             {{($t('login.pages.sendPhoneCode.phoneNumberString'))}}
+              {{ $t("login.pages.sendPhoneCode.phoneNumberString") }}
             </v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-form>
               <label for="">
-               {{ ($t('login.pages.sendMail.phoneNumberString')) }}
+                {{ $t("login.pages.sendMail.phoneNumberString") }}
               </label>
               <v-text-field
                 v-model="FormData.phone"
@@ -44,8 +44,11 @@
             ><br />
             <v-divider></v-divider>
             <div class="text-center mt-3">
-              <router-link :to="{name: 'login-mail'}" class="green--text text-darken-3">
-                {{ ($t('login.pages.sendMail.optionEmailString')) }}
+              <router-link
+                :to="{ name: 'login-mail' }"
+                class="green--text text-darken-3"
+              >
+                {{ $t("login.pages.sendMail.optionEmailString") }}
               </router-link>
             </div>
           </v-card-text>
@@ -56,73 +59,76 @@
 </template>
 
 <script>
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 import { api } from "@/axios/axios";
 
 export default {
-  data(){
-    return{
-      dialog : false,
-      FormData : {
-        phone : ''
+  data() {
+    return {
+      dialog: false,
+      FormData: {
+        phone: "",
       },
-      errors  : {
-        phone  : ''
+      errors: {
+        phone: "",
       },
       items: [
         {
-          title: 'Home',
+          title: "Home",
           disabled: false,
-          href: '/home/homeuser',
+          href: "/home/homeuser",
         },
         {
-          title: 'Login',
+          title: "Login",
           disabled: false,
-          href: '/login/loginuser',
+          href: "/login/loginuser",
         },
         {
-          title: 'Send phone',
+          title: "Send phone",
           disabled: false,
-          href: '/login/phone',
+          href: "/login/phone",
         },
       ],
-    }
+    };
   },
-  methods : {
-    validatePhone () {
-      this.errors.phone = (!this.FormData.phone)? 'El numero es requerido' : ''
-      this.errors.phone = (this.FormData.phone.length < 10 && this.FormData.phone.length >  10)? 'El numero debede ser de 10 caracteres' : ''
+  methods: {
+    validatePhone() {
+      this.errors.phone = !this.FormData.phone ? "El numero es requerido" : "";
+      this.errors.phone =
+        this.FormData.phone.length < 10 && this.FormData.phone.length > 10
+          ? "El numero debede ser de 10 caracteres"
+          : "";
     },
-    async submit (){
-      this.errors.phone = (!this.FormData.phone) ? 'Ingrese un numero' : ''
-      if (Object.values(this.errors).some(error => error !== '')) {
-        toast.warning('Por favor llene correctamente los campos')
+    async submit() {
+      this.errors.phone = !this.FormData.phone ? "Ingrese un numero" : "";
+      if (Object.values(this.errors).some((error) => error !== "")) {
+        toast.warning("Por favor llene correctamente los campos");
         return;
       }
       try {
         this.dialog = true;
 
         const datos = {
-          cellPhone: this.FormData.phone
-        }
-        const { data } = await api.post('/user/recoversms', datos )
+          cellPhone: this.FormData.phone,
+        };
+        const { data } = await api.post("/user/recoversms", datos);
         this.value = false;
 
         if (!data.success) {
-          toast.warning(this.$t('passwordRecovery.email.messageEmail'))
+          toast.warning(this.$t("passwordRecovery.email.messageEmail"));
         }
 
-        if(data.success === true){
-          toast.success('Revise su entrada de mensajes')
-          localStorage.setItem('tokenData', data.token);
-          localStorage.setItem('data', this.FormData.phone.slice(-3));
-          this.$router.push({ name: 'login-optconfirm' });
+        if (data.success === true) {
+          toast.success("Revise su entrada de mensajes");
+          localStorage.setItem("tokenData", data.token);
+          localStorage.setItem("data", this.FormData.phone.slice(-3));
+          this.$router.push({ name: "login-optconfirm" });
         }
       } catch (error) {
-        this.$router.push({ name: 'serverError' })
+        this.$router.push({ name: "serverError" });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -134,4 +140,5 @@ export default {
 .fade-alert.v-leave-active {
   opacity: 0;
 }
-</style>s
+</style>
+s

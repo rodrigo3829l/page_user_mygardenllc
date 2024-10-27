@@ -127,99 +127,96 @@
 </template>
 
 <script>
-import { 
+import {
   nameValidate,
   dateValidate,
   phoneValidate,
-
- } from '@/plugins/validations';
+} from "@/plugins/validations";
 export default {
-  data () {
+  data() {
     return {
-      formData : {
-        nombre: '',
-        apellidoPaterno: '',
-        apellidoMaterno: '',
-        fechaNacimiento: '',
-        sexo: '',
-        lada: '',
-        phone: '',
+      formData: {
+        nombre: "",
+        apellidoPaterno: "",
+        apellidoMaterno: "",
+        fechaNacimiento: "",
+        sexo: "",
+        lada: "",
+        phone: "",
         imagen: null,
       },
-      errors : {
-        nombre: '',
-        apellidoPaterno: '',
-        apellidoMaterno: '',
-        fechaNacimiento: '',
-        phone: '',
-        lada: '',
-        image: '',
-      }
-    }
+      errors: {
+        nombre: "",
+        apellidoPaterno: "",
+        apellidoMaterno: "",
+        fechaNacimiento: "",
+        phone: "",
+        lada: "",
+        image: "",
+      },
+    };
   },
-  methods : {
-    validateImage () {
+  methods: {
+    validateImage() {
       const file = event.target.files[0];
 
       // Check if a file is selected
-      this.errors.image = (!file) ? this.$t('registration.alerts.imageFile') : '';
+      this.errors.image = !file ? this.$t("registration.alerts.imageFile") : "";
 
       // Check the file size (in bytes)
       const maxSize = 4 * 1024 * 1024; // 4 megabytes
-      this.errors.image = (file.size > maxSize) ? this.$t('registration.alerts.sizeFile')  : '';
+      this.errors.image =
+        file.size > maxSize ? this.$t("registration.alerts.sizeFile") : "";
 
       // Read the image as a Blob object
       const reader = new FileReader();
       reader.onload = (e) => {
         this.formData.imagen = e.target.result;
-        this.$emit('updateData', this.formData, this.errors);
+        this.$emit("updateData", this.formData, this.errors);
       };
-      
+
       // Check if the file type is an image
-      if (file.type.startsWith('image/')) {
+      if (file.type.startsWith("image/")) {
         reader.readAsDataURL(file);
       } else {
-        this.$emit('updateData', this.formData, this.errors);
-        this.errors.image = this.$t('registration.alerts.validImage') ;
+        this.$emit("updateData", this.formData, this.errors);
+        this.errors.image = this.$t("registration.alerts.validImage");
       }
-      
     },
     validateSex() {
-      this.$emit('updateData', this.formData, this.errors);
+      this.$emit("updateData", this.formData, this.errors);
     },
-    validateName () {
-      console.log('click en el name')
-      this.errors.nombre = nameValidate(this.formData.nombre)
-      this.$emit('updateData', this.formData, this.errors);
+    validateName() {
+      console.log("click en el name");
+      this.errors.nombre = nameValidate(this.formData.nombre);
+      this.$emit("updateData", this.formData, this.errors);
     },
-    validateDate () {
-      this.errors.fechaNacimiento = dateValidate(this.formData.fechaNacimiento)
-      this.$emit('updateData', this.formData, this.errors);
+    validateDate() {
+      this.errors.fechaNacimiento = dateValidate(this.formData.fechaNacimiento);
+      this.$emit("updateData", this.formData, this.errors);
     },
-    validateApellidoP () {
-      this.errors.apellidoPaterno = nameValidate(this.formData.apellidoPaterno)
-      this.$emit('updateData', this.formData, this.errors);
+    validateApellidoP() {
+      this.errors.apellidoPaterno = nameValidate(this.formData.apellidoPaterno);
+      this.$emit("updateData", this.formData, this.errors);
     },
-    validateApellidoM () {
-      this.errors.apellidoMaterno = nameValidate(this.formData.apellidoMaterno)
-      this.$emit('updateData', this.formData, this.errors);
+    validateApellidoM() {
+      this.errors.apellidoMaterno = nameValidate(this.formData.apellidoMaterno);
+      this.$emit("updateData", this.formData, this.errors);
     },
-    validateLade () {
-      this.errors.lada = (!this.formData.lada)
-        ? this.$t('registration.alerts.lade') 
-        : '';
-      this.$emit('updateData', this.formData, this.errors);
+    validateLade() {
+      this.errors.lada = !this.formData.lada
+        ? this.$t("registration.alerts.lade")
+        : "";
+      this.$emit("updateData", this.formData, this.errors);
     },
-    async validatePhone () {
-      let lada = this.formData.lada.split(' ')[0]; // "+1"
-      let number = lada.replace('+', ''); // "1"
-      this.errors.phone = await phoneValidate(number, this.formData.phone)
-      this.$emit('updateData', this.formData, this.errors);
+    async validatePhone() {
+      let lada = this.formData.lada.split(" ")[0]; // "+1"
+      let number = lada.replace("+", ""); // "1"
+      this.errors.phone = await phoneValidate(number, this.formData.phone);
+      this.$emit("updateData", this.formData, this.errors);
     },
-    
-  }
+  },
 };
-
 </script>
 
 <style scoped>

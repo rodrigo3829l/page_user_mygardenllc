@@ -4,13 +4,33 @@
       <!-- Columna para el avatar y los botones de acción -->
       <v-col cols="12" md="4" class="text-center">
         <v-avatar size="120">
-          <v-img :src="userInfo.img?.secure_url || 'https://cdn.vuetifyjs.com/images/john.jpg'" class="rounded-circle"></v-img>
+          <v-img
+            :src="
+              userInfo.img?.secure_url ||
+              'https://cdn.vuetifyjs.com/images/john.jpg'
+            "
+            class="rounded-circle"
+          ></v-img>
         </v-avatar>
-        <h2 class="mt-3">{{ userInfo.name }} {{ userInfo.apellidoP }} {{ userInfo.apellidoM }}</h2>
+        <h2 class="mt-3">
+          {{ userInfo.name }} {{ userInfo.apellidoP }} {{ userInfo.apellidoM }}
+        </h2>
         <h4>{{ userInfo.email }}</h4>
-        <v-btn block class="mt-3" color="white" @click="verServicios">View Services</v-btn>
-        <v-btn block class="mt-3" color="white" :disabled="load" :loading="load" @click="cambiarContraseña">Change Password</v-btn>
-        <v-btn block class="mt-3" color="green-darken-3" @click="editProfile">Edit Profile</v-btn>
+        <v-btn block class="mt-3" color="white" @click="verServicios"
+          >View Services</v-btn
+        >
+        <v-btn
+          block
+          class="mt-3"
+          color="white"
+          :disabled="load"
+          :loading="load"
+          @click="cambiarContraseña;"
+          >Change Password</v-btn
+        >
+        <v-btn block class="mt-3" color="green-darken-3" @click="editProfile"
+          >Edit Profile</v-btn
+        >
         <v-btn block class="mt-3" color="red" @click="logOut">Logout</v-btn>
       </v-col>
 
@@ -26,17 +46,24 @@
             <v-row>
               <v-col cols="6">
                 <div class="info-label">Full Name:</div>
-                <div class="info-value">{{ userInfo.name }} {{ userInfo.apellidoP }} {{ userInfo.apellidoM }}</div>
+                <div class="info-value">
+                  {{ userInfo.name }} {{ userInfo.apellidoP }}
+                  {{ userInfo.apellidoM }}
+                </div>
               </v-col>
               <v-col cols="6">
                 <div class="info-label">Date of Birth:</div>
-                <div class="info-value">{{ formatDate(userInfo.fechaNacimiento) }}</div>
+                <div class="info-value">
+                  {{ formatDate(userInfo.fechaNacimiento) }}
+                </div>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="6">
                 <div class="info-label">Phone:</div>
-                <div class="info-value">+{{ userInfo.lade }} {{ userInfo.cellPhone }}</div>
+                <div class="info-value">
+                  +{{ userInfo.lade }} {{ userInfo.cellPhone }}
+                </div>
               </v-col>
               <v-col cols="6">
                 <div class="info-label">Gender:</div>
@@ -63,17 +90,23 @@
             <v-row>
               <v-col cols="6">
                 <div class="info-label">Last Login:</div>
-                <div class="info-value">{{ formatDateTime(userInfo.lastLogin) }}</div>
+                <div class="info-value">
+                  {{ formatDateTime(userInfo.lastLogin) }}
+                </div>
               </v-col>
               <v-col cols="6">
                 <div class="info-label">Creation Date:</div>
-                <div class="info-value">{{ formatDateTime(userInfo.creation) }}</div>
+                <div class="info-value">
+                  {{ formatDateTime(userInfo.creation) }}
+                </div>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="6">
                 <div class="info-label">Last Password Change:</div>
-                <div class="info-value">{{ formatDateTime(userInfo.lastPassword) }}</div>
+                <div class="info-value">
+                  {{ formatDateTime(userInfo.lastPassword) }}
+                </div>
               </v-col>
               <v-col cols="6">
                 <div class="info-label">Account Status:</div>
@@ -86,15 +119,19 @@
     </v-row>
 
     <v-dialog :model-value="showUpdate">
-      <UpdateUser :userInfo="userInfo" @update:showUpdate="handleUpdate" @update:userInfo="userUpdate"></UpdateUser>
+      <UpdateUser
+        :userInfo="userInfo"
+        @update:showUpdate="handleUpdate"
+        @update:userInfo="userUpdate"
+      ></UpdateUser>
     </v-dialog>
   </v-container>
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue';
-import { api } from '@/axios/axios';
-import { useUserStore } from '@/store/store';
+import { defineAsyncComponent } from "vue";
+import { api } from "@/axios/axios";
+import { useUserStore } from "@/store/store";
 const userStore = useUserStore();
 
 export default {
@@ -102,7 +139,7 @@ export default {
     return {
       userInfo: {},
       load: false,
-      showUpdate: false
+      showUpdate: false,
     };
   },
   methods: {
@@ -116,14 +153,17 @@ export default {
       this.load = true;
       try {
         const datos = {
-          email: this.userInfo.email
+          email: this.userInfo.email,
         };
-        const { data } = await api.post('/user/recover', datos);
+        const { data } = await api.post("/user/recover", datos);
         this.load = false;
         if (data.success) {
-          localStorage.setItem('tokenData', data.token);
-          localStorage.setItem('data', this.userInfo.email.slice(this.userInfo.email.indexOf('@') + 1));
-          this.$router.push({ name: 'login-optconfirm' });
+          localStorage.setItem("tokenData", data.token);
+          localStorage.setItem(
+            "data",
+            this.userInfo.email.slice(this.userInfo.email.indexOf("@") + 1),
+          );
+          this.$router.push({ name: "login-optconfirm" });
         }
       } catch (error) {
         this.load = false;
@@ -132,46 +172,54 @@ export default {
     },
     async logOut() {
       await userStore.logout();
-      this.$router.push('/');
+      this.$router.push("/");
     },
     editProfile() {
-      this.$router.push({ name: 'profile-edit' });
+      this.$router.push({ name: "profile-edit" });
     },
     verServicios() {
-      this.$router.push({ name: 'profile-myservices' });
+      this.$router.push({ name: "profile-myservices" });
     },
     async getDataUser() {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         const { data } = await api({
-          method: 'GET',
-          url: '/user/protected',
+          method: "GET",
+          url: "/user/protected",
           headers: {
-            Authorization: 'Bearer ' + token,
-            rol: userStore.rol
-          }
+            Authorization: "Bearer " + token,
+            rol: userStore.rol,
+          },
         });
-        console.log(data)
+        console.log(data);
         this.userInfo = data.user;
       } catch (error) {
         console.log(error);
       }
     },
     formatDate(date) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      return new Date(date).toLocaleDateString('en-US', options);
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      return new Date(date).toLocaleDateString("en-US", options);
     },
     formatDateTime(dateTime) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-      return new Date(dateTime).toLocaleDateString('en-US', options);
-    }
+      const options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      };
+      return new Date(dateTime).toLocaleDateString("en-US", options);
+    },
   },
   mounted() {
     this.getDataUser();
   },
   components: {
-    UpdateUser: defineAsyncComponent(() => import('../components/UpdateUser.vue'))
-  }
+    UpdateUser: defineAsyncComponent(
+      () => import("../components/UpdateUser.vue"),
+    ),
+  },
 };
 </script>
 

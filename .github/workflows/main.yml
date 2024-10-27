@@ -18,13 +18,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20'
+          node-version: "20"
       - name: Install dependencies
         run: yarn install
       - name: Run Prettier
-        run: yarn prettier --check "**/*.js"
+        run: yarn format
 
   lint:
+    needs: format-check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -41,7 +42,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20'
+          node-version: "20"
       - name: Install dependencies
         run: yarn install
       - name: Run ESLint
@@ -67,7 +68,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20'
+          node-version: "20"
       - name: Install dependencies
         run: yarn install
       - name: Run Jest Tests
@@ -110,7 +111,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20'
+          node-version: "20"
       - name: Install dependencies
         run: yarn install
       - name: SonarCloud Scan
@@ -140,7 +141,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20'
+          node-version: "20"
       - name: Install dependencies
         run: yarn install
       - name: Install Snyk CLI
@@ -181,7 +182,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20'
+          node-version: "20"
       - name: Install dependencies
         run: yarn install
       - name: Build project
@@ -232,7 +233,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20'
+          node-version: "20"
       - name: Install dependencies
         run: yarn install
       - name: Run Cypress Tests
@@ -268,7 +269,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20'
+          node-version: "20"
       - name: Install dependencies
         run: yarn install
       - name: Build project

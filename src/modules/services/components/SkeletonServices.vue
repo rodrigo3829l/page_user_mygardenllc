@@ -30,8 +30,7 @@
   </v-card>
 </template>
 
-<script>
-</script>
+<script></script>
 
 <style scoped>
 /* Estilos adicionales si son necesarios */

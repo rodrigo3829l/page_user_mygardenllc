@@ -7,10 +7,11 @@
     prepend-icon="mdi-account"
   >
     <v-card-text>"{{ commentText }}"</v-card-text>
-    <v-rating 
-      :model-value="rating" 
-      :half-increments="true" 
-      show-size readonly 
+    <v-rating
+      :model-value="rating"
+      :half-increments="true"
+      show-size
+      readonly
       :length="5"
       color="yellow-darken-3"
     ></v-rating>
@@ -25,7 +26,6 @@ export default {
     commentText: String,
     service: String,
     rating: Number,
-    
   },
 };
 </script>

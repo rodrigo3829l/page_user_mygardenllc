@@ -1,113 +1,116 @@
-import { ref } from "vue"
-import { defineStore } from 'pinia'
+import { ref } from "vue";
+import { defineStore } from "pinia";
 import { api } from "@/axios/axios";
 
-export const useUserStore = defineStore('user', () => {
-    const token = ref(null);
-    const expireIn = ref (null);
-    const name = ref (null);
-    const email = ref (null);
-    const rol = ref (null);
-    const image = ref (null);
+export const useUserStore = defineStore("user", () => {
+  const token = ref(null);
+  const expireIn = ref(null);
+  const name = ref(null);
+  const email = ref(null);
+  const rol = ref(null);
+  const image = ref(null);
 
-    const login = async (email, pass, dpto) => {
-        const datos = {
-            email,
-            password: pass,
-            department : dpto
-        }
-        try {
-            const {data} = await api.post('/user/login', datos)
-            name.value = data.name
-            // email.value = data.email 
-            token.value = data.token;
-            expireIn.value = data.expiresIn
-            rol.value = data.rol
-            image.value = data.image
-            localStorage.setItem('token', token.value)
-            localStorage.setItem('rol', rol.value)
-
-            setTime();
-            return({exito : 'inicio se sesion exitoso'})
-        } catch (error) {
-            console.log("Error deesde el store")
-            console.log(error)
-            const {response} = error
-            return({error: response.data.error})
-        }
-    }
-    const logout = async () => {
-        try {
-            localStorage.removeItem('rol');
-            localStorage.removeItem('token');
-            await api.get('/user/logout')
-        } catch (error) {
-            console.log(error)
-        } finally{
-            localStorage.clear();
-            // localStorage.removeItem('rol');
-            // localStorage.removeItem('token');
-            resetStore();
-        }
-    }
-    const resetStore = () =>{
-        token.value = null;
-        expireIn.value = null;
-        name.value = null
-        email.value = null
-        rol.value = null
-        image.value = null
-        localStorage.clear();
-        // localStorage.removeItem('rol');
-        // localStorage.removeItem('token');
-    }
-    const setTime = () =>{
-        setTimeout(() => {
-            refreshToken();
-        }, expireIn.value * 1000 - 6000)
-    }
-
-    const refreshToken = async () =>{
-        try {
-            // const {data} = await api.get ('/user/refresh');
-            const {data} = await api({
-                method : 'GET',
-                url : '/user/refresh',
-                headers: {
-                    'Authorization' : 'Bearer ' + token.value,
-                    'rol' : 'client'
-                },
-            })
-            token.value = data.token;
-            expireIn.value = data.expiresIn;
-            name.value = data.name
-            email.value = data.email
-            rol.value = data.rol
-            image.value = data.image
-            localStorage.setItem('token', token.value,);
-            setTime();
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    const initializeStore = () => {
-        const storedToken = localStorage.getItem('token');
-        if (storedToken ) {
-            token.value = storedToken;
-            setTime();
-        }
+  const login = async (email, pass, dpto) => {
+    const datos = {
+      email,
+      password: pass,
+      department: dpto,
     };
+    try {
+      const { data } = await api.post("/user/login", datos);
+      name.value = data.name;
+      // email.value = data.email
+      token.value = data.token;
+      expireIn.value = data.expiresIn;
+      rol.value = data.rol;
+      image.value = data.image;
+      localStorage.setItem("token", token.value);
+      localStorage.setItem("rol", rol.value);
 
-    return {
-        token,
-        expireIn,
-        login,
-        logout,
-        refreshToken,
-        initializeStore,
-        name,
-        email,
-        rol,
-        image
+      setTime();
+      return { exito: "inicio se sesion exitoso" };
+    } catch (error) {
+      console.log("Error deesde el store");
+      console.log(error);
+      const { response } = error;
+      return { error: response.data.error };
     }
-  })
+  };
+  const logout = async () => {
+    try {
+      localStorage.removeItem("rol");
+      localStorage.removeItem("token");
+      await api.get("/user/logout");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      localStorage.clear();
+      // localStorage.removeItem('rol');
+      // localStorage.removeItem('token');
+      resetStore();
+    }
+  };
+  const resetStore = () => {
+    token.value = null;
+    expireIn.value = null;
+    name.value = null;
+    email.value = null;
+    rol.value = null;
+    image.value = null;
+    localStorage.clear();
+    // localStorage.removeItem('rol');
+    // localStorage.removeItem('token');
+  };
+  const setTime = () => {
+    setTimeout(
+      () => {
+        refreshToken();
+      },
+      expireIn.value * 1000 - 6000,
+    );
+  };
+
+  const refreshToken = async () => {
+    try {
+      // const {data} = await api.get ('/user/refresh');
+      const { data } = await api({
+        method: "GET",
+        url: "/user/refresh",
+        headers: {
+          Authorization: "Bearer " + token.value,
+          rol: "client",
+        },
+      });
+      token.value = data.token;
+      expireIn.value = data.expiresIn;
+      name.value = data.name;
+      email.value = data.email;
+      rol.value = data.rol;
+      image.value = data.image;
+      localStorage.setItem("token", token.value);
+      setTime();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const initializeStore = () => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      token.value = storedToken;
+      setTime();
+    }
+  };
+
+  return {
+    token,
+    expireIn,
+    login,
+    logout,
+    refreshToken,
+    initializeStore,
+    name,
+    email,
+    rol,
+    image,
+  };
+});

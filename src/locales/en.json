@@ -282,9 +282,9 @@
       },
       "myServices": {
         "servicesString": "My Services",
-        "cancellationString" : "Are you sure you want to cancel your service?",
-        "serviceString" : "Keep in mind that this action is irreversible",
-        "yesString" : "Yes, I'm sure"
+        "cancellationString": "Are you sure you want to cancel your service?",
+        "serviceString": "Keep in mind that this action is irreversible",
+        "yesString": "Yes, I'm sure"
       },
       "editProfile": {
         "editProfileString": "Edit Profile",
@@ -293,18 +293,18 @@
         "goBackString": "Go Back",
         "saveChangesString": "Save Changes"
       },
-      "ProfilePage" : {
-        "helloString" : "Hello",
-        "welcomeString" : "Welcome",
-        "seeServiceString" : "See services",
-        "changeString" : "Change password",
-        "closeString" : "Logout",
-        "accountDataString" : "Account Data",
-        "nameString" : "Name",
-        "emailString" : "Email",
-        "numberString" : "Phone number",
-        "userString" : "User",
-        "dateString" : "Change user data"
+      "ProfilePage": {
+        "helloString": "Hello",
+        "welcomeString": "Welcome",
+        "seeServiceString": "See services",
+        "changeString": "Change password",
+        "closeString": "Logout",
+        "accountDataString": "Account Data",
+        "nameString": "Name",
+        "emailString": "Email",
+        "numberString": "Phone number",
+        "userString": "User",
+        "dateString": "Change user data"
       }
     }
   },
@@ -317,7 +317,7 @@
         "dragImageString": "Drag and drop an image here",
         "scheduleString": "Schedule",
         "closeString": "Close",
-        
+
         "script": {
           "description": "Description is required",
           "imageRequired": "Image is required",

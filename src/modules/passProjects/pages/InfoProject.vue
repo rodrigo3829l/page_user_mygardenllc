@@ -1,7 +1,11 @@
 <template>
   <div v-if="overlay">
     <v-overlay :model-value="overlay" class="align-center justify-center">
-      <v-progress-circular color="primary" size="64" indeterminate></v-progress-circular>
+      <v-progress-circular
+        color="primary"
+        size="64"
+        indeterminate
+      ></v-progress-circular>
     </v-overlay>
   </div>
 
@@ -12,13 +16,16 @@
         <v-row>
           <!-- Carrusel de imágenes -->
           <v-col cols="12">
-            <v-carousel 
-              :show-arrows="false" 
-              hide-delimiter-background 
-              :continuous="true" 
-              style="height: 300px;"
+            <v-carousel
+              :show-arrows="false"
+              hide-delimiter-background
+              :continuous="true"
+              style="height: 300px"
             >
-              <v-carousel-item v-for="(image, index) in project.images" :key="index">
+              <v-carousel-item
+                v-for="(image, index) in project.images"
+                :key="index"
+              >
                 <v-img :src="image.secure_url"></v-img>
               </v-carousel-item>
             </v-carousel>
@@ -37,11 +44,22 @@
           <v-card-title>
             <strong>{{ project.service.name }}</strong>
           </v-card-title>
-          <v-card-subtitle class="service-description">{{ project.service.description }}</v-card-subtitle>
+          <v-card-subtitle class="service-description">{{
+            project.service.description
+          }}</v-card-subtitle>
           <v-card-text>
             <div class="rating-container">
-              <v-rating half-increments v-model="project.service.Calificacion.total" color="yellow-darken-3" readonly></v-rating>
-              <span class="rating-number">({{ project.service.Calificacion.total }})/{{ project.service.Calificacion.totales }}</span>
+              <v-rating
+                half-increments
+                v-model="project.service.Calificacion.total"
+                color="yellow-darken-3"
+                readonly
+              ></v-rating>
+              <span class="rating-number"
+                >({{ project.service.Calificacion.total }})/{{
+                  project.service.Calificacion.totales
+                }}</span
+              >
             </div>
           </v-card-text>
           <v-divider></v-divider>
@@ -56,9 +74,7 @@
         </v-card>
 
         <v-card>
-          <v-card-title>
-            Comentarios
-          </v-card-title>
+          <v-card-title> Comentarios </v-card-title>
           <v-card-text>
             <CommentCard v-if="comment" :comment="comment"></CommentCard>
           </v-card-text>
@@ -69,19 +85,24 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue';
-import { api } from '@/axios/axios.js';
-import { toast } from 'vue3-toastify';
+import { defineAsyncComponent } from "vue";
+import { api } from "@/axios/axios.js";
+import { toast } from "vue3-toastify";
 
 export default {
   components: {
-    CommentCard: defineAsyncComponent(() => import(/* webpackChunkName: "Navbar" */ '@/modules/profile/components/CommentCard.vue'))
+    CommentCard: defineAsyncComponent(
+      () =>
+        import(
+          /* webpackChunkName: "Navbar" */ "@/modules/profile/components/CommentCard.vue"
+        ),
+    ),
   },
   data() {
     return {
       overlay: false,
       project: null,
-      comment: null
+      comment: null,
     };
   },
   async created() {
@@ -91,14 +112,16 @@ export default {
       const { data } = await api.get(`/feature/get/${id}`);
       this.project = data.project;
 
-      const { data: commentData } = await api.get(`/comment/getCommentByScheduledId/${this.project.scheduleService._id}`);
+      const { data: commentData } = await api.get(
+        `/comment/getCommentByScheduledId/${this.project.scheduleService._id}`,
+      );
       this.comment = commentData.comment;
       this.overlay = false;
     } catch (error) {
-      toast.error('Error fetching project or comment data');
+      toast.error("Error fetching project or comment data");
       this.overlay = false;
     }
-  }
+  },
 };
 </script>
 

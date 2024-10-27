@@ -1,9 +1,9 @@
-import { mount } from '@vue/test-utils';
-import ProjectsDestacados from '@/modules/passProjects/pages/ProjectDestacados.vue';
-import { api } from '@/axios/axios.js';
+import { mount } from "@vue/test-utils";
+import ProjectsDestacados from "@/modules/passProjects/pages/ProjectDestacados.vue";
+import { api } from "@/axios/axios.js";
 
 // Mock de la API
-jest.mock('@/axios/axios.js', () => ({
+jest.mock("@/axios/axios.js", () => ({
   api: {
     get: jest.fn(),
   },
@@ -12,21 +12,21 @@ jest.mock('@/axios/axios.js', () => ({
 // Función para esperar las promesas
 const waitForPromises = () => new Promise((resolve) => setTimeout(resolve, 0));
 
-describe('ProjectsDestacados.vue', () => {
+describe("ProjectsDestacados.vue", () => {
   let wrapper;
 
   const mockServices = [
-    { _id: '1', tipo: 'Service A' },
-    { _id: '2', tipo: 'Service B' },
+    { _id: "1", tipo: "Service A" },
+    { _id: "2", tipo: "Service B" },
   ];
 
   const mockProjects = [
     {
-      _id: '101',
-      images: [{ secure_url: 'http://image1.jpg' }],
-      description: 'Project 101',
-      service: { name: 'Service A', tipoDeServicio: { _id: '1' } },
-      scheduleService: { description: 'Details 101', quote: 500 },
+      _id: "101",
+      images: [{ secure_url: "http://image1.jpg" }],
+      description: "Project 101",
+      service: { name: "Service A", tipoDeServicio: { _id: "1" } },
+      scheduleService: { description: "Details 101", quote: 500 },
     },
   ];
 
@@ -45,31 +45,31 @@ describe('ProjectsDestacados.vue', () => {
     await waitForPromises();
   });
 
-  it('debería renderizar correctamente los servicios y proyectos', () => {
+  it("debería renderizar correctamente los servicios y proyectos", () => {
     expect(wrapper.exists()).toBe(true);
-    const cards = wrapper.findAllComponents({ name: 'ProjectCard' });
+    const cards = wrapper.findAllComponents({ name: "ProjectCard" });
     expect(cards.length).toBe(mockProjects.length);
   });
 
-  it('debería actualizar los proyectos al seleccionar un servicio', async () => {
-    const select = wrapper.find('select');
+  it("debería actualizar los proyectos al seleccionar un servicio", async () => {
+    const select = wrapper.find("select");
     if (select.exists()) {
-      await select.setValue('1');
+      await select.setValue("1");
       await waitForPromises();
 
       const filteredProjects = wrapper.vm.filteredProjects;
       expect(filteredProjects).toHaveLength(1);
-      expect(filteredProjects[0].service.tipoDeServicio._id).toBe('1');
+      expect(filteredProjects[0].service.tipoDeServicio._id).toBe("1");
     } else {
-      console.warn('El elemento select no se encontró.');
+      console.warn("El elemento select no se encontró.");
     }
   });
 
-  it('debería paginar correctamente los proyectos', async () => {
+  it("debería paginar correctamente los proyectos", async () => {
     wrapper.vm.projectsPerPage = 1;
     await waitForPromises();
 
-    const cards = wrapper.findAllComponents({ name: 'ProjectCard' });
+    const cards = wrapper.findAllComponents({ name: "ProjectCard" });
     expect(cards.length).toBe(1);
     expect(wrapper.vm.totalPages).toBe(1);
   });

@@ -1,13 +1,7 @@
-<template>
-  Hola
-</template>
+<template>Hola</template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>

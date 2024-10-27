@@ -1,6 +1,6 @@
 <template>
-  <h3 class="text-h6">{{ $t('registration.userdata.titleString') }}</h3>
-  <br>
+  <h3 class="text-h6">{{ $t("registration.userdata.titleString") }}</h3>
+  <br />
   <v-row>
     <v-col>
       <v-text-field
@@ -46,10 +46,24 @@
           :model-value="passwordStrength"
           striped
         ></v-progress-linear>
-        <span v-if="passwordStrength >= 0 && passwordStrength < 50" class="red--text">{{ $t('registration.userdata.veryWeakPasswordString') }}</span>
-        <span v-else-if="passwordStrength >= 50 && passwordStrength < 75" class="red--text">{{ $t('registration.userdata.weakPasswordString') }}</span>
-        <span v-else-if="passwordStrength >= 75 && passwordStrength < 100" class="orange--text">{{ $t('registration.userdata.goodPassword') }}</span>
-        <span v-else class="green--text">{{ $t('registration.userdata.excellentPassword') }}</span>
+        <span
+          v-if="passwordStrength >= 0 && passwordStrength < 50"
+          class="red--text"
+          >{{ $t("registration.userdata.veryWeakPasswordString") }}</span
+        >
+        <span
+          v-else-if="passwordStrength >= 50 && passwordStrength < 75"
+          class="red--text"
+          >{{ $t("registration.userdata.weakPasswordString") }}</span
+        >
+        <span
+          v-else-if="passwordStrength >= 75 && passwordStrength < 100"
+          class="orange--text"
+          >{{ $t("registration.userdata.goodPassword") }}</span
+        >
+        <span v-else class="green--text">{{
+          $t("registration.userdata.excellentPassword")
+        }}</span>
       </div>
       <v-text-field
         v-model="formData.confirmPassword"
@@ -78,79 +92,83 @@
 </template>
 
 <script>
-import { 
+import {
   userNameValidate,
   emailValidate,
   passwordValidate,
-  checkStrengthValid
-} from '@/plugins/validations';
+  checkStrengthValid,
+} from "@/plugins/validations";
 export default {
   data() {
     return {
       formData: {
-        userName: '',
-        email: '',
-        password: '',     
-        confirmPassword: '',
-        agreeToTerms : false
+        userName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        agreeToTerms: false,
       },
       passwordStrength: 0,
-      color : '',
+      color: "",
       passwordVisibleConfirm: false,
       passwordVisible: false,
-      errors : {
-        userName: '',
-        email: '',
-        password: '',     
-        confirmPassword: '',
-        agreeToTerms : ''
-      }
+      errors: {
+        userName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        agreeToTerms: "",
+      },
     };
   },
-  methods : {
-    togglePasswordVisibility () {
+  methods: {
+    togglePasswordVisibility() {
       this.passwordVisible = !this.passwordVisible;
     },
-    togglePasswordVisibilityConfirm () {
+    togglePasswordVisibilityConfirm() {
       this.passwordVisibleConfirm = !this.passwordVisibleConfirm;
     },
-    validateUserName () {
-      this.errors.userName = userNameValidate(this.formData.userName)
-      this.$emit('updateData', this.formData, this.errors);
+    validateUserName() {
+      this.errors.userName = userNameValidate(this.formData.userName);
+      this.$emit("updateData", this.formData, this.errors);
     },
-    validateEmail () {
-      this.errors.email = emailValidate(this.formData.email)
-      this.$emit('updateData', this.formData, this.errors);
+    validateEmail() {
+      this.errors.email = emailValidate(this.formData.email);
+      this.$emit("updateData", this.formData, this.errors);
     },
-    validatePswd () {
-      if (this.formData.password === this.formData.confirmPassword){
-        this.errors.confirmPassword = ''
-        this.errors.password = ''
+    validatePswd() {
+      if (this.formData.password === this.formData.confirmPassword) {
+        this.errors.confirmPassword = "";
+        this.errors.password = "";
       }
-      this.errors.password = passwordValidate(this.formData.password)
-      this.validateForcePsw()
-      this.$emit('updateData', this.formData, this.errors);
+      this.errors.password = passwordValidate(this.formData.password);
+      this.validateForcePsw();
+      this.$emit("updateData", this.formData, this.errors);
     },
-    validateTerms () {
-      this.formData.agreeToTerms = !this.formData.agreeToTerms
-      this.$emit('updateData', this.formData, this.errors);
+    validateTerms() {
+      this.formData.agreeToTerms = !this.formData.agreeToTerms;
+      this.$emit("updateData", this.formData, this.errors);
     },
-    validateConfPswd () {
-      if (this.formData.password === this.formData.confirmPassword){
-        this.errors.confirmPassword = ''
-        this.errors.password = ''
+    validateConfPswd() {
+      if (this.formData.password === this.formData.confirmPassword) {
+        this.errors.confirmPassword = "";
+        this.errors.password = "";
       }
-      this.errors.confirmPassword = passwordValidate(this.formData.confirmPassword)
-      this.$emit('updateData', this.formData, this.errors);
+      this.errors.confirmPassword = passwordValidate(
+        this.formData.confirmPassword,
+      );
+      this.$emit("updateData", this.formData, this.errors);
     },
-    validateForcePsw () {
-      const { passwordStrength, color } = checkStrengthValid(this.formData.password);
-      this.passwordStrength = passwordStrength
-      this.color = color
-    }
+    validateForcePsw() {
+      const { passwordStrength, color } = checkStrengthValid(
+        this.formData.password,
+      );
+      this.passwordStrength = passwordStrength;
+      this.color = color;
+    },
   },
-  mounted () {
-    this.$emit('updateData', this.formData, this.errors);
-  }
+  mounted() {
+    this.$emit("updateData", this.formData, this.errors);
+  },
 };
 </script>

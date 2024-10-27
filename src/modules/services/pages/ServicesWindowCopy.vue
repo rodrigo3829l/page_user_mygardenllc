@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid style="background-color: #f0f0f0;">
+  <v-container fluid style="background-color: #f0f0f0">
     <!-- Buscador y Título -->
     <v-container>
       <v-row class="py-4">
@@ -21,104 +21,109 @@
       </v-row>
     </v-container>
   </v-container>
-    <!-- Sección de Categorías y Servicios -->
-    <v-container>
-      <v-row class="py-4">
-        <!-- Categorías -->
-        <v-col cols="12" sm="4" md="3">
-          <v-list dense>
-            <v-list-item-title>Categories</v-list-item-title>
-            <v-list-item
-              @click="filterByCategory({ _id: 'all', tipo: 'all' })"
-              class="clickable"
-            >
-              All
-            </v-list-item>
+  <!-- Sección de Categorías y Servicios -->
+  <v-container>
+    <v-row class="py-4">
+      <!-- Categorías -->
+      <v-col cols="12" sm="4" md="3">
+        <v-list dense>
+          <v-list-item-title>Categories</v-list-item-title>
+          <v-list-item
+            @click="filterByCategory({ _id: 'all', tipo: 'all' })"
+            class="clickable"
+          >
+            All
+          </v-list-item>
 
-            <v-list-item
-              v-for="(category, i) in categories"
+          <v-list-item
+            v-for="(category, i) in categories"
+            :key="i"
+            @click="filterByCategory(category)"
+            class="clickable"
+          >
+            {{ category.tipo }}
+          </v-list-item>
+        </v-list>
+      </v-col>
+
+      <!-- Cards de Servicios -->
+      <v-col cols="12" sm="8" md="9">
+        <v-row>
+          <template v-if="loading">
+            <v-col cols="12" sm="6" md="6" v-for="n in 2" :key="n">
+              <SkeletonServices />
+            </v-col>
+          </template>
+          <template v-else-if="paginatedServices.length === 0">
+            <v-col cols="12" class="text-center">
+              <v-alert color="green-darken-3" type="info" dismissible>
+                No service found
+              </v-alert>
+            </v-col>
+          </template>
+          <template v-else>
+            <v-col
+              v-for="(service, i) in paginatedServices"
               :key="i"
-              @click="filterByCategory(category)"
-              class="clickable"
+              cols="12"
+              sm="6"
+              md="6"
             >
-              {{ category.tipo }}
-            </v-list-item>
-          </v-list>
-        </v-col>
+              <ProyectsCard :service="service" />
+            </v-col>
+          </template>
+        </v-row>
 
-        <!-- Cards de Servicios -->
-        <v-col cols="12" sm="8" md="9">
-          <v-row>
-            <template v-if="loading">
-              <v-col cols="12" sm="6" md="6" v-for="n in 2" :key="n">
-                <SkeletonServices />
-              </v-col>
-            </template>
-            <template v-else-if="paginatedServices.length === 0">
-              <v-col cols="12" class="text-center">
-                <v-alert color="green-darken-3" type="info" dismissible>
-                  No service found
-                </v-alert>
-              </v-col>
-            </template>
-            <template v-else>
-              <v-col
-                v-for="(service, i) in paginatedServices"
-                :key="i"
-                cols="12"
-                sm="6"
-                md="6"
-              >
-                <ProyectsCard :service="service" />
-              </v-col>
-            </template>
-          </v-row>
-
-          <!-- Componente de Paginación -->
-          <v-pagination
-            v-if="totalPages > 1"
-            v-model="currentPage"
-            :length="totalPages"
-            :total-visible="7"
-          ></v-pagination>
-        </v-col>
-      </v-row>
-    </v-container>
-
+        <!-- Componente de Paginación -->
+        <v-pagination
+          v-if="totalPages > 1"
+          v-model="currentPage"
+          :length="totalPages"
+          :total-visible="7"
+        ></v-pagination>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue';
-import { api } from '@/axios/axios.js';
+import { defineAsyncComponent } from "vue";
+import { api } from "@/axios/axios.js";
 
 export default {
-  name: 'ServicesPage',
+  name: "ServicesPage",
   components: {
-    ProyectsCard: defineAsyncComponent(() => import('@/modules/shared/components/ProyectsCard.vue')),
-    SkeletonServices: defineAsyncComponent(() => import('@/modules/services/components/SkeletonServices.vue'))
+    ProyectsCard: defineAsyncComponent(
+      () => import("@/modules/shared/components/ProyectsCard.vue"),
+    ),
+    SkeletonServices: defineAsyncComponent(
+      () => import("@/modules/services/components/SkeletonServices.vue"),
+    ),
   },
   data() {
     return {
-      search: '',
+      search: "",
       categories: [],
       services: [],
-      currentCategory: 'all',
+      currentCategory: "all",
       currentPage: 1,
       servicesPerPage: 2, // Cantidad de servicios por página
-      loading: false // Estado de carga
+      loading: false, // Estado de carga
     };
   },
   computed: {
     filteredServices() {
       let filtered = this.services;
 
-      if (this.currentCategory !== 'all') {
-        filtered = filtered.filter(service => service.tipoDeServicio.tipo === this.currentCategory);
+      if (this.currentCategory !== "all") {
+        filtered = filtered.filter(
+          (service) => service.tipoDeServicio.tipo === this.currentCategory,
+        );
       }
 
       if (this.search.trim()) {
-        filtered = filtered.filter(service =>
-          service.name.toLowerCase().includes(this.search.toLowerCase())
+        filtered = filtered.filter((service) =>
+          service.name.toLowerCase().includes(this.search.toLowerCase()),
         );
       }
 
@@ -138,16 +143,16 @@ export default {
   methods: {
     async fetchServices() {
       this.loading = true; // Comienza a cargar
-      const { data } = await api.get('/services/get');
+      const { data } = await api.get("/services/get");
       this.services = data.services;
       this.loading = false; // Finaliza la carga
     },
     async fetchCategories() {
-      const { data } = await api.get('/typeservice/get');
-      this.categories = [...data.tipesServices.filter(item => item.isUsable)];
+      const { data } = await api.get("/typeservice/get");
+      this.categories = [...data.tipesServices.filter((item) => item.isUsable)];
     },
     filterByCategory(category) {
-      this.currentCategory = category.tipo === 'all' ? 'all' : category.tipo;
+      this.currentCategory = category.tipo === "all" ? "all" : category.tipo;
       this.currentPage = 1; // Reinicia la página al cambiar de categoría
       this.fetchServices(); // Vuelve a cargar los servicios al cambiar de categoría
     },
@@ -156,14 +161,14 @@ export default {
       this.fetchServices(); // Vuelve a cargar los servicios al buscar
     },
     handleClear() {
-      this.currentCategory = 'all'; // Restablece la categoría a "all"
+      this.currentCategory = "all"; // Restablece la categoría a "all"
       this.fetchServices(); // Vuelve a cargar los servicios
-    }
+    },
   },
   watch: {
     search() {
       this.handleSearch();
-    }
+    },
   },
   created() {
     this.fetchServices();

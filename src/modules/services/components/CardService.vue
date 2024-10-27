@@ -39,11 +39,7 @@ export default {
 </style> -->
 
 <template>
-  <v-card
-    :loading="loading"
-    class="mx-auto my-12"
-    max-width="374"
-  >
+  <v-card :loading="loading" class="mx-auto my-12" max-width="374">
     <template v-slot:loader="{ isActive }">
       <v-progress-linear
         :active="isActive"
@@ -53,22 +49,14 @@ export default {
       ></v-progress-linear>
     </template>
 
-    <v-img
-      cover
-      height="250"
-      :src="proyecto.img"
-    ></v-img>
+    <v-img cover height="250" :src="proyecto.img"></v-img>
 
     <v-card-item>
-      <v-card-title>{{proyecto.nombre}}</v-card-title>
-
+      <v-card-title>{{ proyecto.nombre }}</v-card-title>
     </v-card-item>
 
     <v-card-text>
-      <v-row
-        align="center"
-        class="mx-0"
-      >
+      <v-row align="center" class="mx-0">
         <v-rating
           :model-value="proyecto.rating"
           color="amber"
@@ -78,14 +66,11 @@ export default {
           size="small"
         ></v-rating>
 
-        <div class="text-grey ms-4">
-          {{ proyecto.rating }} (413)
-        </div>
+        <div class="text-grey ms-4">{{ proyecto.rating }} (413)</div>
       </v-row>
-      <br>
-      
+      <br />
 
-      <div>{{ proyecto.descripcion   }}</div>
+      <div>{{ proyecto.descripcion }}</div>
     </v-card-text>
 
     <v-divider class="mx-4 mb-1"></v-divider>
@@ -103,11 +88,7 @@ export default {
     </div>
 
     <v-card-actions>
-      <v-btn
-        color="green-darken-3"
-        variant="text"
-        @click="reserve"
-      >
+      <v-btn color="green-darken-3" variant="text" @click="reserve">
         Reserve
       </v-btn>
     </v-card-actions>
@@ -115,23 +96,23 @@ export default {
 </template>
 
 <script>
-  export default {
-    props: {
-      proyecto: {
-        type: Object,
-      },
+export default {
+  props: {
+    proyecto: {
+      type: Object,
     },
-    data: () => ({
-      loading: false,
-      selection: 1,
-    }),
+  },
+  data: () => ({
+    loading: false,
+    selection: 1,
+  }),
 
-    methods: {
-      reserve () {
-        this.loading = true
+  methods: {
+    reserve() {
+      this.loading = true;
 
-        setTimeout(() => (this.loading = false), 2000)
-      },
+      setTimeout(() => (this.loading = false), 2000);
     },
-  }
+  },
+};
 </script>

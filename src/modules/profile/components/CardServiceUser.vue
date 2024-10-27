@@ -1,11 +1,7 @@
 <template>
   <v-card class="mx-auto" max-width="344">
     <!-- Primera fila: Imagen con chip para el status -->
-    <v-img
-      :src="service.img.secure_url"
-      height="200px"
-      cover
-    >
+    <v-img :src="service.img.secure_url" height="200px" cover>
       <!-- Chip para el status -->
       <v-chip
         variant="elevated"
@@ -25,9 +21,7 @@
     </v-card-title>
 
     <!-- Tercera fila: Última fecha de actualización -->
-    <v-card-subtitle>
-      Last updated {{ lastUpdated }}
-    </v-card-subtitle>
+    <v-card-subtitle> Last updated {{ lastUpdated }} </v-card-subtitle>
 
     <!-- Cuarta fila: Botones de acción -->
     <v-card-actions>
@@ -57,36 +51,37 @@ export default {
   computed: {
     statusColor() {
       switch (this.service.status) {
-        case 'development':
-          return 'yellow';
-        case 'quoted':
-          return 'orange'; // Color para estado quoted
-        case 'canceled':
-          return 'red';
-        case 'finish':
-          return 'green';
-        case 'quoting':
-          return 'blue'; // Color para estado quoting
+        case "development":
+          return "yellow";
+        case "quoted":
+          return "orange"; // Color para estado quoted
+        case "canceled":
+          return "red";
+        case "finish":
+          return "green";
+        case "quoting":
+          return "blue"; // Color para estado quoting
         default:
-          return 'grey';
+          return "grey";
       }
     },
     lastUpdated() {
       const status = this.service.status;
       let referenceDate;
 
-      if (status === 'quoting') {
+      if (status === "quoting") {
         referenceDate = this.service.dates.reserved;
-      } else if (status === 'finish') {
+      } else if (status === "finish") {
         referenceDate = this.service.dates.quoted;
-      } else if (status === 'quoted' || status === 'development') {
+      } else if (status === "quoted" || status === "development") {
         referenceDate = this.service.dates.quoted;
-      } else if (status === 'canceled') {
-        referenceDate = this.service.dates.quoted || this.service.dates.reserved;
+      } else if (status === "canceled") {
+        referenceDate =
+          this.service.dates.quoted || this.service.dates.reserved;
       }
 
       if (!referenceDate) {
-        return 'Unknown';
+        return "Unknown";
       }
 
       const currentDate = new Date();
@@ -110,34 +105,37 @@ export default {
 
       // Botón para ver información
       buttons.push({
-        text: 'View',
-        color: 'success',
+        text: "View",
+        color: "success",
         action: () => this.info(),
       });
 
       // Botón para reagendar si el status es quoting
-      if (this.service.status === 'quoting') {
+      if (this.service.status === "quoting") {
         buttons.push({
-          text: 'Reprog',
-          color: 'primary',
+          text: "Reprog",
+          color: "primary",
           action: () => this.reschedule(),
         });
       }
 
       // Botón para cancelar si el status no es finish
-      if (this.service.status !== 'finish' && this.service.status !== 'canceled') {
+      if (
+        this.service.status !== "finish" &&
+        this.service.status !== "canceled"
+      ) {
         buttons.push({
-          text: 'Cancel',
-          color: 'error',
+          text: "Cancel",
+          color: "error",
           action: () => this.cancel(),
         });
       }
 
       // Botón para pagar si el status es quoted o si hay un monto pendiente
-      if (this.service.status === 'quoted' || this.service.pending != 0) {
+      if (this.service.status === "quoted" || this.service.pending != 0) {
         buttons.push({
-          text: 'Pay',
-          color: 'yellow-darken-4',
+          text: "Pay",
+          color: "yellow-darken-4",
           action: () => this.pay(),
         });
       }
@@ -147,19 +145,26 @@ export default {
   },
   methods: {
     reschedule() {
-      this.$emit('updateData', {
-        id: this.service._id,
-        date: this.service.dates.scheduledTime,
-      }, 'reschedule');
+      this.$emit(
+        "updateData",
+        {
+          id: this.service._id,
+          date: this.service.dates.scheduledTime,
+        },
+        "reschedule",
+      );
     },
     cancel() {
-      this.$emit('updateData', this.service._id, 'cancel');
+      this.$emit("updateData", this.service._id, "cancel");
     },
     info() {
-      this.$router.push({ name: 'profile-infomyservices', params: { id: this.service._id } });
+      this.$router.push({
+        name: "profile-infomyservices",
+        params: { id: this.service._id },
+      });
     },
     pay() {
-      this.$emit('payService', this.service);
+      this.$emit("payService", this.service);
     },
   },
 };

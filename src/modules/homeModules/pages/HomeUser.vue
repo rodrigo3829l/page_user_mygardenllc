@@ -176,8 +176,7 @@
 </style>
  -->
 
-
- <template>
+<template>
   <v-container>
     <v-form @submit.prevent="submitComment">
       <v-text-field
@@ -195,30 +194,33 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   data() {
     return {
-      comment: '',
+      comment: "",
       snackbar: false,
-      snackbarMessage: ''
+      snackbarMessage: "",
     };
   },
   methods: {
     async submitComment() {
       try {
-        const response = await axios.post('http://127.0.0.1:5000/predict/comment', {
-          comment: this.comment
-        });
+        const response = await axios.post(
+          "http://127.0.0.1:5000/predict/comment",
+          {
+            comment: this.comment,
+          },
+        );
         this.snackbarMessage = `Predicción: ${response.data.prediction}`;
       } catch (error) {
-        this.snackbarMessage = 'Error al realizar la predicción';
+        this.snackbarMessage = "Error al realizar la predicción";
       } finally {
         this.snackbar = true;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

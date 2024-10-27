@@ -1,337 +1,336 @@
 {
-    "navbar" : {
-      "homeString": "Inicio",
-      "servicesString": "Servicios",
-      "projectsString": "Proyectos",
-      "contactString": "Contacto",
-      "faqsString": "Preguntas frecuentes",
-      "loginString": "Iniciar sesión",
-      "yourAccountString" :  "Tu cuenta",
-      "yourServices" : "Tus servicios",
-      "logoutString" : "Cerrar sesion",
-      "subtitleString" : "Servicios de jardineria y mas."
-    },
-    "home" : {
-      "tittleString": "Mi Jardín LLC",
-      "subtitleString": "Servicios de Jardinería, Mantenimiento y Construcción.",
-      "button" : "EXPLORA NUESTROS SERVICIOS",
-      "CompanyString" : "Nuestra Compañía",
-      "aboutTitleString" : "Acerca de",
-      "aboutDescriptionString" : "Mi Jardín, LLC es una empresa con sede en Atlanta, Georgia, EE. UU., y se trata de hacer que los jardines luzcan increíbles y construir cosas geniales. Iniciamos en agosto de 2020, gracias a la idea de nuestro fundador, Maximus Hernández Hernández, un joven mexicano lleno de espíritu. Comenzó esta empresa con el objetivo de llevar servicios de primera categoría y geniales al ámbito de la jardinería y la construcción.",
-      "missionTitleString" : "Nuestra Misión",
-      "missionDescriptionString" : "Como empresa familiar, entendemos completamente lo crucial que es construir conexiones sólidas con nuestra gente. Nos enfocamos en ofrecer un trabajo de primera calidad que perdure en el tiempo, utilizando materiales de primera y cuidando cada detalle. Cuando eliges a Mi Jardín LLC, no solo obtienes servicios de jardinería, sino que también consigues un compañero comprometido para crear un espacio exterior en el que te sentirás a gusto durante años. ¡Confía en nosotros, será increíble!",
-      "proyectTitleString" : "Proyectos",
-      "commentsTitleString" : "Comentarios",
-      "telephoneString" : "Contacto telefónico",
-      "emailString" : "Correo de contacto",
-      "proyectSring":"Proyectos",
-      "commentsString":"Comentarios"
-    },
-    "footer":{
-      "titleString":"Mi Jardín LLC",
-      "descriptionString":"Servicios de jardinería, mantenimiento y construcción",
-      "privacyPolicyString":"Política de Privacidad",
-      "termsAndConditionsString":"Términos y Condiciones",
-      "binBataString":"Bina Data",
-      "ourScheduleString":"Nuestro Horario",
-      "mondayString":"Lunes - Viernes: 9:00 AM - 5:00 PM",
-      "saturdayString":"Sábado: 10:00 AM - 2:00 PM",
-      "sundayClosedString":"Domingo: Cerrado",
-      "contactString":"Contacto",
-      "addressString":"Dirección: Calle Principal 123, Ciudad",
-      "phoneString":"Teléfono: +001 (470) 234-1526",
-      "emailString":"Correo electrónico: ",
-      "mapString":"Mapa"
-    },
-    "services":{
-      "searchString":"Busca tu servicio favorito",
-      "gardeningString":"Jardinería",
-      "tagsString":"Etiquetas",
-      "reserveString":"Reservar",
-      "ConstructionString":"Construcción",
-      "CleaningString":"Limpieza",
-      "MaintenanceString":"Mantenimiento"
-    },
-    "projects":{
-      "gardeningString":"Jardinería",
-      "constructionString":"Construcción",
-      "cleaningString":"Limpieza",
-      "maintenanceString":"Mantenimiento",
-      "example5String":"Ejemplo 5",
-      "example6String":"Ejemplo 6",
-      "buttonString":"MÁS INFORMACIÓN"
-    },
-    "contact":{
-      "contactInformationString":"Información de contacto",
-      "countryString":"123 Calle Principal, Ciudad, País",
-      "dayOfServiceString":"Lunes a Viernes: 9:00 AM - 6:00 PM",
-      "ContactString":"Contacto",
-      "nameString":"Nombre",
-      "emailString":"Correo electrónico",
-      "subjectString":"Asunto",
-      "messageString":"Mensaje",
-      "buttonString":"Enviar"
-    },
-    "faqs":{
-      "titleString":"Preguntas Frecuentes",
-      "buttonShowAllString":"MOSTRAR TODO",
-      "buttonHideAllString":"OCULTAR TODO"
-    },
-    "login":{
-      "pages":{
-        "sendMail":{
-          "phoneNumberString":"Numero de Telefono",
-          "enterPhoneString":"Ingrese su número telefónico",
-          "optionEmailString":" No te gusta esta opción, probemos por el correo"
-        },
-        "sendPhoneCode":{
-          "phoneNumberString":"Numero de Telefono"
-        }
+  "navbar": {
+    "homeString": "Inicio",
+    "servicesString": "Servicios",
+    "projectsString": "Proyectos",
+    "contactString": "Contacto",
+    "faqsString": "Preguntas frecuentes",
+    "loginString": "Iniciar sesión",
+    "yourAccountString": "Tu cuenta",
+    "yourServices": "Tus servicios",
+    "logoutString": "Cerrar sesion",
+    "subtitleString": "Servicios de jardineria y mas."
+  },
+  "home": {
+    "tittleString": "Mi Jardín LLC",
+    "subtitleString": "Servicios de Jardinería, Mantenimiento y Construcción.",
+    "button": "EXPLORA NUESTROS SERVICIOS",
+    "CompanyString": "Nuestra Compañía",
+    "aboutTitleString": "Acerca de",
+    "aboutDescriptionString": "Mi Jardín, LLC es una empresa con sede en Atlanta, Georgia, EE. UU., y se trata de hacer que los jardines luzcan increíbles y construir cosas geniales. Iniciamos en agosto de 2020, gracias a la idea de nuestro fundador, Maximus Hernández Hernández, un joven mexicano lleno de espíritu. Comenzó esta empresa con el objetivo de llevar servicios de primera categoría y geniales al ámbito de la jardinería y la construcción.",
+    "missionTitleString": "Nuestra Misión",
+    "missionDescriptionString": "Como empresa familiar, entendemos completamente lo crucial que es construir conexiones sólidas con nuestra gente. Nos enfocamos en ofrecer un trabajo de primera calidad que perdure en el tiempo, utilizando materiales de primera y cuidando cada detalle. Cuando eliges a Mi Jardín LLC, no solo obtienes servicios de jardinería, sino que también consigues un compañero comprometido para crear un espacio exterior en el que te sentirás a gusto durante años. ¡Confía en nosotros, será increíble!",
+    "proyectTitleString": "Proyectos",
+    "commentsTitleString": "Comentarios",
+    "telephoneString": "Contacto telefónico",
+    "emailString": "Correo de contacto",
+    "proyectSring": "Proyectos",
+    "commentsString": "Comentarios"
+  },
+  "footer": {
+    "titleString": "Mi Jardín LLC",
+    "descriptionString": "Servicios de jardinería, mantenimiento y construcción",
+    "privacyPolicyString": "Política de Privacidad",
+    "termsAndConditionsString": "Términos y Condiciones",
+    "binBataString": "Bina Data",
+    "ourScheduleString": "Nuestro Horario",
+    "mondayString": "Lunes - Viernes: 9:00 AM - 5:00 PM",
+    "saturdayString": "Sábado: 10:00 AM - 2:00 PM",
+    "sundayClosedString": "Domingo: Cerrado",
+    "contactString": "Contacto",
+    "addressString": "Dirección: Calle Principal 123, Ciudad",
+    "phoneString": "Teléfono: +001 (470) 234-1526",
+    "emailString": "Correo electrónico: ",
+    "mapString": "Mapa"
+  },
+  "services": {
+    "searchString": "Busca tu servicio favorito",
+    "gardeningString": "Jardinería",
+    "tagsString": "Etiquetas",
+    "reserveString": "Reservar",
+    "ConstructionString": "Construcción",
+    "CleaningString": "Limpieza",
+    "MaintenanceString": "Mantenimiento"
+  },
+  "projects": {
+    "gardeningString": "Jardinería",
+    "constructionString": "Construcción",
+    "cleaningString": "Limpieza",
+    "maintenanceString": "Mantenimiento",
+    "example5String": "Ejemplo 5",
+    "example6String": "Ejemplo 6",
+    "buttonString": "MÁS INFORMACIÓN"
+  },
+  "contact": {
+    "contactInformationString": "Información de contacto",
+    "countryString": "123 Calle Principal, Ciudad, País",
+    "dayOfServiceString": "Lunes a Viernes: 9:00 AM - 6:00 PM",
+    "ContactString": "Contacto",
+    "nameString": "Nombre",
+    "emailString": "Correo electrónico",
+    "subjectString": "Asunto",
+    "messageString": "Mensaje",
+    "buttonString": "Enviar"
+  },
+  "faqs": {
+    "titleString": "Preguntas Frecuentes",
+    "buttonShowAllString": "MOSTRAR TODO",
+    "buttonHideAllString": "OCULTAR TODO"
+  },
+  "login": {
+    "pages": {
+      "sendMail": {
+        "phoneNumberString": "Numero de Telefono",
+        "enterPhoneString": "Ingrese su número telefónico",
+        "optionEmailString": " No te gusta esta opción, probemos por el correo"
       },
-      "titleString":"Iniciar sesión",
-      "emailString":"Correo electrónico o usuario",
-      "InsertUserEmailString":"Inserta un usuario o correo electrónico válido",
-      "passwordString":"Contraseña",
-      "insertValidPasswordString":"Inserta una contraseña válida",
-      "descriptionWarningString":"Advertencia: Después de 3 intentos fallidos consecutivos de inicio de sesión, tu cuenta se bloqueará temporalmente durante tres horas. Si necesitas iniciar sesión ahora, también puedes hacer clic en ¿Olvidaste tu contraseña? abajo para restablecer la contraseña de inicio de sesión.",
-      "buttonString":"INGRESAR",
-      "registrationString":"¿No tienes una cuenta? Regístrate",
-      "forgotPasswordString":"¿Olvidaste tu contraseña? Recupérala aquí",
-      "alertLength" : "La contraseña debe tener al menos 6 caracteres de longitud.",
-      "alertUppercase" : "La contraseña debe contener al menos una letra mayúscula.",
-      "alertNumber" : "La contraseña debe contener al menos un número.",
-      "alertCharacter" : "La contraseña debe contener solo un carácter especial.",
-      "alertEmail" : "Debe ser un correo electrónico válido con un dominio admitido.",
-      "tittleAlert" : "Inicio de sesión exitoso",
-      "messageAlert" : "Bienvenido" 
-    },
-    "registration":{
-      "buttons" : {
-        "buttonNextString":"SIGUIENTE PASO",
-        "buttonPreviousString":"PASO ANTERIOR",
-        "signUp":"REGISTRARME"
-      },
-      "personalInformation":{
-        "titleString":"Información Personal",
-        "firstNameString":"Nombre",
-        "lastNameString":"Apellido paterno",
-        "middleString":"Apellido materno",
-        "dateString":"Fecha de Nacimiento",
-        "genderString":"Selecciona tu género",
-        "maleString" : "Hombre",
-        "femaleString" : "Mujer",
-        "ladeString":"lada",
-        "phoneString":"Número de teléfono",
-        "titlePictureString":"Foto de Perfil",
-        "selectPictureString":"Selecciona tu foto de perfil",
-        "selectImageString":"Seleccionar Imagen"
-      },
-      "LocationDetails":{
-        "titleString":"Detalles de Ubicación",
-        "postalString":"Código Postal",
-        "buttonString":"VALIDAR",
-        "cityString":"Ciudad",
-        "streetString":"Calle",
-        "neighborhoodString":"Vecindario",
-        "placeholderNeighboorhood" : "Ingresa tu vecindario",
-        "houseString":"Número de Casa",
-        "placeholderNumHouse" : "Ingresa tu numero de casa"
-      },
-      "userdata":{
-        "titleString":"Datos de Usuario",
-        "userString":"Nombre de Usuario",
-        "userNameString":"Ej. Usuario38",
-        "emailString":"Correo electrónico",
-        "userEmailString":"usuariodominio.com",
-        "passwordString":"Contraseña",
-        "helloString":"Hola12#",
-        "confirmPasswordString":"Confirmar Contraseña",
-        "descriptionString":"Acepto los Términos y Condiciones para registrarme en esta página.",
-        "weakPasswordString" : "Contraseña débil",
-        "goodPassword" : "Contraseña buena",
-        "excellentPassword" : "Contraseña excelente"
-      },
-      "alerts" : {
-        "postalCode" : "Código postal inválido",
-        "serviceOnly" : "El servicio solo se ofrece en Atlanta",
-        "imageFile" : "Por favor, seleccione un archivo de imagen.",
-        "sizeFile" : "El tamaño del archivo debe ser de hasta 4 megabytes.",
-        "validImage" : "Por favor, seleccione un archivo de imagen válido.",
-        "firstName" : "Nombre inválido",
-        "lastName" : "Apellido paterno inválido",
-        "maidenName" : "Apellido materno invalido",
-        "dateBirth" : "Fecha de nacimiento inválida",
-        "lade" : "La Lada es obligatoria",
-        "number" : "Número de teléfono inválido",
-        "validatingPhone" : "Error al validar el número de teléfono",
-        "city" : "La ciudad es obligatoria",
-        "neighborhood" : "El vecindadio es obligatorio",
-        "invalidChars" : "Solo se permiten letras, números, espacios, apóstrofes y '#'",
-        "street" : "La calle es obligatoria",
-        "houseNumber" : "Número de casa inválido",
-        "userName" : "Nombre de usuario inválido",
-        "email" : "Debe ser un correo electrónico válido con un dominio admitido.",
-        "alertLength" : "La contraseña debe tener al menos 6 caracteres de longitud.",
-        "alertUppercase" : "La contraseña debe contener al menos una letra mayúscula.",
-        "alertNumber" : "La contraseña debe contener al menos un número.",
-        "alertCharacter" : "La contraseña debe contener solo un carácter especial.",
-        "dontMatch" : "Las contraseñas no coinciden.",
-        "tittleAlertError" : "¡Algo salió mal al registrar tu cuenta de jardinería! 🌿🚨",
-        "tittleAlertSuccess" : "¡Registro exitoso de cuenta de jardinería! 🌟🌻"
+      "sendPhoneCode": {
+        "phoneNumberString": "Numero de Telefono"
       }
     },
-    "passwordRecovery":{
-      "email" : {
-        "emailString":"Correo electrónico",
-        "optionString":"No te gusta esta opción, probemos por el teléfono",
-        "registeredString":"Correo registrado",
-        "enterEmailString":"Ingrese el correo electrónico asociado a la cuenta",
-        "buttonString":"CONFIRMAR",
-        "alertEmail" : "Debe ser un correo electrónico válido con un dominio admitido.",
-        "messageEmail" : "Este correo electrónico no ha sido registrado"
+    "titleString": "Iniciar sesión",
+    "emailString": "Correo electrónico o usuario",
+    "InsertUserEmailString": "Inserta un usuario o correo electrónico válido",
+    "passwordString": "Contraseña",
+    "insertValidPasswordString": "Inserta una contraseña válida",
+    "descriptionWarningString": "Advertencia: Después de 3 intentos fallidos consecutivos de inicio de sesión, tu cuenta se bloqueará temporalmente durante tres horas. Si necesitas iniciar sesión ahora, también puedes hacer clic en ¿Olvidaste tu contraseña? abajo para restablecer la contraseña de inicio de sesión.",
+    "buttonString": "INGRESAR",
+    "registrationString": "¿No tienes una cuenta? Regístrate",
+    "forgotPasswordString": "¿Olvidaste tu contraseña? Recupérala aquí",
+    "alertLength": "La contraseña debe tener al menos 6 caracteres de longitud.",
+    "alertUppercase": "La contraseña debe contener al menos una letra mayúscula.",
+    "alertNumber": "La contraseña debe contener al menos un número.",
+    "alertCharacter": "La contraseña debe contener solo un carácter especial.",
+    "alertEmail": "Debe ser un correo electrónico válido con un dominio admitido.",
+    "tittleAlert": "Inicio de sesión exitoso",
+    "messageAlert": "Bienvenido"
+  },
+  "registration": {
+    "buttons": {
+      "buttonNextString": "SIGUIENTE PASO",
+      "buttonPreviousString": "PASO ANTERIOR",
+      "signUp": "REGISTRARME"
+    },
+    "personalInformation": {
+      "titleString": "Información Personal",
+      "firstNameString": "Nombre",
+      "lastNameString": "Apellido paterno",
+      "middleString": "Apellido materno",
+      "dateString": "Fecha de Nacimiento",
+      "genderString": "Selecciona tu género",
+      "maleString": "Hombre",
+      "femaleString": "Mujer",
+      "ladeString": "lada",
+      "phoneString": "Número de teléfono",
+      "titlePictureString": "Foto de Perfil",
+      "selectPictureString": "Selecciona tu foto de perfil",
+      "selectImageString": "Seleccionar Imagen"
+    },
+    "LocationDetails": {
+      "titleString": "Detalles de Ubicación",
+      "postalString": "Código Postal",
+      "buttonString": "VALIDAR",
+      "cityString": "Ciudad",
+      "streetString": "Calle",
+      "neighborhoodString": "Vecindario",
+      "placeholderNeighboorhood": "Ingresa tu vecindario",
+      "houseString": "Número de Casa",
+      "placeholderNumHouse": "Ingresa tu numero de casa"
+    },
+    "userdata": {
+      "titleString": "Datos de Usuario",
+      "userString": "Nombre de Usuario",
+      "userNameString": "Ej. Usuario38",
+      "emailString": "Correo electrónico",
+      "userEmailString": "usuariodominio.com",
+      "passwordString": "Contraseña",
+      "helloString": "Hola12#",
+      "confirmPasswordString": "Confirmar Contraseña",
+      "descriptionString": "Acepto los Términos y Condiciones para registrarme en esta página.",
+      "weakPasswordString": "Contraseña débil",
+      "goodPassword": "Contraseña buena",
+      "excellentPassword": "Contraseña excelente"
+    },
+    "alerts": {
+      "postalCode": "Código postal inválido",
+      "serviceOnly": "El servicio solo se ofrece en Atlanta",
+      "imageFile": "Por favor, seleccione un archivo de imagen.",
+      "sizeFile": "El tamaño del archivo debe ser de hasta 4 megabytes.",
+      "validImage": "Por favor, seleccione un archivo de imagen válido.",
+      "firstName": "Nombre inválido",
+      "lastName": "Apellido paterno inválido",
+      "maidenName": "Apellido materno invalido",
+      "dateBirth": "Fecha de nacimiento inválida",
+      "lade": "La Lada es obligatoria",
+      "number": "Número de teléfono inválido",
+      "validatingPhone": "Error al validar el número de teléfono",
+      "city": "La ciudad es obligatoria",
+      "neighborhood": "El vecindadio es obligatorio",
+      "invalidChars": "Solo se permiten letras, números, espacios, apóstrofes y '#'",
+      "street": "La calle es obligatoria",
+      "houseNumber": "Número de casa inválido",
+      "userName": "Nombre de usuario inválido",
+      "email": "Debe ser un correo electrónico válido con un dominio admitido.",
+      "alertLength": "La contraseña debe tener al menos 6 caracteres de longitud.",
+      "alertUppercase": "La contraseña debe contener al menos una letra mayúscula.",
+      "alertNumber": "La contraseña debe contener al menos un número.",
+      "alertCharacter": "La contraseña debe contener solo un carácter especial.",
+      "dontMatch": "Las contraseñas no coinciden.",
+      "tittleAlertError": "¡Algo salió mal al registrar tu cuenta de jardinería! 🌿🚨",
+      "tittleAlertSuccess": "¡Registro exitoso de cuenta de jardinería! 🌟🌻"
+    }
+  },
+  "passwordRecovery": {
+    "email": {
+      "emailString": "Correo electrónico",
+      "optionString": "No te gusta esta opción, probemos por el teléfono",
+      "registeredString": "Correo registrado",
+      "enterEmailString": "Ingrese el correo electrónico asociado a la cuenta",
+      "buttonString": "CONFIRMAR",
+      "alertEmail": "Debe ser un correo electrónico válido con un dominio admitido.",
+      "messageEmail": "Este correo electrónico no ha sido registrado"
+    },
+    "otp": {
+      "tittleString": "Verifique Su Cuenta",
+      "messageMail": "Enviamos un código de verificación a: ",
+      "checkMessage": "Por favor, revise su correo electrónico y pegue el código a continuación.",
+      "resendString": "Reenviando en:",
+      "dontReceive": "¿No recibió el código?",
+      "resend": "Reenviar",
+      "alertInvalidCode": "Código inválido",
+      "resendingMessage": "Codigo reenviado",
+      "notResendingMessage": "Código no reenviado"
+    },
+    "confirm": {
+      "tittleString": "Cambiar contraseña",
+      "passwordTittleString": "Nueva contraseña",
+      "passwordLabel": "Ingrese una nueva contraseña válida",
+      "weakPasswordString": "Contraseña débil",
+      "goodPassword": "Contraseña buena",
+      "excellentPassword": "Contraseña excelente",
+      "confirmPasswordTittle": "Confirme su contraseña",
+      "confirmPasswordLabel": "Valide su contraseña",
+      "buttonString": "Confirmar",
+      "alertLength": "La contraseña debe tener al menos 6 caracteres de longitud.",
+      "alertUppercase": "La contraseña debe contener al menos una letra mayúscula.",
+      "alertNumber": "La contraseña debe contener al menos un número.",
+      "alertCharacter": "La contraseña debe contener solo un carácter especial.",
+      "alertDontMatch": "Las contraseñas no coinciden.",
+      "alertDontChange": "Error al cambiar la contraseña",
+      "alertChange": "Contraseña cambiada con éxito"
+    }
+  },
+  "servicesCard": {
+    "tagsString": "Etiquetas",
+    "btnString": "Reservar"
+  },
+  "profile": {
+    "components": {
+      "cardServiceUser": {
+        "statusString": "Estatus",
+        "payServicesString": "Por favor paga el servicio",
+        "payServiceString": "Pagar servicio",
+        "informationString": "Informacion"
       },
-      "otp" : {
-        "tittleString" : "Verifique Su Cuenta",
-        "messageMail" : "Enviamos un código de verificación a: ",
-        "checkMessage" : "Por favor, revise su correo electrónico y pegue el código a continuación.",
-        "resendString" : "Reenviando en:",
-        "dontReceive" : "¿No recibió el código?",
-        "resend" : "Reenviar",
-        "alertInvalidCode" : "Código inválido",
-        "resendingMessage" : "Codigo reenviado",
-        "notResendingMessage" : "Código no reenviado"
+      "calendarCard": {
+        "cancelString": "Cancelar",
+        "rescheduleString": "Reagendar"
       },
-      "confirm" : {
-        "tittleString" : "Cambiar contraseña",
-        "passwordTittleString" : "Nueva contraseña",
-        "passwordLabel" : "Ingrese una nueva contraseña válida",
-        "weakPasswordString" : "Contraseña débil",
-        "goodPassword" : "Contraseña buena",
-        "excellentPassword" : "Contraseña excelente",
-        "confirmPasswordTittle" : "Confirme su contraseña",
-        "confirmPasswordLabel" : "Valide su contraseña",
-        "buttonString" : "Confirmar",
-        "alertLength" : "La contraseña debe tener al menos 6 caracteres de longitud.",
-        "alertUppercase" : "La contraseña debe contener al menos una letra mayúscula.",
-        "alertNumber" : "La contraseña debe contener al menos un número.",
-        "alertCharacter" : "La contraseña debe contener solo un carácter especial.",
-        "alertDontMatch" : "Las contraseñas no coinciden.",
-        "alertDontChange" : "Error al cambiar la contraseña",
-        "alertChange" : "Contraseña cambiada con éxito"
+      "updateUser": {
+        "updateString": "Actualizar datos de la cuenta",
+        "nameString": "Nombre",
+        "lastNameString": "Apellido Paterno",
+        "motherNameString": "Apellido Mterno",
+        "birthDateString": "Fecha de Nacimiento",
+        "phoneString": "Telefono",
+        "nameUserString": "Nombre de Usuario"
       }
     },
-    "servicesCard" : {
-      "tagsString" : "Etiquetas",
-      "btnString" : "Reservar"
-    },
-    "profile":{
-      "components":{
-        "cardServiceUser":{
-          "statusString":"Estatus",
-          "payServicesString": "Por favor paga el servicio",
-          "payServiceString": "Pagar servicio",
-          "informationString": "Informacion"
-        },
-        "calendarCard":{
-          "cancelString":"Cancelar",
-          "rescheduleString":"Reagendar"
-        },
-        "updateUser":{
-          "updateString":"Actualizar datos de la cuenta",
-          "nameString":"Nombre",
-          "lastNameString":"Apellido Paterno",
-          "motherNameString":"Apellido Mterno",
-          "birthDateString":"Fecha de Nacimiento",
-          "phoneString":"Telefono",
-          "nameUserString":"Nombre de Usuario"
+    "pages": {
+      "infoMyService": {
+        "getYourServiceString": "Obteniendo tu servicio",
+        "serviceDetailsString": "Detalles del Servicio",
+        "descriptionString": "Descripcion",
+        "totalPriceString": "Precio Total",
+        "pendingPaymentString": "Pago pendiente",
+        "statusString": "Estatus",
+        "usedProductsString": "Productos Utilizados",
+        "productString": "Producto",
+        "quantityString": "Cantidad",
+        "totalString": "Total",
+        "costBreakdownString": "Costos Desglosados",
+        "laborString": "Mano de Obra",
+        "machineryString": "Maquinaria",
+        "assignedEmployeesString": "Empleados Asignados",
+        "paymentFormString": "Formulario de Pago",
+        "cardNameString": "Nombre de la Tarjeta",
+        "expirationMonthString": "Mes de expiración",
+        "expirationYearString": "Año de expiración",
+        "buttonClose": "Cerrar",
+        "buttonPay": "Pagar",
+        "shareOpinionString": "Comparte tu opinión",
+        "leaveCommentString": "Deja tu comentario aquí",
+        "yourRatingString": "Tu calificación:",
+        "script": {
+          "expirationMonthString": "El mes de expiración es requerido",
+          "expirationRequiredString": "El año de expiración es requerido",
+          "cardNumberString": "El número de tarjeta debe ser de 16 dígitos numéricos",
+          "theCodeString": "El código CVV es requerido y debe tener 3 o 4 dígitos",
+          "paymentPercentageString": "Porcentaje de Pago",
+          "sendString": "Enviar"
         }
       },
-      "pages":{
-        "infoMyService": {
-          "getYourServiceString": "Obteniendo tu servicio",
-          "serviceDetailsString": "Detalles del Servicio",
-          "descriptionString": "Descripcion",
-          "totalPriceString": "Precio Total",
-          "pendingPaymentString": "Pago pendiente",
-          "statusString": "Estatus",
-          "usedProductsString": "Productos Utilizados",
-          "productString": "Producto",
-          "quantityString": "Cantidad",
-          "totalString": "Total",
-          "costBreakdownString": "Costos Desglosados",
-          "laborString": "Mano de Obra",
-          "machineryString": "Maquinaria",
-          "assignedEmployeesString": "Empleados Asignados",
-          "paymentFormString": "Formulario de Pago",
-          "cardNameString": "Nombre de la Tarjeta",
-          "expirationMonthString":"Mes de expiración",
-          "expirationYearString":"Año de expiración",
-          "buttonClose":"Cerrar",
-          "buttonPay":"Pagar",
-          "shareOpinionString":"Comparte tu opinión",
-          "leaveCommentString":"Deja tu comentario aquí",
-          "yourRatingString":"Tu calificación:",
-          "script":{
-            "expirationMonthString":"El mes de expiración es requerido",
-            "expirationRequiredString":"El año de expiración es requerido",
-            "cardNumberString":"El número de tarjeta debe ser de 16 dígitos numéricos",
-            "theCodeString":"El código CVV es requerido y debe tener 3 o 4 dígitos",
-            "paymentPercentageString":"Porcentaje de Pago",
-            "sendString":"Enviar"
-          }
-        },
-        "myServices":{
-          "servicesString":"Mis Servicios",
-          "cancellationString" : "Estas seguro de querer cancelar el servicio?",
-          "serviceString" : "Ten en cuenta que esta accion es irreversible",
-          "yesString" : "Si, estoy seguro"
-        },
-        "editProfile":{
-          "editProfileString":"Editar Perfil",
-          "selectProfileString":"Seleccionar foto de perfil",
-          "selectedImageString":"Imagen seleccionada",
-          "goBackString":"Regresa",
-          "saveChangesString":"Guardar Cambios"
-        },
-        "ProfilePage": {
-          "helloString": "Hola",
-          "welcomeString": "Bienvenido",
-          "seeServiceString": "Ver servicios",
-          "changeString": "Cambiar contraseña",
-          "closeString": "Cerrar sesión",
-          "accountDataString": "Datos de la cuenta",
-          "nameString": "Nombre",
-          "emailString": "Correo electrónico",
-          "numberString": "Número de teléfono",
-          "userString": "Usuario",
-          "dateString": "Cambia tus datos"
-        }
-        
+      "myServices": {
+        "servicesString": "Mis Servicios",
+        "cancellationString": "Estas seguro de querer cancelar el servicio?",
+        "serviceString": "Ten en cuenta que esta accion es irreversible",
+        "yesString": "Si, estoy seguro"
+      },
+      "editProfile": {
+        "editProfileString": "Editar Perfil",
+        "selectProfileString": "Seleccionar foto de perfil",
+        "selectedImageString": "Imagen seleccionada",
+        "goBackString": "Regresa",
+        "saveChangesString": "Guardar Cambios"
+      },
+      "ProfilePage": {
+        "helloString": "Hola",
+        "welcomeString": "Bienvenido",
+        "seeServiceString": "Ver servicios",
+        "changeString": "Cambiar contraseña",
+        "closeString": "Cerrar sesión",
+        "accountDataString": "Datos de la cuenta",
+        "nameString": "Nombre",
+        "emailString": "Correo electrónico",
+        "numberString": "Número de teléfono",
+        "userString": "Usuario",
+        "dateString": "Cambia tus datos"
       }
-    },
-    "service":{
-      "pages":{ 
-        "scheduleService":{
-          "descriptionString":"Por favor describa brevemente como es que desea que se haga el servcio, proporcione una fotografia del lugar y seleccione una fecha para la cotizacion",
-          "describeServiceString":"Describa brevemente como desea su servicio",
-          "selectPhotoString":"Seleccione una foto del área a trabajar",
-          "dragImageString":"Arrastre y suelte una imagen aquí",
-          "scheduleString":"Agendar",
-          "closeString":"Cerrar",
-          "script" : {
-            "description" : "La descripcion es requerida",
-            "imageRequired" : "La imagen es requerida",
-            "busy" : "Upss parece que estamos ocupados",
-            "busyMessage" : "Lastimosamente no podemos visittarte hoy mismo ya que estamos muy ocuados, por favor selecciona otra fecha. 🌱☘️",
-            "error" : "'Lo sentimos mucho, parece que algo ha pasado.",
-            "success" : "Se agendo correctamente tu servicio"
-          }
+    }
+  },
+  "service": {
+    "pages": {
+      "scheduleService": {
+        "descriptionString": "Por favor describa brevemente como es que desea que se haga el servcio, proporcione una fotografia del lugar y seleccione una fecha para la cotizacion",
+        "describeServiceString": "Describa brevemente como desea su servicio",
+        "selectPhotoString": "Seleccione una foto del área a trabajar",
+        "dragImageString": "Arrastre y suelte una imagen aquí",
+        "scheduleString": "Agendar",
+        "closeString": "Cerrar",
+        "script": {
+          "description": "La descripcion es requerida",
+          "imageRequired": "La imagen es requerida",
+          "busy": "Upss parece que estamos ocupados",
+          "busyMessage": "Lastimosamente no podemos visittarte hoy mismo ya que estamos muy ocuados, por favor selecciona otra fecha. 🌱☘️",
+          "error": "'Lo sentimos mucho, parece que algo ha pasado.",
+          "success": "Se agendo correctamente tu servicio"
         }
       }
-    },
-  "accesibility":{
-    "pages":{
-      "navegacionPage":{
+    }
+  },
+  "accesibility": {
+    "pages": {
+      "navegacionPage": {
         "goBackString": "Regresar",
         "startString": "Inicio",
         "loginString": "Login",

@@ -3,5 +3,4 @@ export const csp = `
   script-src 'self' 'unsafe-inline';
   style-src 'self' 'unsafe-inline';
   img-src 'self' data:;
-  font-src 'self' data:;`
-  ;
+  font-src 'self' data:;`;

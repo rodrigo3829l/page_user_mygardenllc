@@ -83,43 +83,42 @@
       </v-col>
     </v-row>
   </v-container>
-
 </template>
 
 <script>
-import { api } from '@/axios/axios.js';
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import { api } from "@/axios/axios.js";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 export default {
   data() {
     return {
       loading: false,
       form: {
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      }
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      },
     };
   },
   methods: {
     async handleSubmit() {
       this.loading = true;
       try {
-        const response = await api.post('/user/contact', this.form);
+        const response = await api.post("/user/contact", this.form);
         if (response.data.success) {
           toast.success(response.data.msg, { position: "top-right" });
-          this.form = { name: '', email: '', subject: '', message: '' }; // Limpiar el formulario
+          this.form = { name: "", email: "", subject: "", message: "" }; // Limpiar el formulario
         } else {
           toast.error(response.data.msg, { position: "top-right" });
         }
       } catch (error) {
-        toast.error('Error al enviar el mensaje', { position: "top-right" });
+        toast.error("Error al enviar el mensaje", { position: "top-right" });
       } finally {
         this.loading = false;
       }
-    }
+    },
   },
 };
 </script>

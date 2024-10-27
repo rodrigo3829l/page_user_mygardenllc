@@ -1,13 +1,15 @@
 <template>
   <div class="container mt-4">
     <div class="card">
-      <div class="card-header">
-        Comentarios
-      </div>
+      <div class="card-header">Comentarios</div>
       <div class="card-body">
         <div class="form-group">
           <label for="comment">Escribe tu comentario:</label>
-          <textarea id="comment" class="form-control" v-model="userComment"></textarea>
+          <textarea
+            id="comment"
+            class="form-control"
+            v-model="userComment"
+          ></textarea>
         </div>
         <div class="form-group">
           <label for="rating">Calificación (de 1 a 5 estrellas):</label>
@@ -29,16 +31,16 @@
 export default {
   data() {
     return {
-      userComment: '',
-      userRating: '5' // Valor predeterminado de 5 estrellas
+      userComment: "",
+      userRating: "5", // Valor predeterminado de 5 estrellas
     };
   },
   methods: {
     submitComment() {
       // Aquí puedes manejar la lógica para enviar el comentario y calificación a tu servidor o realizar otras acciones necesarias.
-      console.log('Comentario:', this.userComment);
-      console.log('Calificación:', this.userRating);
-    }
-  }
+      console.log("Comentario:", this.userComment);
+      console.log("Calificación:", this.userRating);
+    },
+  },
 };
 </script>
