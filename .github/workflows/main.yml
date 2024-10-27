@@ -99,7 +99,7 @@ jobs:
           git push origin main --force
 
   sonar-scan:
-    needs: [unit-integration-tests, jest-validation]
+    needs: unit-integration-tests
     if: ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' }}
     runs-on: ubuntu-latest
     steps:
@@ -177,7 +177,7 @@ jobs:
           git push origin main --force
 
   deploy-staging:
-    needs: [snyk-scan, snyk-validation]
+    needs: snyk-scan
     if: ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' && needs.snyk-scan.outputs.snyk_exit_code == '0' }}
     runs-on: ubuntu-latest
     steps:
