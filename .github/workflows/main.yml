@@ -77,16 +77,13 @@ jobs:
           set +e
           yarn test:unit --coverage || exit_code=$?
           echo "::set-output name=exit_code::$exit_code"
-          echo "exit_code=$exit_code" >> $GITHUB_ENV
-          echo "Jest exit code: $exit_code"
+          echo "exit_code=$exit_code"
           set -e
-      - name: Check Jest Exit Code
+      - name: Verify Jest Exit Code
         run: |
-          echo "Jest exit code from GITHUB_ENV: $exit_code"
-        env:
-          exit_code: ${{ steps.set_exit_code.outputs.exit_code }}
+          echo "Verifying Jest Exit Code: ${{ steps.set_exit_code.outputs.exit_code }}"
       - name: Handle Jest Failure
-        if: env.exit_code != '0'
+        if: ${{ steps.set_exit_code.outputs.exit_code != '0' }}
         run: |
           echo "Jest tests failed. Reverting to previous version..."
           git config --global user.email "20210658@uthh.edu.mx"
