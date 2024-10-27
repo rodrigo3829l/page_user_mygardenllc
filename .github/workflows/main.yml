@@ -32,6 +32,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
       - name: Install dependencies
         run: yarn install
       - name: Run Jest Tests
@@ -40,7 +47,6 @@ jobs:
           yarn test:unit --coverage || exit_code=$?
           echo "exit_code=$exit_code" >> $GITHUB_ENV
           set -e
-
       - name: Handle Jest Failure
         if: env.exit_code != '0'
         run: |
@@ -54,9 +60,16 @@ jobs:
     needs: unit-integration-tests
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
       - name: Install dependencies
         run: yarn install
-      - uses: actions/checkout@v3
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
@@ -67,9 +80,16 @@ jobs:
     needs: sonar-scan
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
       - name: Install dependencies
         run: yarn install
-      - uses: actions/checkout@v3
       - name: Install Snyk CLI
         run: npm install -g snyk
       - name: Run Snyk Scan
@@ -78,7 +98,6 @@ jobs:
         run: |
           snyk test --all-projects || exit_code=$?
           echo "exit_code=$exit_code" >> $GITHUB_ENV
-
       - name: Handle Snyk Failure
         if: env.exit_code != '0'
         run: |
@@ -92,6 +111,14 @@ jobs:
     needs: snyk-scan
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
       - name: Install dependencies
         run: yarn install
       - name: Build project
@@ -119,6 +146,14 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.MY_GH_TOKEN }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
       - name: Install dependencies
         run: yarn install
       - name: Run Cypress Tests
@@ -130,4 +165,3 @@ jobs:
             git config --global user.name "rodrigo3829l"
             git reset --hard HEAD^
             git push origin main --force
-          fi
