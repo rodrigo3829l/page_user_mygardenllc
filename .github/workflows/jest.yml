@@ -1,0 +1,50 @@
+name: Run Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions: write-all
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.MY_GH_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run tests
+        run: |
+          set +e
+          # ejecuta las pruebas
+          yarn test:unit
+          # guarda el valor de las pruebas que pude ser 0 o 1
+          TEST_RESULT=$?
+          set -e
+          # si el resultado es diferente de 0
+          if [ $TEST_RESULT -ne 0 ]; then
+            echo "Tests failed. Reverting to previous version..."
+            git config --global user.email "20210658@uthh.edu.mx"
+            git config --global user.name "rodrigo3829l"
+            # regresa al commit anterior
+            git reset --hard HEAD^
+            git push https://github.com/rodrigo3829l/page_user_mygardenllc.git --force
+          else
+            echo "Tests passed."
+          fi
