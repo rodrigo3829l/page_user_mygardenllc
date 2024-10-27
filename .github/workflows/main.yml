@@ -80,6 +80,11 @@ jobs:
           echo "exit_code=$exit_code" >> $GITHUB_ENV
           echo "Jest exit code: $exit_code"
           set -e
+      - name: Check Jest Exit Code
+        run: |
+          echo "Jest exit code from GITHUB_ENV: $exit_code"
+        env:
+          exit_code: ${{ steps.set_exit_code.outputs.exit_code }}
       - name: Handle Jest Failure
         if: env.exit_code != '0'
         run: |
@@ -153,11 +158,18 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
+          set +e
           snyk monitor --all-projects --org=6ce58cdd-2e65-4c0c-bbe5-705980cee5fe
           snyk test --all-projects --org=6ce58cdd-2e65-4c0c-bbe5-705980cee5fe || exit_code=$?
           echo "::set-output name=exit_code::$exit_code"
           echo "exit_code=$exit_code" >> $GITHUB_ENV
           echo "Snyk exit code: $exit_code"
+          set -e
+      - name: Check Snyk Exit Code
+        run: |
+          echo "Snyk exit code from GITHUB_ENV: $exit_code"
+        env:
+          exit_code: ${{ steps.set_exit_code.outputs.exit_code }}
       - name: Handle Snyk Failure
         if: env.exit_code != '0'
         run: |
