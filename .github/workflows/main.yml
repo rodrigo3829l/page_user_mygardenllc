@@ -77,13 +77,28 @@ jobs:
           set +e
           yarn test:unit --coverage || exit_code=$?
           echo "::set-output name=exit_code::$exit_code"
+          mv coverage/lcov-report ./coverage-report
           echo "exit_code=$exit_code"
           set -e
       - name: Upload Jest Test Results
         uses: actions/upload-artifact@v3
         with:
-          name: jest-results
-          path: coverage/
+          name: jest-coverage-report
+          path: coverage-report/
+
+  post-coverage-comment:
+    needs: unit-integration-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v4
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Los reportes de cobertura están disponibles en los artefactos: [Ver artefactos](${{ github.run_id }})`
+            });
 
   jest-validation:
     needs: unit-integration-tests
@@ -163,6 +178,7 @@ jobs:
           echo "::set-output name=exit_code::$exit_code"
           echo "exit_code=$exit_code"
           set -e
+
   snyk-validation:
     needs: snyk-scan
     if: ${{ needs.snyk-scan.outputs.snyk_exit_code != '0' }}
@@ -307,3 +323,18 @@ jobs:
             mirror -R --only-newer --exclude-glob admin --exclude-glob oldcosas --exclude-glob staging --exclude .htaccess ./dist /public_html;
             quit
           "
+  notify-pr:
+    runs-on: ubuntu-latest
+    needs: [unit-integration-tests, snyk-scan, sonar-scan]
+    steps:
+      - uses: actions/github-script@v4
+        with:
+          script: |
+            const status = ${{ needs.unit-integration-tests.outputs.jest_exit_code }} == '0' && ${{ needs.snyk-scan.outputs.snyk_exit_code }} == '0' ? 'Success' : 'Failed';
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `CI/CD Pipeline ${status} for branch ${context.ref}.`
+            });
+
