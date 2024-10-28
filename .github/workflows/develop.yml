@@ -170,7 +170,8 @@ jobs:
       - uses: actions/github-script@v4
         with:
           script: |
-            const status = ${{ needs.unit-integration-tests.outputs.jest_exit_code }} == '0' && ${{ needs.snyk-scan.outputs.snyk_exit_code }} == '0' ? 'Success' : 'Failed';
+            const status = ${{ needs.unit-integration-tests.outputs.jest_exit_code }} == '0' && 
+                            ${{ needs.snyk-scan.outputs.snyk_exit_code }} == '0' ? 'Success' : 'Failed';
             github.rest.issues.createComment({
               issue_number: context.payload.pull_request.number,
               owner: context.repo.owner,
