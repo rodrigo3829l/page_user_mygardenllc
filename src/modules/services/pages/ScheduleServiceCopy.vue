@@ -19,9 +19,7 @@
           readonly
         ></v-rating>
         <p>
-          {{ service.Calificacion.total }} ({{
-            service.Calificacion.totales
-          }}
+          {{ service.Calificacion.total }} ({{ service.Calificacion.totales }}
           reviews)
         </p>
         <p>{{ service.description }}</p>
