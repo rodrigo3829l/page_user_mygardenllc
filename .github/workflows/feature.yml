@@ -86,7 +86,7 @@ jobs:
           name: jest-results
           path: coverage-reports/
 
-    post-coverage-comment:
+  post-coverage-comment:
     needs: jest-tests
     runs-on: ubuntu-latest
     steps:
