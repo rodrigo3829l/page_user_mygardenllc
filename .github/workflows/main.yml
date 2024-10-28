@@ -349,7 +349,7 @@ jobs:
       - uses: actions/github-script@v4
         with:
           script: |
-            const status = success;
+            const status = Success;
 
             github.rest.issues.createComment({
               issue_number: context.payload.pull_request.number,
@@ -365,9 +365,7 @@ jobs:
       - name: Send Notification Email
         uses: dawidd6/action-send-mail@v3
         with:
-          # Conexión utilizando la URL
-          connection_url: ${{ secrets.MAIL_CONNECTION }}
-          
+
           # Configuración alternativa si no se usa connection_url
           server_address: ${{ secrets.SMTP_HOST }}
           server_port: ${{ secrets.SMTP_PORT }}
@@ -379,7 +377,7 @@ jobs:
           subject: CI/CD Pipeline Notification - ${{ github.ref_name }}
 
           # Dirección de remitente
-          from: CI/CD Bot <no-reply@example.com>
+          from: CI/CD Bot 20210658@uthh.edu.mx
 
           # Direcciones de destinatarios
           to: ${{ secrets.EMAIL_TO }}
@@ -501,8 +499,5 @@ jobs:
                 </div>
                 </body>
                 </html>
-
-          # Prioridad opcional del correo
-          priority: high
 
 
