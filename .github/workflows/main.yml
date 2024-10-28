@@ -267,6 +267,10 @@ jobs:
           node-version: "20"
       - name: Install dependencies
         run: yarn install
+
+      - name: Install Cypress Binary
+        run: npx cypress install
+
       - name: Run Cypress Tests
         id: set_exit_code
         run: |
