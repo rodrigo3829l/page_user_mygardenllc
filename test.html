@@ -13,8 +13,16 @@
       <div style="background-color: #0f2b20; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
         <p><strong>Rama:</strong> <code style="color: #4cd137;">${{ github.ref_name }}</code></p>
         <p><strong>Repositorio:</strong> <a href="https://github.com/${{ github.repository }}" style="color: #4cd137; text-decoration: none;">${{ github.repository }}</a></p>
-        <p><strong>Commit:</strong> <a href="https://github.com/${{ github.repository }}/commit/${{ github.sha }}" style="color: #4cd137; text-decoration: none;">${{ github.sha }}</a></p>
-        <p><strong>ID de Ejecución:</strong> <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" style="color: #4cd137; text-decoration: none;">${{ github.run_id }}</a></p>
+        <p><strong>Commit:</strong> 
+          <a href="https://github.com/${{ github.repository }}/commit/${{ github.sha }}" style="color: #4cd137; text-decoration: none;">
+            ...${{ github.sha.slice(-3) }}
+          </a>
+        </p>
+        <p><strong>ID de Ejecución:</strong> 
+          <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" style="color: #4cd137; text-decoration: none;">
+            ...${{ github.run_id.slice(-3) }}
+          </a>
+        </p>
       </div>
 
       <h3 style="color: #fff;">¿Cómo fue? 🤔</h3>
@@ -36,4 +44,4 @@
       </footer>
     </div>
   </body>
-</html>
+  </html>
