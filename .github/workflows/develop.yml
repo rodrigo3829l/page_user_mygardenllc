@@ -163,57 +163,125 @@ jobs:
           git reset --hard HEAD^
           git push origin main --force
 
-  notify-pr:
+  notify-pr-success:
+    if: ${{ needs.unit-integration-tests.outputs.jest_exit_code != '0' || needs.snyk-scan.outputs.snyk_exit_code != '0' }}
     runs-on: ubuntu-latest
     needs: [unit-integration-tests, snyk-scan, sonar-scan]
     steps:
       - uses: actions/github-script@v4
+        if: ${{ github.event_name == 'pull_request' }}
         with:
           script: |
-            const status = ${{ needs.unit-integration-tests.outputs.jest_exit_code }} == '0' && 
-                            ${{ needs.snyk-scan.outputs.snyk_exit_code }} == '0' ? 'Success' : 'Failed';
-            github.rest.issues.createComment({
-              issue_number: context.payload.pull_request.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `CI/CD Pipeline ${status} for branch ${context.ref}.`
-            });
+            const issue_number = context.payload.pull_request 
+              ? context.payload.pull_request.number 
+              : null;
+
+            if (issue_number) {
+              github.rest.issues.createComment({
+                issue_number: issue_number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `CI/CD Pipeline Success for branch ${context.ref}.`
+              });
+            } else {
+              console.log('Not a pull request. Skipping comment creation.');
+            }
+
+
+  notify-pr-failed:
+    if: ${{ needs.unit-integration-tests.outputs.jest_exit_code != '0' || needs.snyk-scan.outputs.snyk_exit_code != '0' }}
+    runs-on: ubuntu-latest
+    needs: [unit-integration-tests, snyk-scan, sonar-scan]
+    steps:
+      - uses: actions/github-script@v4
+        if: ${{ github.event_name == 'pull_request' }}
+        with:
+          script: |
+            const issue_number = context.payload.pull_request 
+              ? context.payload.pull_request.number 
+              : null;
+
+            if (issue_number) {
+              github.rest.issues.createComment({
+                issue_number: issue_number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `CI/CD Pipeline Failed for branch ${context.ref}.`
+              });
+            } else {
+              console.log('Not a pull request. Skipping comment creation.');
+            }
+
+
 
   notify-email:
     needs: [unit-integration-tests, snyk-scan, sonar-scan]
     runs-on: ubuntu-latest
     steps:
+      - name: Prepare SHA and Run ID
+        id: vars
+        run: |
+          echo "::set-output name=short_sha::...${GITHUB_SHA: -3}"
+          echo "::set-output name=short_run_id::...${GITHUB_RUN_ID: -3}"
+
       - name: Send Notification Email
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_HOST }}
           server_port: ${{ secrets.SMTP_PORT }}
+          secure: false
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
+          
           subject: CI/CD Pipeline Notification - ${{ github.ref_name }}
+          from: CI/CD Bot <20210658@uthh.edu.mx>
           to: ${{ secrets.EMAIL_TO }}
-          from: no-reply@example.com
-          content_type: text/html
-          body: |
-            <h2>CI/CD Pipeline Notification</h2>
-            <p><strong>Branch:</strong> <code>${{ github.ref_name }}</code></p>
-            <p><strong>Repository:</strong> <a href="https://github.com/${{ github.repository }}">${{ github.repository }}</a></p>
-            <p><strong>Commit:</strong> <a href="https://github.com/${{ github.repository }}/commit/${{ github.sha }}">{{ github.sha }}</a></p>
-            <p><strong>Run ID:</strong> <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}">{{ github.run_id }}</a></p>
 
-            <h3>Status Summary:</h3>
-            <ul>
-              <li><strong>Jest Tests:</strong> 
-                ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' && '✅ Success' || '❌ Failed' }}
-              </li>
-              <li><strong>Snyk Scan:</strong> 
-                ${{ needs.snyk-scan.outputs.snyk_exit_code == '0' && '✅ Success' || '❌ Failed' }}
-              </li>
-            </ul>
+          html_body: |
+            <html lang="es">
+            <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Notificación de CI/CD Pipeline</title>
+            </head>
+            <body style="font-family: Arial, sans-serif; background-color: #195131; color: #fff; margin: 0; padding: 20px;">
+              <div style="max-width: 600px; margin: 0 auto; background-color: #145234; border-radius: 10px; padding: 20px;">
+                <h2 style="text-align: center; color: #fff;">
+                  🚀 ¡Tu Pipeline ha finalizado!
+                </h2>
 
-            <h3>Pipeline Logs:</h3>
-            <p>Check the full pipeline logs <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}">here</a>.</p>
+                <div style="background-color: #0f2b20; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                  <p><strong>Rama:</strong> <code style="color: #4cd137;">${{ github.ref_name }}</code></p>
+                  <p><strong>Repositorio:</strong> <a href="https://github.com/${{ github.repository }}" style="color: #4cd137; text-decoration: none;">${{ github.repository }}</a></p>
+                  <p><strong>Commit:</strong> 
+                    <a href="https://github.com/${{ github.repository }}/commit/${{ github.sha }}" style="color: #4cd137; text-decoration: none;">
+                      ${{ steps.vars.outputs.short_sha }}
+                    </a>
+                  </p>
+                  <p><strong>ID de Ejecución:</strong> 
+                    <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" style="color: #4cd137; text-decoration: none;">
+                      ${{ steps.vars.outputs.short_run_id }}
+                    </a>
+                  </p>
+                </div>
 
-            <footer>
-              <p>This is an automated notification. Please do not reply to this email.</p>
-            </footer>
+                <h3 style="color: #fff;">¿Cómo fue? 🤔</h3>
+                <ul style="list-style-type: none; padding: 0;">
+                  <li style="margin-bottom: 10px;">
+                    ✅ Pruebas Jest: 
+                    ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' && '¡Éxito! 🎉' || '❌ Falló' }}
+                  </li>
+                  <li>
+                    🛡️ Escaneo Snyk: 
+                    ${{ needs.snyk-scan.outputs.snyk_exit_code == '0' && '¡Todo en orden! 🛡️' || '❌ Falló' }}
+                  </li>
+                </ul>
+
+                <p>Consulta los registros completos del pipeline <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" style="color: #4cd137; text-decoration: none;">aquí</a>.</p>
+
+                <footer style="text-align: center; margin-top: 20px; color: rgba(255, 255, 255, 0.7); font-size: 12px;">
+                  Este es un mensaje automatizado de tu bot de CI/CD. No es necesario responder. 🤖
+                </footer>
+              </div>
+            </body>
+            </html>
