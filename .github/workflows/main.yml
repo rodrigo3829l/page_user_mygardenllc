@@ -341,7 +341,7 @@ jobs:
             quit
           "
 
-  notify-pr:
+  notify-pr-success:
     if: ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' && needs.snyk-scan.outputs.snyk_exit_code == '0' }}
     runs-on: ubuntu-latest
     needs: [unit-integration-tests, snyk-scan, sonar-scan]
@@ -349,13 +349,26 @@ jobs:
       - uses: actions/github-script@v4
         with:
           script: |
-            const status = Success;
-
             github.rest.issues.createComment({
               issue_number: context.payload.pull_request.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `CI/CD Pipeline ${status} for branch ${context.ref}.`
+              body: `CI/CD Pipeline Success for branch ${context.ref}.`
+            });
+
+  notify-pr-failed:
+    if: ${{ needs.unit-integration-tests.outputs.jest_exit_code != '0' && needs.snyk-scan.outputs.snyk_exit_code != '0' }}
+    runs-on: ubuntu-latest
+    needs: [unit-integration-tests, snyk-scan, sonar-scan]
+    steps:
+      - uses: actions/github-script@v4
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.payload.pull_request.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `CI/CD Pipeline Failed for branch ${context.ref}.`
             });
 
   notify-email:
@@ -369,7 +382,7 @@ jobs:
           # Configuración alternativa si no se usa connection_url
           server_address: ${{ secrets.SMTP_HOST }}
           server_port: ${{ secrets.SMTP_PORT }}
-          secure: true
+          secure: false
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           
@@ -377,7 +390,7 @@ jobs:
           subject: CI/CD Pipeline Notification - ${{ github.ref_name }}
 
           # Dirección de remitente
-          from: CI/CD Bot 20210658@uthh.edu.mx
+          from: CI/CD Bot <20210658@uthh.edu.mx>
 
           # Direcciones de destinatarios
           to: ${{ secrets.EMAIL_TO }}
