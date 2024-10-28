@@ -396,27 +396,25 @@ jobs:
     needs: [unit-integration-tests, snyk-scan, sonar-scan]
     runs-on: ubuntu-latest
     steps:
+      - name: Prepare SHA and Run ID
+        id: vars
+        run: |
+          echo "::set-output name=short_sha::...${GITHUB_SHA: -3}"
+          echo "::set-output name=short_run_id::...${GITHUB_RUN_ID: -3}"
+
       - name: Send Notification Email
         uses: dawidd6/action-send-mail@v3
         with:
-
-          # Configuración alternativa si no se usa connection_url
           server_address: ${{ secrets.SMTP_HOST }}
           server_port: ${{ secrets.SMTP_PORT }}
           secure: false
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           
-          # Asunto del correo
           subject: CI/CD Pipeline Notification - ${{ github.ref_name }}
-
-          # Dirección de remitente
           from: CI/CD Bot <20210658@uthh.edu.mx>
-
-          # Direcciones de destinatarios
           to: ${{ secrets.EMAIL_TO }}
 
-          # Cuerpo del correo en HTML
           html_body: |
             <html lang="es">
             <head>
@@ -435,12 +433,12 @@ jobs:
                   <p><strong>Repositorio:</strong> <a href="https://github.com/${{ github.repository }}" style="color: #4cd137; text-decoration: none;">${{ github.repository }}</a></p>
                   <p><strong>Commit:</strong> 
                     <a href="https://github.com/${{ github.repository }}/commit/${{ github.sha }}" style="color: #4cd137; text-decoration: none;">
-                      ...${{ github.sha.slice(-3) }}
+                      ${{ steps.vars.outputs.short_sha }}
                     </a>
                   </p>
                   <p><strong>ID de Ejecución:</strong> 
                     <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" style="color: #4cd137; text-decoration: none;">
-                      ...${{ github.run_id.slice(-3) }}
+                      ${{ steps.vars.outputs.short_run_id }}
                     </a>
                   </p>
                 </div>
