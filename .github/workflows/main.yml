@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 permissions: write-all
 
@@ -86,7 +87,7 @@ jobs:
           name: jest-coverage-report
           path: coverage-report/
 
-  post-coverage-comment:
+  post-coverage-comment-jest:
     needs: unit-integration-tests
     runs-on: ubuntu-latest
     steps:
@@ -269,7 +270,7 @@ jobs:
         id: set_exit_code
         run: |
           set +e
-          npx cypress run || exit_code=$?
+          npx cypress run --reporter mochawesome --reporter-options reportDir=cypress/reports || exit_code=$?
           echo "::set-output name=exit_code::$exit_code"
           set -e
       - name: Handle Cypress Failure
@@ -281,6 +282,20 @@ jobs:
         with:
           name: cypress-results
           path: cypress/reports/
+
+  post-coverage-comment-cypress:
+    needs: e2e-tests-staging
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v4
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `El reporte de Cypress está disponible en los artefactos: [Ver artefactos](${{ github.run_id }})`
+            });
 
   deploy:
     needs: e2e-tests-staging
