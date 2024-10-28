@@ -1,108 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CI/CD Pipeline Notification</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .container {
-      background-color: #195131;
-      border-radius: 12px;
-      padding: 20px 30px;
-      width: 420px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    }
-    h2 {
-      text-align: center;
-      font-size: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-    .details {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      background-color: #145234;
-      border-radius: 8px;
-      padding: 15px;
-      margin: 15px 0;
-    }
-    .details p {
-      margin: 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 16px;
-    }
-    .status {
-      margin: 20px 0;
-    }
-    .status ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    .status li {
-      margin: 10px 0;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    a {
-      color: #4cd137;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .footer {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 12px;
-      opacity: 0.8;
-    }
-    .icon {
-      background-color: #0f2b20;
-      padding: 6px;
-      border-radius: 6px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2><i class="fas fa-rocket icon"></i> Your Pipeline Just Finished!</h2>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificación de CI/CD Pipeline</title>
+  </head>
+  <body style="font-family: Arial, sans-serif; background-color: #195131; color: #fff; margin: 0; padding: 20px;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #145234; border-radius: 10px; padding: 20px;">
+      <h2 style="text-align: center; color: #fff;">
+        🚀 ¡Tu Pipeline ha finalizado!
+      </h2>
 
-    <div class="details">
-      <p><i class="fas fa-code-branch"></i> <strong>Branch:</strong> <code>main</code></p>
-      <p><i class="fas fa-book"></i> <strong>Repository:</strong> <a href="#">user/repo</a></p>
-      <p><i class="fas fa-hashtag"></i> <strong>Commit:</strong> <a href="#">abc123</a></p>
-      <p><i class="fas fa-id-badge"></i> <strong>Run ID:</strong> <a href="#">12345</a></p>
-    </div>
+      <div style="background-color: #0f2b20; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+        <p><strong>Rama:</strong> <code style="color: #4cd137;">${{ github.ref_name }}</code></p>
+        <p><strong>Repositorio:</strong> <a href="https://github.com/${{ github.repository }}" style="color: #4cd137; text-decoration: none;">${{ github.repository }}</a></p>
+        <p><strong>Commit:</strong> <a href="https://github.com/${{ github.repository }}/commit/${{ github.sha }}" style="color: #4cd137; text-decoration: none;">${{ github.sha }}</a></p>
+        <p><strong>ID de Ejecución:</strong> <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" style="color: #4cd137; text-decoration: none;">${{ github.run_id }}</a></p>
+      </div>
 
-    <div class="status">
-      <h3>How did it go? 🤔</h3>
-      <ul>
-        <li><i class="fas fa-check-circle" style="color: #4cd137;"></i> Jest Tests: Nailed it! 🎉</li>
-        <li><i class="fas fa-shield-alt" style="color: #4cd137;"></i> Snyk Scan: All clear! 🛡️</li>
+      <h3 style="color: #fff;">¿Cómo fue? 🤔</h3>
+      <ul style="list-style-type: none; padding: 0;">
+        <li style="margin-bottom: 10px;">
+          ✅ Pruebas Jest: 
+          ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' && '¡Éxito! 🎉' || '❌ Falló' }}
+        </li>
+        <li>
+          🛡️ Escaneo Snyk: 
+          ${{ needs.snyk-scan.outputs.snyk_exit_code == '0' && '¡Todo en orden! 🛡️' || '❌ Falló' }}
+        </li>
       </ul>
-    </div>
 
-    <p>Check out the full pipeline logs <a href="#">right here</a>.</p>
+      <p>Consulta los registros completos del pipeline <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" style="color: #4cd137; text-decoration: none;">aquí</a>.</p>
 
-    <div class="footer">
-      <p>This is an automated message from your friendly neighborhood CI/CD bot. No need to write back! 🤖</p>
+      <footer style="text-align: center; margin-top: 20px; color: rgba(255, 255, 255, 0.7); font-size: 12px;">
+        Este es un mensaje automatizado de tu bot de CI/CD. No es necesario responder. 🤖
+      </footer>
     </div>
-  </div>
-</body>
+  </body>
 </html>
