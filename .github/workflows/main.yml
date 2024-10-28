@@ -92,10 +92,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v4
+        if: github.event_name == 'pull_request'
         with:
           script: |
             github.rest.issues.createComment({
-              issue_number: context.issue.number,
+              issue_number: context.payload.pull_request.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: `Los reportes de cobertura están disponibles en los artefactos: [Ver artefactos](${{ github.run_id }})`
@@ -288,6 +289,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v4
+        if: github.event_name == 'pull_request'
         with:
           script: |
             github.rest.issues.createComment({
@@ -338,6 +340,7 @@ jobs:
             mirror -R --only-newer --exclude-glob admin --exclude-glob oldcosas --exclude-glob staging --exclude .htaccess ./dist /public_html;
             quit
           "
+
   notify-pr:
     runs-on: ubuntu-latest
     needs: [unit-integration-tests, snyk-scan, sonar-scan]
@@ -347,39 +350,28 @@ jobs:
           script: |
             const status = ${{ needs.unit-integration-tests.outputs.jest_exit_code }} == '0' && ${{ needs.snyk-scan.outputs.snyk_exit_code }} == '0' ? 'Success' : 'Failed';
             github.rest.issues.createComment({
-              issue_number: context.issue.number,
+              issue_number: context.payload.pull_request.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: `CI/CD Pipeline ${status} for branch ${context.ref}.`
             });
 
   notify-email:
-    runs-on: ubuntu-latest
     needs: [unit-integration-tests, snyk-scan, sonar-scan]
+    runs-on: ubuntu-latest
     steps:
-      - name: Send Email Notification
-        env:
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          EMAIL_TO: ${{ secrets.EMAIL_TO }}
-        run: |
-          status="Success"
-          if [ "${{ needs.unit-integration-tests.outputs.jest_exit_code }}" != "0" ] || [ "${{ needs.snyk-scan.outputs.snyk_exit_code }}" != "0" ]; then
-            status="Failure"
-          fi
-
-          echo "Sending email notification..."
-
-          sendmail="To: $EMAIL_TO
-  From: $SMTP_USERNAME
-  Subject: CI/CD Pipeline $status for branch ${{ github.ref_name }}
-
-  Pipeline status: $status
-  Branch: ${{ github.ref_name }}
-  Repository: ${{ github.repository }}
-  Run ID: ${{ github.run_id }}"
-
-          echo "$sendmail" | openssl s_client -starttls smtp -crlf -connect $SMTP_HOST:$SMTP_PORT \
-            -auth login -user $SMTP_USERNAME -pass $SMTP_PASSWORD
+      - name: Send Notification Email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_HOST }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: CI/CD Pipeline Notification
+          to: ${{ secrets.EMAIL_TO }}
+          from: no-reply@example.com
+          body: |
+            CI/CD Pipeline Status:
+            Branch: ${{ github.ref_name }}
+            Jest Tests: ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' && 'Success' || 'Failed' }}
+            Snyk Scan: ${{ needs.snyk-scan.outputs.snyk_exit_code == '0' && 'Success' || 'Failed' }}
