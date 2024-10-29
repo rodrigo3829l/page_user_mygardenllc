@@ -5,7 +5,7 @@
       <NavBar></NavBar>
 
       <!-- Mostrar el Splash Screen primero -->
-      <SplashScreen v-if="showSplash" />
+      <!-- <SplashScreen v-if="showSplash" /> -->
 
       <!-- Home Screen -->
       <router-view></router-view>
