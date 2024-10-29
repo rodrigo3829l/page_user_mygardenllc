@@ -63,9 +63,9 @@ export default {
     FooterComponent: defineAsyncComponent(
       () => import("@/modules/shared/components/FooterComponent.vue"),
     ),
-    SplashScreen: defineAsyncComponent(
-      () => import("@/modules/shared/components/SplashScreen.vue"),
-    ),
+    // SplashScreen: defineAsyncComponent(
+    //   () => import("@/modules/shared/components/SplashScreen.vue"),
+    // ),
     // AccessibilityButtons: defineAsyncComponent(() => import('@/modules/shared/components/AccessibilityButtons.vue')),
   },
   mounted() {
