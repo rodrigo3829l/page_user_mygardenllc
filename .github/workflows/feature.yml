@@ -116,8 +116,8 @@ jobs:
           git push origin ${{ github.ref_name }} --force
 
   sonar-scan:
-    needs: jest-tests
-    if: ${{ needs.jest-tests.outputs.jest_exit_code == '0' }}
+    needs: unit-integration-tests
+    if: ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -131,6 +131,12 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-node-
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
+      - name: Install dependencies
+        run: yarn install
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
@@ -139,8 +145,10 @@ jobs:
 
   snyk-scan:
     needs: sonar-scan
-    if: ${{ needs.jest-tests.outputs.jest_exit_code == '0' }}
+    if: ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' }}
     runs-on: ubuntu-latest
+    outputs:
+      snyk_exit_code: ${{ steps.set_exit_code.outputs.exit_code }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -153,7 +161,7 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      - name: Install Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: "20"
