@@ -15,7 +15,7 @@
 
         <!-- Friendly Message with emojis -->
         <p class="friendly-message">
-          "We nurture your space with love and care. <br />
+          "We nurture your space with love and care.<br />
           Get ready to watch your garden blossom 🌷"
         </p>
 

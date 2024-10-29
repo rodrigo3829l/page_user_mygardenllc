@@ -116,8 +116,8 @@ jobs:
           git push origin ${{ github.ref_name }} --force
 
   sonar-scan:
-    needs: unit-integration-tests
-    if: ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' }}
+    needs: jest-tests
+    if: ${{ needs.jest-tests.outputs.jest_exit_code == '0' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -145,7 +145,7 @@ jobs:
 
   snyk-scan:
     needs: sonar-scan
-    if: ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' }}
+    if: ${{ needs.jest-tests.outputs.jest_exit_code == '0' }}
     runs-on: ubuntu-latest
     outputs:
       snyk_exit_code: ${{ steps.set_exit_code.outputs.exit_code }}
