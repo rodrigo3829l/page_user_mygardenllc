@@ -239,7 +239,7 @@ jobs:
             set ftp:ssl-protect-list true;
             set ftp:ssl-allow yes;
             open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST;
-            mirror -R --only-newer --exclude .htaccess ./dist /public_html/staging;
+            mirror -R --only-newer --exclude .htaccess --exclude firebase-messaging-sw.js ./dist /public_html/staging;
             quit
           "
 
@@ -346,7 +346,7 @@ jobs:
             set ftp:ssl-protect-list true;
             set ftp:ssl-allow yes;
             open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST;
-            mirror -R --only-newer --exclude-glob admin --exclude-glob oldcosas --exclude-glob staging --exclude .htaccess ./dist /public_html;
+            mirror -R --only-newer --exclude-glob admin --exclude-glob oldcosas --exclude-glob staging --exclude firebase-messaging-sw.js --exclude .htaccess ./dist /public_html;
             quit
           "
 
