@@ -179,6 +179,7 @@ export default {
             rol: "client",
           },
         });
+        await this.fetchNotifications()
         if (data.success) {
           toast.success("All notifications marked as read");
         } else {
@@ -191,6 +192,7 @@ export default {
         toast.error("Error marking all notifications as read");
       } finally {
         this.overlay = false; // Ocultar el overlay después de la acción
+        await this.fetchNotifications()
       }
     },
     async deleteAllNotifications() {
@@ -208,6 +210,7 @@ export default {
 
         if (data.success) {
           toast.success("All notifications deleted");
+          this.notifications = [];
         } else {
           toast.error("Failed to delete all notifications");
         }
@@ -218,6 +221,7 @@ export default {
         toast.error("Error deleting notifications");
       } finally {
         this.overlay = false; // Ocultar el overlay después de la acción
+        await this.fetchNotifications()
       }
     },
     formatDate(date) {

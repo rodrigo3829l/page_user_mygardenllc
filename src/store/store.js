@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import { api } from "@/axios/axios";
+import { requestForToken } from "../../firebase.js";
 
 export const useUserStore = defineStore("user", () => {
   const token = ref(null);
@@ -11,11 +12,15 @@ export const useUserStore = defineStore("user", () => {
   const image = ref(null);
 
   const login = async (email, pass, dpto) => {
+    const fcmToken = await requestForToken()
     const datos = {
       email,
       password: pass,
       department: dpto,
+      fcmToken,
+      platform: "web",
     };
+    console.log(datos)
     try {
       const { data } = await api.post("/user/login", datos);
       name.value = data.name;

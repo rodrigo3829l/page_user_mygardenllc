@@ -221,6 +221,10 @@ export default {
     },
     // Ir al servicio relacionado
     goToService() {
+      this.$router.push({
+        name: "profile-infomyservices",
+        params: { id: this.notification.serviceId._id },
+      });
       // this.$router.push();
     },
   },
