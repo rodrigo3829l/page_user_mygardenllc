@@ -6,6 +6,7 @@ import { loadFonts } from "./plugins/webfontloader";
 import { createI18n } from "vue-i18n";
 import router from "./router/router.js";
 import { useUserStore } from "./store/store.js";
+import { onMessageListener } from "../firebase.js";
 
 import Vue3Toastify from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
@@ -37,3 +38,20 @@ app
 
 const userStore = useUserStore();
 userStore.initializeStore();
+
+onMessageListener()
+  .then((payload) => {
+    console.log("Notificación recibida en primer plano:", payload);
+    if (Notification.permission === "granted") {
+      new Notification(payload.notification.title, {
+        body: payload.notification.body,
+        icon: payload.notification.icon || "../public/img/icons/192x192.png",
+        requireInteraction: true,
+        silent: false
+      });
+    } else {
+      console.log("Permiso de notificación no concedido.");
+    }
+  })
+  .catch((err) => console.log("Error al recibir el mensaje en primer plano:", err));
+
