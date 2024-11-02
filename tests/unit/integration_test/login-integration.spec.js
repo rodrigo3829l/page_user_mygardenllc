@@ -1,5 +1,4 @@
 // tests/unit/integration_test/login-integration.spec.js
-
 import { mount, flushPromises } from "@vue/test-utils";
 import LoginUser from "@/modules/login/pages/LoginUser.vue";
 import { createRouter, createMemoryHistory } from "vue-router";
@@ -19,6 +18,11 @@ const i18n = createI18n({
   locale: "en",
   messages: { en: { login: { titleString: "Login" } } },
 });
+
+jest.mock("firebase/messaging", () => ({
+  getMessaging: jest.fn(),
+}));
+
 
 // Mock del userStore
 jest.mock("@/store/store", () => ({

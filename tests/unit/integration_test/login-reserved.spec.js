@@ -18,6 +18,9 @@ const Services = {
     },
   },
 };
+jest.mock("firebase/messaging", () => ({
+  getMessaging: jest.fn(),
+}));
 
 // Mock de Pinia y el store de usuario
 const pinia = createPinia();

@@ -17,6 +17,11 @@ const i18n = createI18n({
 });
 setActivePinia(pinia);
 
+jest.mock("firebase/messaging", () => ({
+  getMessaging: jest.fn(),
+}));
+
+
 // Mock del store y axios
 const mockUserStore = {
   token: "fake-token",
