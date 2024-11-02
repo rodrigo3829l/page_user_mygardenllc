@@ -511,14 +511,19 @@ export default {
             rol: "client",
           },
         });
-        // console.log(data.notifications[0])
+        // console.log("Datos de notificacione")
+        // console.log(data.notifications)
         if (data.success) {
           // this.sho wNotificationService(data.notifications[0])
           // Filtrar notificaciones no leídas
-          const unreadNotifications = data.notifications.filter(
-            (notification) => !notification.read,
-          );
-          this.unreadCount = unreadNotifications.length; // Guardar el conteo de no leídas
+          if(data.notifications !== undefined){
+            const unreadNotifications = data.notifications.filter(
+              (notification) => !notification.read,
+            );
+            this.unreadCount = unreadNotifications.length; // Guardar el conteo de no leídas
+          }else{
+            this.unreadCount = 0
+          }
         }
       } catch (error) {
         console.error("Error fetching unread notifications:", error);

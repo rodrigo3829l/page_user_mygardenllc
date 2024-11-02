@@ -47,22 +47,57 @@ export const requestForToken = async () => {
 };
 
 
+// export const onMessageListener = () =>
+//   new Promise((resolve) => {
+//     console.log("Esperando mensajes en primer plano...");
+//     onMessage(messaging, (payload) => {
+//       console.log("Notificación recibida en primer plano:", payload); // Imprime la notificación en la consola
+
+//       // Muestra una notificación push
+//       if (Notification.permission === "granted") {
+//         new Notification(payload.notification.title, {
+//           body: payload.notification.body,
+//           icon: payload.notification.icon || "./public/img/icons/192x192.png",
+//           requireInteraction: true,
+//           silent: false,
+//         });
+//       }
+
+//       resolve(payload);
+//     });
+//   });
+
 export const onMessageListener = () =>
   new Promise((resolve) => {
     console.log("Esperando mensajes en primer plano...");
     onMessage(messaging, (payload) => {
-      console.log("Notificación recibida en primer plano:", payload); // Imprime la notificación en la consola
+      console.log("Notificación recibida en primer plano:", payload);
 
-      // Muestra una notificación push
+      // Verifica si hay una URL en el payload para redirigir al hacer clic
+      const notificationUrl = `https://mygardenllcservices.com/profile/infomyservices/${payload.data.serviceId}`;
+
+      // Muestra una notificación push en primer plano
       if (Notification.permission === "granted") {
-        new Notification(payload.notification.title, {
+        const notification = new Notification(payload.notification.title, {
           body: payload.notification.body,
-          icon: payload.notification.icon || "./public/img/icons/192x192.png",
+          icon: "https://res.cloudinary.com/dui4i9f4e/image/upload/v1709677547/logos/jb7aaqsuesjivzmiz5mg.png",
           requireInteraction: true,
           silent: false,
+          data: { url: notificationUrl }, // Guarda la URL en los datos de la notificación
         });
+
+        // Añade un listener para manejar el clic en la notificación
+        notification.onclick = (event) => {
+          event.preventDefault(); // Evita que se cierre la notificación automáticamente
+
+          // Redirige al usuario a la URL especificada
+          if (notification.data && notification.data.url) {
+            window.open(notification.data.url, "_blank");
+          }
+        };
       }
 
       resolve(payload);
     });
   });
+
