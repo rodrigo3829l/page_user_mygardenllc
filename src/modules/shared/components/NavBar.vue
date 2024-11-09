@@ -516,13 +516,13 @@ export default {
         if (data.success) {
           // this.sho wNotificationService(data.notifications[0])
           // Filtrar notificaciones no leídas
-          if(data.notifications !== undefined){
+          if (data.notifications !== undefined) {
             const unreadNotifications = data.notifications.filter(
               (notification) => !notification.read,
             );
             this.unreadCount = unreadNotifications.length; // Guardar el conteo de no leídas
-          }else{
-            this.unreadCount = 0
+          } else {
+            this.unreadCount = 0;
           }
         }
       } catch (error) {
@@ -671,6 +671,7 @@ export default {
           question1: this.survey.q1,
           question2: this.survey.q2,
           question3: this.survey.q3,
+          plataform: "web",
         };
 
         // Realizar la petición POST al servidor Flask para obtener el nivel de satisfacción

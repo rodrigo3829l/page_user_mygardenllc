@@ -1,47 +1,104 @@
 <html lang="es">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Notificación de CI/CD Pipeline</title>
   </head>
-  <body style="font-family: Arial, sans-serif; background-color: #195131; color: #fff; margin: 0; padding: 20px;">
-    <div style="max-width: 600px; margin: 0 auto; background-color: #145234; border-radius: 10px; padding: 20px;">
-      <h2 style="text-align: center; color: #fff;">
+  <body
+    style="
+      font-family: Arial, sans-serif;
+      background-color: #195131;
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+    "
+  >
+    <div
+      style="
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #145234;
+        border-radius: 10px;
+        padding: 20px;
+      "
+    >
+      <h2 style="text-align: center; color: #fff">
         🚀 ¡Tu Pipeline ha finalizado!
       </h2>
 
-      <div style="background-color: #0f2b20; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-        <p><strong>Rama:</strong> <code style="color: #4cd137;">${{ github.ref_name }}</code></p>
-        <p><strong>Repositorio:</strong> <a href="https://github.com/${{ github.repository }}" style="color: #4cd137; text-decoration: none;">${{ github.repository }}</a></p>
-        <p><strong>Commit:</strong> 
-          <a href="https://github.com/${{ github.repository }}/commit/${{ github.sha }}" style="color: #4cd137; text-decoration: none;">
+      <div
+        style="
+          background-color: #0f2b20;
+          padding: 15px;
+          border-radius: 8px;
+          margin-bottom: 20px;
+        "
+      >
+        <p>
+          <strong>Rama:</strong>
+          <code style="color: #4cd137">${{ github.ref_name }}</code>
+        </p>
+        <p>
+          <strong>Repositorio:</strong>
+          <a
+            href="https://github.com/${{ github.repository }}"
+            style="color: #4cd137; text-decoration: none"
+            >${{ github.repository }}</a
+          >
+        </p>
+        <p>
+          <strong>Commit:</strong>
+          <a
+            href="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
+            style="color: #4cd137; text-decoration: none"
+          >
             ...${{ github.sha.slice(-3) }}
           </a>
         </p>
-        <p><strong>ID de Ejecución:</strong> 
-          <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" style="color: #4cd137; text-decoration: none;">
+        <p>
+          <strong>ID de Ejecución:</strong>
+          <a
+            href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            style="color: #4cd137; text-decoration: none"
+          >
             ...${{ github.run_id.slice(-3) }}
           </a>
         </p>
       </div>
 
-      <h3 style="color: #fff;">¿Cómo fue? 🤔</h3>
-      <ul style="list-style-type: none; padding: 0;">
-        <li style="margin-bottom: 10px;">
-          ✅ Pruebas Jest: 
-          ${{ needs.unit-integration-tests.outputs.jest_exit_code == '0' && '¡Éxito! 🎉' || '❌ Falló' }}
+      <h3 style="color: #fff">¿Cómo fue? 🤔</h3>
+      <ul style="list-style-type: none; padding: 0">
+        <li style="margin-bottom: 10px">
+          ✅ Pruebas Jest: ${{
+          needs.unit-integration-tests.outputs.jest_exit_code == '0' && '¡Éxito!
+          🎉' || '❌ Falló' }}
         </li>
         <li>
-          🛡️ Escaneo Snyk: 
-          ${{ needs.snyk-scan.outputs.snyk_exit_code == '0' && '¡Todo en orden! 🛡️' || '❌ Falló' }}
+          🛡️ Escaneo Snyk: ${{ needs.snyk-scan.outputs.snyk_exit_code == '0' &&
+          '¡Todo en orden! 🛡️' || '❌ Falló' }}
         </li>
       </ul>
 
-      <p>Consulta los registros completos del pipeline <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" style="color: #4cd137; text-decoration: none;">aquí</a>.</p>
+      <p>
+        Consulta los registros completos del pipeline
+        <a
+          href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          style="color: #4cd137; text-decoration: none"
+          >aquí</a
+        >.
+      </p>
 
-      <footer style="text-align: center; margin-top: 20px; color: rgba(255, 255, 255, 0.7); font-size: 12px;">
-        Este es un mensaje automatizado de tu bot de CI/CD. No es necesario responder. 🤖
+      <footer
+        style="
+          text-align: center;
+          margin-top: 20px;
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 12px;
+        "
+      >
+        Este es un mensaje automatizado de tu bot de CI/CD. No es necesario
+        responder. 🤖
       </footer>
     </div>
   </body>
-  </html>
+</html>

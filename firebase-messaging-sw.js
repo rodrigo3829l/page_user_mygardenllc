@@ -1,6 +1,10 @@
 /* eslint-disable */
-importScripts('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
-importScripts('https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js');
+importScripts(
+  "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js",
+);
+importScripts(
+  "https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js",
+);
 
 const firebaseConfig = {
   apiKey: "AIzaSyDtDswGuO5glDnzQPOJ_T-_sNHXm0McBOo",
@@ -9,7 +13,7 @@ const firebaseConfig = {
   storageBucket: "notifications-32633.firebasestorage.app",
   messagingSenderId: "27910282456",
   appId: "1:27910282456:web:9eb50131e6e606ed4e4bad",
-  measurementId: "G-RPKNJ503MB"
+  measurementId: "G-RPKNJ503MB",
 };
 
 // Inicializa Firebase en el Service Worker
@@ -40,7 +44,8 @@ messaging.onBackgroundMessage((payload) => {
     icon: "https://res.cloudinary.com/dui4i9f4e/image/upload/v1709677547/logos/jb7aaqsuesjivzmiz5mg.png",
     requireInteraction: true,
     silent: false,
-    data: { // Añadir la URL que queremos abrir al hacer clic
+    data: {
+      // Añadir la URL que queremos abrir al hacer clic
       url: `https://mygardenllcservices.com/profile/infomyservices/${payload.data.serviceId}`,
     },
   };
@@ -50,15 +55,15 @@ messaging.onBackgroundMessage((payload) => {
 });
 
 // Escuchar el evento click en las notificaciones
-self.addEventListener('notificationclick', (event) => {
+self.addEventListener("notificationclick", (event) => {
   event.notification.close(); // Cerrar la notificación al hacer clic
 
   // Abrir o enfocar la URL especificada en la notificación
   event.waitUntil(
-    clients.matchAll({ type: 'window' }).then((windowClients) => {
+    clients.matchAll({ type: "window" }).then((windowClients) => {
       // Si ya existe una ventana abierta con la URL, enfocar esa ventana
       for (let client of windowClients) {
-        if (client.url === event.notification.data.url && 'focus' in client) {
+        if (client.url === event.notification.data.url && "focus" in client) {
           return client.focus();
         }
       }
@@ -66,6 +71,6 @@ self.addEventListener('notificationclick', (event) => {
       if (clients.openWindow) {
         return clients.openWindow(event.notification.data.url);
       }
-    })
+    }),
   );
 });

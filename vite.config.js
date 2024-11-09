@@ -18,7 +18,7 @@ export default defineConfig({
         name: "My Garden LLC",
         short_name: "MyGarden",
         description: "Professional gardening services",
-        theme_color: "#4DBA87",
+        theme_color: "#2E7D32",
         background_color: "#ffffff",
         display: "standalone",
         start_url: "/",

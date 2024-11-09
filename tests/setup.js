@@ -3,8 +3,7 @@ import vuetify from "@/plugins/vuetify"; // Importar el Vuetify configurado
 
 config.global.plugins = [vuetify];
 global.ResizeObserver = class {
-    observe() {}
-    unobserve() {}
-    disconnect() {}
-  };
-  
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};

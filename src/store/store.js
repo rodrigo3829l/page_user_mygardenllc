@@ -12,7 +12,7 @@ export const useUserStore = defineStore("user", () => {
   const image = ref(null);
 
   const login = async (email, pass, dpto) => {
-    const fcmToken = await requestForToken()
+    const fcmToken = await requestForToken();
     const datos = {
       email,
       password: pass,
@@ -20,7 +20,7 @@ export const useUserStore = defineStore("user", () => {
       fcmToken,
       platform: "web",
     };
-    console.log(datos)
+    console.log(datos);
     try {
       const { data } = await api.post("/user/login", datos);
       name.value = data.name;

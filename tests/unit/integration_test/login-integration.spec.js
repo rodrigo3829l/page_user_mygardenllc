@@ -23,7 +23,6 @@ jest.mock("firebase/messaging", () => ({
   getMessaging: jest.fn(),
 }));
 
-
 // Mock del userStore
 jest.mock("@/store/store", () => ({
   useUserStore: jest.fn(() => ({

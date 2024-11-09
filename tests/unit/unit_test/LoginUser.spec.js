@@ -19,7 +19,6 @@ jest.mock("firebase/messaging", () => ({
   getMessaging: jest.fn(),
 }));
 
-
 // Configuración simulada de i18n
 const i18n = createI18n({
   locale: "en",

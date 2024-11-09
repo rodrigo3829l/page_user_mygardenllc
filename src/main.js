@@ -58,7 +58,7 @@ userStore.initializeStore();
 // onMessageListener()
 //   .then((payload) => {
 //     console.log("Notificación recibida en primer plano:", payload);
-    
+
 //     if (Notification.permission === "granted") {
 //       const notificationOptions = {
 //         body: payload.notification.body,
@@ -66,7 +66,7 @@ userStore.initializeStore();
 //         requireInteraction: true,
 //         silent: false,
 //       };
-      
+
 //       // Crear la notificación
 //       const notification = new Notification(payload.notification.title, notificationOptions);
 
@@ -75,7 +75,7 @@ userStore.initializeStore();
 //         event.preventDefault(); // Previene la acción por defecto
 //         const serviceId = payload.data.serviceId; // Asegúrate de que el payload tenga el ID del servicio
 //         const url = `https://mygardenllcservices.com/profile/infomyservices/${serviceId}`;
-        
+
 //         // Abre la URL en la misma pestaña o en una nueva
 //         window.open(url, "_blank"); // "_blank" abre en una nueva pestaña. Cambia a "_self" para la misma pestaña
 //       };
